@@ -36,21 +36,20 @@ button{font:inherit;cursor:pointer;border:0}
 
 .card{container-type:size}
 .wrap{height:100%;max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;
-  padding:calc(max(12px,env(safe-area-inset-top)) + 78px) clamp(18px,5vw,40px) 84px;gap:clamp(10px,2vh,18px);--ah:clamp(150px,27vh,300px)}
+  padding:calc(max(12px,env(safe-area-inset-top)) + 78px) clamp(18px,5vw,40px) 84px;gap:clamp(10px,2cqh,18px);--ah:clamp(150px,27cqh,300px)}
 .art{flex:none;height:var(--ah);aspect-ratio:1/1;max-width:80%;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .art img{width:100%;height:100%;object-fit:contain;display:block}
 
-.verse{flex:none;width:100%;font-family:Khand,Inter,sans-serif;font-weight:500;color:#111;line-height:1.2;--vs:clamp(21px,5.8vw,30px)}
-body.hi .verse{--vs:clamp(19px,5.2vw,28px)}
+.verse{flex:none;width:100%;font-family:Khand,Inter,sans-serif;font-weight:500;color:#111;line-height:1.2;--vs:clamp(24px,6.6vw,34px)}
 .verse span{display:block;white-space:normal;text-wrap:balance;font-size:var(--vs)}
 .bar{font-style:normal;font-weight:400;opacity:.8;letter-spacing:-.06em;margin:0 .1em}
 .v-hi{display:none}
 body.hi .v-hing{display:none}
 body.hi .v-hi{display:block}
-.mean{flex:none;margin-top:clamp(2px,1vh,10px);width:min(calc(100% - 52px),500px);font-family:Kalam,'Comic Sans MS',cursive;font-weight:400;line-height:1.4}
+.mean{flex:none;margin-top:clamp(2px,1cqh,10px);width:min(calc(100% - 52px),500px);font-family:Kalam,'Comic Sans MS',cursive;font-weight:400;line-height:1.4}
 .mean p,.mt,.ex{margin:0;font-family:Kalam,'Comic Sans MS',cursive;font-weight:400;line-height:1.4}
-.mt{color:#e06b0a;font-size:calc(var(--ms,1) * clamp(16px,5vw,22px))}
-.ex{color:#111;font-size:calc(var(--ms,1) * clamp(14.5px,4.1vw,17px));margin-top:clamp(6px,1.4vh,12px);line-height:1.38}
+.mt{color:#e06b0a;font-size:calc(var(--ms,1) * clamp(14px,4.2vw,18px))}
+.ex{color:#111;font-size:calc(var(--ms,1) * clamp(14.5px,4.1vw,17px));margin-top:clamp(6px,1.4cqh,12px);line-height:1.38}
 
 /* controls */
 #ui{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:flex-end;
@@ -105,21 +104,21 @@ body.hi .v-hi{display:block}
 /* sankalp screen */
 .sk{flex:none;width:min(calc(100% - 20px),500px);text-align:center}
 .sk h2{margin:0 0 4px;font-family:Khand,Inter,sans-serif;font-weight:500;font-size:clamp(30px,8.4vw,40px);color:#111;line-height:1.1;letter-spacing:.03em}
-.goals{display:flex;justify-content:center;gap:clamp(10px,3vw,16px);margin:clamp(12px,2.4vh,22px) 0}
+.goals{display:flex;justify-content:center;gap:clamp(10px,3vw,16px);margin:clamp(12px,2.4cqh,22px) 0}
 .goals button{width:clamp(54px,15vw,66px);height:clamp(54px,15vw,66px);border-radius:50%;background:#111;color:#f08a2c;font-family:Khand,Inter,sans-serif;font-weight:500;font-size:clamp(24px,7vw,30px);line-height:1;transition:transform .15s,background .15s}
 .goals button:active{transform:scale(.94)}
 .goals button.on{background:#e06b0a;color:#fff}
 .lnk{margin-top:8px;padding:8px 14px;font-family:Inter,sans-serif;font-size:14px;font-weight:500;letter-spacing:.03em;color:#111;text-decoration:underline;text-underline-offset:3px}
 
 /* jaikara screen (no image) */
-.jk{gap:clamp(10px,2.2vh,20px)}
+.jk{gap:clamp(10px,2.2cqh,20px)}
 .jv{width:min(calc(100% - 20px),500px);text-align:center}
 .jv .v-hing,.jv .v-hi{font-family:Khand,Inter,sans-serif;font-weight:500;color:#111;line-height:1.2;font-size:clamp(24px,7.6vw,36px)}
 .jv .mt{font-size:clamp(15px,4.2vw,18px);margin-top:2px}
-.jv.rn{margin-top:clamp(2px,1vh,10px)}
+.jv.rn{margin-top:clamp(2px,1cqh,10px)}
 .jv.rn .ex{font-size:clamp(14px,3.8vw,16px);margin-bottom:2px}
 .jv.rn .v-hing,.jv.rn .v-hi{font-size:clamp(21px,6.4vw,28px)}
-.rounds{width:min(calc(100% - 20px),500px);text-align:center;margin-top:clamp(4px,1.4vh,14px)}
+.rounds{width:min(calc(100% - 20px),500px);text-align:center;margin-top:clamp(4px,1.4cqh,14px)}
 #rtxt b{display:block;font-family:Kalam,cursive;font-weight:400;color:#e06b0a;font-size:clamp(19px,5.4vw,23px);line-height:1.3}
 #rtxt span{display:block;font-family:Kalam,cursive;color:#111;font-size:clamp(15px,4.2vw,18px)}
 #again{margin-top:12px;padding:12px 24px;border-radius:999px;background:#111;color:#f08a2c;font-family:Inter,sans-serif;font-size:15px;font-weight:500;letter-spacing:.04em}
@@ -138,7 +137,7 @@ body.hi .v-hi{display:block}
 
 .wrap.jk{justify-content:center}
 /* sankalp: music choice */
-.mus{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 clamp(8px,1.6vh,14px);font-family:Inter,sans-serif;font-size:14px;color:#111}
+.mus{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 clamp(8px,1.6cqh,14px);font-family:Inter,sans-serif;font-size:14px;color:#111}
 .mus span{letter-spacing:.06em;text-transform:uppercase;font-size:12px;color:#333;margin-right:2px}
 .mus button{padding:8px 18px;border-radius:999px;background:#111;color:#f08a2c;font-family:Inter,sans-serif;font-size:14px;font-weight:500;letter-spacing:.04em}
 .mus button.on{background:#e06b0a;color:#fff}
@@ -149,15 +148,15 @@ body.hi .v-hi{display:block}
 .more:active{transform:scale(.96)}
 #bubble{position:fixed;left:16px;right:16px;max-width:520px;margin:0 auto;z-index:70;background:#fff;color:#111;padding:16px 18px;border-radius:20px;
   box-shadow:0 10px 40px rgba(0,0,0,.22);font-family:Kalam,'Comic Sans MS',cursive;font-size:clamp(16px,4.4vw,19px);line-height:1.45;text-align:center;
-  max-height:calc(100vh - 150px);overflow:auto;opacity:0;pointer-events:none;transform:scale(.88) translateY(10px);transform-origin:var(--tx,50%) 100%;
+  max-height:calc(100dvh - 150px);overflow:auto;opacity:0;pointer-events:none;transform:scale(.88) translateY(10px);transform-origin:var(--tx,50%) 100%;
   transition:opacity .2s,transform .28s cubic-bezier(.2,.9,.3,1.2)}
 #bubble.open{opacity:1;pointer-events:auto;transform:none}
 #bubble p{margin:0}
 #bubble .tail{position:absolute;bottom:-7px;left:var(--tx,50%);width:16px;height:16px;margin-left:-8px;background:#fff;transform:rotate(45deg);border-radius:0 0 4px 0;box-shadow:4px 4px 10px rgba(0,0,0,.08)}
 /* jaikara with image */
-.jk{--ah:clamp(110px,23vh,240px)}
+.jk{--ah:clamp(110px,23cqh,240px)}
 @media (max-height:700px){
-  .jk{gap:6px;--ah:clamp(110px,19vh,210px)}
+  .jk{gap:6px;--ah:clamp(110px,19cqh,210px)}
   .jv .v-hing,.jv .v-hi{font-size:clamp(20px,6.2vw,26px)}
   .jv .mt{font-size:14px}
   .jv.rn .v-hing,.jv.rn .v-hi{font-size:clamp(18px,5.4vw,22px)}
@@ -183,6 +182,9 @@ body.hi .v-hi{display:block}
   #ui button{padding:11px 12px}
 }
 @media (max-height:600px){.jk .art{display:none}}
+/* v0.24: Safari-visible-height aware sankalp */
+.skw{--ah:clamp(110px,22cqh,260px)}
+@container (max-height:720px){.skw{--ah:clamp(90px,17cqh,170px);gap:6px}.sk .ex{display:none}.goals{margin:10px 0}}
 
 </style>
 </head>
@@ -543,7 +545,7 @@ window.CHALISA_JK = {
   }
   function cardHTML(c,i){
     if(c.t==="sankalp"){
-      return '<section class="card"><div class="wrap">'+artHTML(c,i)+
+      return '<section class="card"><div class="wrap skw">'+artHTML(c,i)+
         '<div class="sk"><h2>Sankalp</h2><p class="mt">How many times will you read the Chalisa today?</p>'+
         '<div class="goals">'+GOALS.map(function(g){return '<button data-g="'+g+'">'+g+'</button>'}).join("")+'</div>'+
         '<div class="mus"><span>Music</span><button data-m="1">On</button><button data-m="0">Off</button></div>'+
