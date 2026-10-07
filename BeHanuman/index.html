@@ -278,6 +278,19 @@ body.done .jk{padding-bottom:128px}
 #supp a{display:block;padding:12px 22px;border-radius:12px;font-family:Inter,sans-serif;font-size:15px;color:#111;text-decoration:none;white-space:nowrap;text-align:center}
 #supp a:active{background:#eee}
 body.done #ui #reset,body.done #ui #explain{display:none!important}
+/* v0.35 support page */
+#suppage{position:fixed;inset:0;z-index:400;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;padding:calc(max(12px,env(safe-area-inset-top)) + 70px) 22px 30px;overflow:auto;opacity:0;transition:opacity .25s}
+#suppage.open{display:flex;opacity:1}
+#supback{position:absolute;left:16px;top:max(14px,env(safe-area-inset-top));height:42px;padding:0 18px;border-radius:999px;background:#111;color:#f08a2c;font-family:Inter,sans-serif;font-size:14px;font-weight:500}
+.supin{width:min(100%,440px);text-align:center}
+.suph{font-size:46px;color:#e06b0a;line-height:1}
+.supin h2{margin:6px 0 8px;font-family:Khand,Inter,sans-serif;font-weight:500;font-size:clamp(32px,9vw,42px);color:#111;line-height:1.1}
+.supin p{margin:0 0 20px;font-family:Kalam,cursive;font-size:clamp(16px,4.4vw,19px);color:#333;line-height:1.4}
+#suplist{display:flex;flex-direction:column;gap:12px}
+.supitem{display:block;padding:15px 18px;border-radius:20px;background:#111;text-decoration:none;text-align:center}
+.supitem b{display:block;font-family:Inter,sans-serif;font-weight:500;font-size:16px;color:#f08a2c;letter-spacing:.03em}
+.supitem span{display:block;margin-top:3px;font-family:Inter,sans-serif;font-size:12.5px;color:#d8d8d6}
+.supitem:active{transform:scale(.98)}
 
 </style>
 </head>
@@ -288,7 +301,8 @@ body.done #ui #reset,body.done #ui #explain{display:none!important}
 <div id="foot"><b id="flabel">Doha 1</b><span id="fcount">1 / 42<em id="hint"> · swipe up &#8593;</em></span></div>
 <div id="ui"><button id="explain" aria-label="Show explanation">Explanation</button><button id="reset" aria-label="Restart from the beginning">&#8634; Restart</button></div>
 <div id="splash"><div class="sp-art"><div class="glow"></div><div class="parts" id="parts"></div><div class="hearts" id="hearts"></div><img id="spimg" alt="Hanuman meditating" draggable="false"></div><b>Be Hanuman</b><span><i class="bar">||</i> Hanuman Chalisa <i class="bar">||</i></span></div>
-<div id="endnav"><div id="supp"></div><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button></div>
+<div id="endnav"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button></div>
+<div id="suppage"><button id="supback" aria-label="Back">&#8249; Back</button><div class="supin"><div class="suph">&#9825;</div><h2>Support Be Hanuman</h2><p>Free, with no ads. If it helped your reading, here are a few ways to help it reach more people.</p><div id="suplist"></div></div></div>
 <div id="bubble"><p></p><i class="tail"></i></div>
 <div id="a2hs"><div class="in"><b>Add Be Hanuman to your Home Screen</b><p>1. Tap the <i>Share</i> button (the square with an arrow) in your browser's toolbar.<br>2. Scroll down and tap <i>Add to Home Screen</i>, then <i>Add</i>.</p><button id="a2close">Got it</button></div></div>
 <div id="sheet"><div class="in"><div class="hd"><span>Press play on the track below.</span><button id="closeSheet">Close</button></div></div></div>
@@ -964,20 +978,28 @@ window.CHALISA_JK = {
     if(cur>0){sp.style.display="none"}else{ht=setTimeout(hide,2600)}
   })();
   // Support + Home after the sankalp is complete
-  var GH_URL="https://github.com/Sethi-Ai/AICatalyst",IG_URL="";
-  var supp=document.getElementById("supp"),suppBtn=document.getElementById("support");
-  function suppLinks(){return[{t:"Follow on Instagram",u:IG_URL},{t:"Star on GitHub",u:GH_URL}].filter(function(x){return x.u})}
-  function closeSupp(){supp.classList.remove("open")}
-  suppBtn.addEventListener("click",function(){
-    var L=suppLinks();
-    if(L.length===1){window.open(L[0].u,"_blank","noopener");return}
-    if(supp.classList.contains("open")){closeSupp();return}
-    supp.innerHTML=L.map(function(x){return '<a href="'+x.u+'" target="_blank" rel="noopener">'+x.t+'</a>'}).join("");
-    supp.classList.add("open");
+  var GH_URL="https://github.com/behanuman/behanuman.github.io",IG_URL="";
+  var sp2=document.getElementById("suppage");
+  function openSupport(){
+    var items=[
+      {k:"share",t:"Share with a friend",d:"Send the app on WhatsApp or anywhere",u:"#"},
+      {k:"star",t:"Star us on GitHub",d:"Free, and it helps others find the app",u:GH_URL},
+      {k:"ig",t:"Follow on Instagram",d:"Updates, new features and daily inspiration",u:IG_URL}
+    ].filter(function(x){return x.u});
+    document.getElementById("suplist").innerHTML=items.map(function(x){return '<a class="supitem" data-k="'+x.k+'" href="'+x.u+'" target="_blank" rel="noopener"><b>'+x.t+'</b><span>'+x.d+'</span></a>'}).join("");
+    sp2.classList.add("open");
+  }
+  document.getElementById("support").addEventListener("click",openSupport);
+  document.getElementById("supback").addEventListener("click",function(){sp2.classList.remove("open")});
+  document.getElementById("suplist").addEventListener("click",function(e){
+    var a=e.target.closest(".supitem");if(!a||a.dataset.k!=="share")return;
+    e.preventDefault();
+    var url=location.href.split("#")[0],txt="Learn the Hanuman Chalisa verse by verse with Be Hanuman";
+    if(navigator.share){navigator.share({title:"Be Hanuman",text:txt,url:url}).catch(function(){})}
+    else window.open("https://wa.me/?text="+encodeURIComponent(txt+" "+url),"_blank","noopener");
   });
-  window.addEventListener("pointerdown",function(e){if(!e.target.closest("#supp,#support"))closeSupp()},true);
   document.getElementById("home").addEventListener("click",function(){
-    closeSupp();goal=1;round=1;saveRounds();document.body.classList.remove("done");
+    sp2.classList.remove("open");goal=1;round=1;saveRounds();document.body.classList.remove("done");
     try{sessionStorage.setItem("bh_card_s","0")}catch(e){}
     updateRounds();goTo(0);if(window.__showSplash)window.__showSplash();
   });
