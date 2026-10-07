@@ -155,9 +155,9 @@ body.hi .v-hi{display:block}
 #bubble p{margin:0}
 #bubble .tail{position:absolute;bottom:-7px;left:var(--tx,50%);width:16px;height:16px;margin-left:-8px;background:#fff;transform:rotate(45deg);border-radius:0 0 4px 0;box-shadow:4px 4px 10px rgba(0,0,0,.08)}
 /* jaikara with image */
-.jk{--ah:clamp(110px,19vh,210px)}
+.jk{--ah:clamp(110px,23vh,240px)}
 @media (max-height:700px){
-  .jk{gap:6px}
+  .jk{gap:6px;--ah:clamp(110px,19vh,210px)}
   .jv .v-hing,.jv .v-hi{font-size:clamp(20px,6.2vw,26px)}
   .jv .mt{font-size:14px}
   .jv.rn .v-hing,.jv.rn .v-hi{font-size:clamp(18px,5.4vw,22px)}
@@ -724,6 +724,9 @@ window.CHALISA_JK = {
     [].forEach.call(stage.querySelectorAll("[data-g]"),function(b){b.classList.toggle("on",+b.dataset.g===goal)});
     var g=goal||1,r=Math.min(round,g),t=document.getElementById("rtxt"),btn=document.getElementById("again");
     if(!t)return;
+    // Jaikara picture alternates by round: celebration, Ram Darbar, celebration...
+    var jimg=stage.querySelector(".jk .art img"),jn=(r%2===1)?"jaikara":"jaikara2";
+    if(jimg&&jimg.dataset.n!==jn){jimg.dataset.n=jn;jimg.dataset.k="0";jimg.onerror=function(){__imgFail(jimg)};jimg.src=BASE+"images/"+jn+".jpg"}
     if(r<g){
       t.innerHTML='<b>Round '+r+' of '+g+' complete</b><span>'+(g-r)+' more to go</span>';
       btn.textContent="Read again: round "+(r+1);btn.dataset.a="again";
