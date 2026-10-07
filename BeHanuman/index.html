@@ -459,13 +459,33 @@ window.CHALISA = [
   tgl.onclick=function(){setMode(mode==="hi"?"hing":"hi")};
   setMode(mode);
 
-  // Spotify: one embed in a sheet that slides away but keeps playing. Browsers block autoplay, so tap play once.
-  var sheet=document.getElementById("sheet");
-  var f=document.createElement("iframe");
-  f.src="https://open.spotify.com/embed/track/"+SPOTIFY+"?utm_source=generator&theme=0";
-  f.allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
-  f.title="Hanuman Chalisa on Spotify";
-  sheet.querySelector(".in").appendChild(f);
+  // Spotify. Browsers block sound until the visitor touches the page, so music starts on the first
+  // tap, swipe, scroll or key press (if the browser allows it). The sheet lets people pause or play.
+  var SPOTIFY2="2O05KKeleQJ9imz1mXHPGc";
+  var sheet=document.getElementById("sheet"),host=document.createElement("div"),ctrl=null,started=false;
+  sheet.querySelector(".in").appendChild(host);
+  function plainIframe(){
+    if(ctrl||host.querySelector("iframe"))return;
+    var f=document.createElement("iframe");
+    f.src="https://open.spotify.com/embed/track/"+SPOTIFY2+"?utm_source=generator&theme=0";
+    f.style.cssText="display:block;width:100%;height:80px;border:0;border-radius:12px";
+    f.allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+    f.title="Hanuman Chalisa on Spotify";host.appendChild(f);
+  }
+  function tryPlay(){if(ctrl&&!started){try{ctrl.play()}catch(e){}}}
+  window.onSpotifyIframeApiReady=function(API){
+    API.createController(host,{uri:"spotify:track:"+SPOTIFY2,width:"100%",height:80,theme:0},function(c){
+      ctrl=c;
+      c.addListener("playback_update",function(e){if(e&&e.data&&e.data.isPaused===false)started=true});
+      c.addListener("ready",tryPlay);
+    });
+  };
+  var sc=document.createElement("script");sc.src="https://open.spotify.com/embed/iframe-api/v1";sc.async=true;
+  sc.onerror=plainIframe;document.body.appendChild(sc);
+  setTimeout(plainIframe,5000);
+  ["pointerdown","touchend","keydown","wheel","click"].forEach(function(ev){
+    window.addEventListener(ev,tryPlay,{passive:true});
+  });
   document.getElementById("music").onclick=function(){sheet.classList.add("open")};
   document.getElementById("closeSheet").onclick=function(){sheet.classList.remove("open")};
 
