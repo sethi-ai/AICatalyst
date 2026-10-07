@@ -40,17 +40,17 @@ button{font:inherit;cursor:pointer;border:0}
 .art{flex:0 1 auto;width:min(80%,448px);aspect-ratio:1/1;min-height:90px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .art img{width:100%;height:100%;object-fit:contain;display:block}
 
-.verse{flex:none;font-family:Khand,Inter,sans-serif;font-weight:500;color:#111;line-height:1.2;--k:.4;--len:var(--lh)}
-body.hi .verse{--k:.56;--len:var(--ld)}
-.verse span{display:block;white-space:nowrap;font-size:clamp(14px,calc(min(84cqw,760px) / (var(--len) * var(--k))),46px)}
+.verse{flex:none;width:100%;font-family:Khand,Inter,sans-serif;font-weight:500;color:#111;line-height:1.2;--vs:clamp(21px,5.8vw,30px)}
+body.hi .verse{--vs:clamp(19px,5.2vw,28px)}
+.verse span{display:block;white-space:normal;text-wrap:balance;font-size:var(--vs)}
 .bar{font-style:normal;font-weight:400;opacity:.8;letter-spacing:-.06em;margin:0 .1em}
 .v-hi{display:none}
 body.hi .v-hing{display:none}
 body.hi .v-hi{display:block}
 .mean{flex:none;margin-top:clamp(2px,1vh,10px);width:min(calc(100% - 52px),500px);font-family:Kalam,'Comic Sans MS',cursive;font-weight:400;line-height:1.4}
 .mean p,.mt,.ex{margin:0;font-family:Kalam,'Comic Sans MS',cursive;font-weight:400;line-height:1.4}
-.mt{color:#e06b0a;font-size:clamp(16px,5vw,22px)}
-.ex{color:#111;font-size:clamp(14.5px,4.1vw,17px);margin-top:clamp(6px,1.4vh,12px);line-height:1.38}
+.mt{color:#e06b0a;font-size:calc(var(--ms,1) * clamp(16px,5vw,22px))}
+.ex{color:#111;font-size:calc(var(--ms,1) * clamp(14.5px,4.1vw,17px));margin-top:clamp(6px,1.4vh,12px);line-height:1.38}
 
 /* controls */
 #ui{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:flex-end;
@@ -98,8 +98,8 @@ body.hi .v-hi{display:block}
 /* short phones (iPhone SE / mini): tighter text so the image stays visible */
 @media (max-height:700px){
   .wrap{gap:8px;padding-top:66px;padding-bottom:70px}
-  .mean .mt{font-size:15px;line-height:1.3}
-  .mean .ex{font-size:13px;line-height:1.3;margin-top:5px}
+  .mean .mt{line-height:1.3}
+  .mean .ex{line-height:1.3;margin-top:5px}
   .art{width:min(80%,448px)}
 }
 
@@ -135,6 +135,7 @@ body.hi .v-hi{display:block}
 #a2hs p{margin:0 0 14px;font-size:15px;line-height:1.55}
 #a2hs i{font-style:normal;color:#fff;font-weight:500}
 #a2hs button{background:#f08a2c;color:#111;border-radius:999px;padding:10px 22px;font-size:14px;font-weight:500}
+.jv.rn .rep{margin-top:6px;font-family:Khand,Inter,sans-serif;font-weight:500;font-size:clamp(16px,4.6vw,20px);color:#444;letter-spacing:.04em}
 
 </style>
 </head>
@@ -458,14 +459,14 @@ window.CHALISA_JK = {
  lines:[
   {dev:"सियावर रामचंद्र की जय।",hing:"Siyavar Ramchandra ki jai!",en:"Glory to Shri Rama, the husband of Sita!"},
   {dev:"पवनसुत हनुमान की जय॥",hing:"Pavansut Hanuman ki jai!",en:"Glory to Hanuman, the son of the Wind God!"}],
- rn:{dev:"राम राम जय सीता राम।",hing:"Ram Ram Jai Sita Ram",note:"Then repeat 11 times"}};
+ rn:{dev:["राम राम जय राजा राम","राम राम जय सीता राम"],hing:["Ram Ram Jai Raja Ram","Ram Ram Jai Sita Ram"],note:"Repeat 11 Times"}};
 </script>
 <script>(function(){
   var CH=window.CHALISA,JK=window.CHALISA_JK,D=[];
   D.push({t:"sankalp",kl:"Sankalp",img:"sankalp"});
   CH.forEach(function(c,i){c.img=pad(i+1);D.push(c);if(i===0){window.CHALISA_OP2.img="opening2";D.push(window.CHALISA_OP2)}});
   D.push({t:"jaikara",kl:"Jaikara"});
-  var N=D.length,MAIN="2O05KKeleQJ9imz1mXHPGc",JKTRACK="6MvqtaK8RDuFlTu9wuH8vy",GOALS=[1,3,7,11];
+  var N=D.length,MAIN="6MvqtaK8RDuFlTu9wuH8vy",GOALS=[1,3,7,11];
   var goal=0,round=1;
   try{goal=parseInt(localStorage.getItem("bh_goal")||"0",10)||0;round=parseInt(localStorage.getItem("bh_round")||"1",10)||1}catch(e){}
   function saveRounds(){try{localStorage.setItem("bh_goal",String(goal));localStorage.setItem("bh_round",String(round))}catch(e){}}
@@ -506,7 +507,7 @@ window.CHALISA_JK = {
         return '<div class="jv"><div class="v-hing">'+esc(l.hing)+'</div><div class="v-hi">'+esc(l.dev)+'</div><p class="mt">'+esc(l.en)+'</p></div>';
       }).join("");
       return '<section class="card"><div class="wrap jk">'+L+
-        '<div class="jv rn"><p class="ex">'+esc(JK.rn.note)+'</p><div class="v-hing">'+esc(JK.rn.hing)+'</div><div class="v-hi">'+esc(JK.rn.dev)+'</div></div>'+
+        '<div class="jv rn"><div class="v-hing">'+esc(JK.rn.hing[0])+'<br>'+esc(JK.rn.hing[1])+'</div><div class="v-hi">'+esc(JK.rn.dev[0])+'<br>'+esc(JK.rn.dev[1])+'</div><p class="rep"><i class="bar">||</i> '+esc(JK.rn.note)+' <i class="bar">||</i></p></div>'+
         '<div class="rounds"><p id="rtxt"></p><button id="again"></button></div></div></section>';
     }
     var B='<i class="bar">||</i>';
@@ -606,7 +607,7 @@ window.CHALISA_JK = {
   setMode(mode);
 
   // Spotify. Music never starts by itself, except the Jaikara track, which starts when you arrive at the last screen.
-  var sheet=document.getElementById("sheet"),host=document.createElement("div"),ctrl=null,playing=false,jkWant=false,pendingJK=false,onJK=false;
+  var sheet=document.getElementById("sheet"),host=document.createElement("div"),ctrl=null,playing=false,jkWant=false,pendingJK=false,onJK=false,wantPlay=false,lastPos=0,lastDur=0;
   var mbtn=document.getElementById("music");
   sheet.querySelector(".in").appendChild(host);
   function label(){mbtn.textContent=playing?"Pause":"Play";mbtn.setAttribute("aria-label",playing?"Pause music":"Play music")}
@@ -620,18 +621,21 @@ window.CHALISA_JK = {
   }
   function startJK(){
     if(!ctrl){pendingJK=true;return}
-    try{ctrl.loadUri("spotify:track:"+JKTRACK);ctrl.play();setTimeout(function(){if(jkWant&&!playing){try{ctrl.play()}catch(e){}}},600)}catch(e){}
+    if(playing)return;
+    try{ctrl.play();setTimeout(function(){if(jkWant&&!playing){try{ctrl.play()}catch(e){}}},600)}catch(e){}
   }
   function onJaikara(){onJK=true;jkWant=true;startJK()}
-  function backToMain(){
-    onJK=false;jkWant=false;pendingJK=false;
-    if(ctrl){try{ctrl.loadUri("spotify:track:"+MAIN)}catch(e){}}
-    playing=false;label();
-  }
+  function backToMain(){onJK=false;jkWant=false;pendingJK=false}
   window.onSpotifyIframeApiReady=function(API){
     API.createController(host,{uri:"spotify:track:"+MAIN,width:"100%",height:80,theme:0},function(c){
       ctrl=c;
-      c.addListener("playback_update",function(e){if(e&&e.data){playing=e.data.isPaused===false;if(playing)jkWant=false;label()}});
+      c.addListener("playback_update",function(e){
+        if(!e||!e.data)return;var d=e.data;
+        playing=d.isPaused===false;if(playing){jkWant=false;wantPlay=true}label();
+        // loop: when the track ends (it reports paused near the end), start it again unless the visitor paused it
+        if(d.isPaused&&wantPlay&&lastDur>0&&lastPos>=lastDur-3500&&(d.position||0)<2500){lastPos=0;try{c.seek(0);c.play()}catch(x){}return}
+        if(!d.isPaused){lastPos=d.position||0;lastDur=d.duration||lastDur}
+      });
       if(pendingJK||cur===N-1&&onJK){pendingJK=false;startJK()}
     });
   };
@@ -646,7 +650,7 @@ window.CHALISA_JK = {
     },{passive:true});
   });
   mbtn.onclick=function(){
-    jkWant=false;
+    jkWant=false;wantPlay=!playing;
     if(ctrl){try{ctrl.togglePlay();playing=!playing;label()}catch(e){sheet.classList.add("open")}}
     else{plainIframe();sheet.classList.add("open")}
   };
@@ -694,6 +698,19 @@ window.CHALISA_JK = {
   var ai=document.createElement("link");ai.rel="apple-touch-icon";ai.href=BASE+"icon-180.png";document.head.appendChild(ai);
   document.getElementById("reset").onclick=function(){goal=0;round=1;saveRounds();updateRounds();backToMain();goTo(0);hint.classList.remove("gone")};
   if(cur>0)hint.classList.add("gone");
+  // Keep the illustration a good size: shrink the meaning text (never the verse) on cards where the text is long.
+  function fit(){
+    var H=window.innerHeight,nat=Math.min(stage.clientWidth*.8,448),target=Math.min(nat,Math.max(150,H*.3));
+    cards.forEach(function(el){
+      var m=el.querySelector(".mean"),art=el.querySelector(".art");if(!m||!art)return;
+      var k=1;m.style.setProperty("--ms",1);
+      while(k>.7&&art.offsetHeight<target-1){k=Math.round((k-.04)*100)/100;m.style.setProperty("--ms",k)}
+    });
+  }
+  window.addEventListener("resize",fit);
+  tgl.addEventListener("click",fit);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  fit();
   updateRounds();
 })();
 </script>
