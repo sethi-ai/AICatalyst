@@ -197,6 +197,9 @@ body.hi .v-hi{display:block}
 @container (max-height:640px){.swipe{display:none}.skw{padding-bottom:84px}}
 @media (prefers-reduced-motion:reduce){.swipe i{animation:none;opacity:.8}}
 #hint{display:none!important}
+/* v0.26: chaupai meaning +1.25pt, smaller explanation button */
+.chp .mt{font-size:calc(var(--ms,1) * clamp(13.7px,calc(3.6vw + 1.67px),17.7px))}
+#ui #explain{min-height:36px;padding:8px 14px;font-size:12px;letter-spacing:.05em}
 
 </style>
 </head>
@@ -578,7 +581,7 @@ window.CHALISA_JK = {
     var h1=B+' '+esc(c.hing[0]), h2=esc(c.hing[1])+' '+B;
     var d1=B+' '+esc(strip(c.dev[0])), d2=esc(strip(c.dev[1]))+' '+B;
     var lh=Math.max(c.hing[0].length,c.hing[1].length)+3, ld=Math.max(strip(c.dev[0]).length,strip(c.dev[1]).length)+3;
-    return '<section class="card" style="--lh:'+lh+';--ld:'+ld+'"><div class="wrap">'+artHTML(c,i)+
+    return '<section class="card'+(c.kl==="Chaupai"?' chp':'')+'" style="--lh:'+lh+';--ld:'+ld+'"><div class="wrap">'+artHTML(c,i)+
       '<div class="verse"><div class="v-hing"><span>'+h1+'</span><span>'+h2+'</span></div>'+
       '<div class="v-hi"><span>'+d1+'</span><span>'+d2+'</span></div></div>'+
       '<div class="mean"><p class="mt">'+esc(c.mt)+'</p></div>'+
