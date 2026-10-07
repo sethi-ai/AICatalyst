@@ -264,6 +264,20 @@ body.hi .v-hi{display:block}
 .sl-l.on{color:#e06b0a;font-size:30px;top:44px;font-weight:600}
 @media (max-height:700px){.sl-in{height:70px}.sl-l{top:42px}.sl-l.on{top:36px;font-size:26px}}
 @container (max-height:610px){.skw{--ah:clamp(64px,13cqh,100px)}.skw .sl{margin:6px auto}}
+/* v0.34 end of sankalp */
+#endnav{position:fixed;left:0;right:0;bottom:max(16px,env(safe-area-inset-bottom));z-index:52;display:none;flex-direction:column;align-items:center;gap:10px;pointer-events:none}
+body.done #endnav{display:flex}
+body.done #foot,body.done #reset{display:none}
+body.done .jk{padding-bottom:128px}
+#endnav button{pointer-events:auto;height:44px;min-width:170px;padding:0 24px;border-radius:999px;font-family:Inter,sans-serif;font-size:14px;font-weight:500;letter-spacing:.05em}
+#support{background:#e06b0a;color:#fff}
+#home{background:#111;color:#f08a2c}
+#endnav button:active{transform:scale(.96)}
+#supp{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translate(-50%,8px) scale(.94);display:flex;flex-direction:column;gap:2px;background:#fff;border-radius:18px;padding:8px;box-shadow:0 10px 40px rgba(0,0,0,.22);opacity:0;pointer-events:none;transition:opacity .18s,transform .22s}
+#supp.open{opacity:1;pointer-events:auto;transform:translate(-50%,0) scale(1)}
+#supp a{display:block;padding:12px 22px;border-radius:12px;font-family:Inter,sans-serif;font-size:15px;color:#111;text-decoration:none;white-space:nowrap;text-align:center}
+#supp a:active{background:#eee}
+body.done #ui #reset,body.done #ui #explain{display:none!important}
 
 </style>
 </head>
@@ -274,6 +288,7 @@ body.hi .v-hi{display:block}
 <div id="foot"><b id="flabel">Doha 1</b><span id="fcount">1 / 42<em id="hint"> · swipe up &#8593;</em></span></div>
 <div id="ui"><button id="explain" aria-label="Show explanation">Explanation</button><button id="reset" aria-label="Restart from the beginning">&#8634; Restart</button></div>
 <div id="splash"><div class="sp-art"><div class="glow"></div><div class="parts" id="parts"></div><div class="hearts" id="hearts"></div><img id="spimg" alt="Hanuman meditating" draggable="false"></div><b>Be Hanuman</b><span><i class="bar">||</i> Hanuman Chalisa <i class="bar">||</i></span></div>
+<div id="endnav"><div id="supp"></div><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button></div>
 <div id="bubble"><p></p><i class="tail"></i></div>
 <div id="a2hs"><div class="in"><b>Add Be Hanuman to your Home Screen</b><p>1. Tap the <i>Share</i> button (the square with an arrow) in your browser's toolbar.<br>2. Scroll down and tap <i>Add to Home Screen</i>, then <i>Add</i>.</p><button id="a2close">Got it</button></div></div>
 <div id="sheet"><div class="in"><div class="hd"><span>Press play on the track below.</span><button id="closeSheet">Close</button></div></div></div>
@@ -690,7 +705,7 @@ window.CHALISA_JK = {
     if(n!==cur){
       leaving=cur;clearTimeout(leaveT);stage.classList.add("moving");
       leaveT=setTimeout(function(){leaving=-1;stage.classList.remove("moving");layout()},700);
-      var was=cur;cur=n;save();hint.classList.add("gone");closeBubble();updateExplain();if(n===N-1)resetCount();
+      var was=cur;cur=n;save();hint.classList.add("gone");closeBubble();updateExplain();if(n!==N-1)document.body.classList.remove("done");if(n===N-1)resetCount();
       musicSync();
     }
     dy=0;layout();
@@ -858,7 +873,7 @@ window.CHALISA_JK = {
   })();
   var rc=11;
   function resetCount(){
-    rc=11;var w=stage.querySelector(".jk");if(w)w.classList.remove("fin");
+    rc=11;document.body.classList.remove("done");var w=stage.querySelector(".jk");if(w)w.classList.remove("fin");
     var n=document.getElementById("rn"),t=document.getElementById("rt");if(n)n.textContent=rc;if(t)t.textContent="Times";
   }
   function tapRepeat(){
@@ -867,7 +882,7 @@ window.CHALISA_JK = {
     if(n)n.textContent=rc;if(t)t.textContent=rc===1?"Time":"Times";
     if(rb){rb.classList.remove("pop");void rb.offsetWidth;rb.classList.add("pop")}
     haptic(rc===0?30:12);
-    if(rc===0&&w)setTimeout(function(){w.classList.add("fin");layout()},260);
+    if(rc===0&&w)setTimeout(function(){w.classList.add("fin");if(Math.min(round,goal||1)>=(goal||1))document.body.classList.add("done");layout()},260);
   }
   function updateRounds(){
     resetCount();slPaint();
@@ -878,10 +893,10 @@ window.CHALISA_JK = {
     if(jimg&&jimg.dataset.n!==jn){jimg.dataset.n=jn;jimg.dataset.k="0";jimg.onerror=function(){__imgFail(jimg)};jimg.src=BASE+"images/"+jn+".jpg"}
     if(r<g){
       t.innerHTML='<b>Round '+r+' of '+g+' complete</b><span>'+(g-r)+' more to go</span>';
-      btn.textContent="Read again: round "+(r+1);btn.dataset.a="again";
+      btn.textContent="Read again: round "+(r+1);btn.dataset.a="again";btn.style.display="";
     }else{
       t.innerHTML='<b>Sankalp complete</b><span>Jai Hanuman.</span>';
-      btn.textContent="Begin a new sankalp";btn.dataset.a="new";
+      btn.textContent="Begin a new sankalp";btn.dataset.a="new";btn.style.display="none";
     }
     layout();
   }
@@ -936,17 +951,36 @@ window.CHALISA_JK = {
   (function(){
     var sp=document.getElementById("splash"),im=document.getElementById("spimg");
     if(!sp)return;
-    if(cur>0){sp.style.display="none";return}
     im.onerror=function(){im.onerror=function(){sp.classList.add("noimg")};im.src=BASE+"images/sankalp.jpg"};
     im.src=BASE+"images/splash.png";
     var P=document.getElementById("parts");
     var H=document.getElementById("hearts");
     if(H)for(var h=0;h<7;h++){var hh=document.createElement("i");hh.style.cssText="left:"+(76+Math.random()*10).toFixed(1)+"%;--hs:"+(11+Math.random()*9).toFixed(0)+"px;--hd:"+(2.8+Math.random()*1.4).toFixed(1)+"s;--hw:-"+(h*0.55).toFixed(2)+"s;--hx:"+(Math.random()*36-18).toFixed(0)+"px";H.appendChild(hh)}
     if(P)for(var q=0;q<16;q++){var e=document.createElement("i");e.style.cssText="left:"+(8+Math.random()*84).toFixed(1)+"%;bottom:"+(8+Math.random()*40).toFixed(1)+"%;--s:"+(3+Math.random()*5).toFixed(1)+"px;--d:"+(3.2+Math.random()*3).toFixed(1)+"s;--w:-"+(Math.random()*4).toFixed(1)+"s;--x:"+(Math.random()*30-15).toFixed(0)+"px";P.appendChild(e)}
-    function hide(){sp.classList.add("out");setTimeout(function(){sp.style.display="none"},700)}
+    var ht=0;
+    function hide(){clearTimeout(ht);sp.classList.add("out");setTimeout(function(){if(sp.classList.contains("out"))sp.style.display="none"},700)}
     sp.addEventListener("pointerdown",hide);
-    setTimeout(hide,2600);
+    window.__showSplash=function(){clearTimeout(ht);sp.style.display="flex";sp.classList.remove("out");void sp.offsetWidth;ht=setTimeout(hide,2600)};
+    if(cur>0){sp.style.display="none"}else{ht=setTimeout(hide,2600)}
   })();
+  // Support + Home after the sankalp is complete
+  var GH_URL="https://github.com/Sethi-Ai/AICatalyst",IG_URL="";
+  var supp=document.getElementById("supp"),suppBtn=document.getElementById("support");
+  function suppLinks(){return[{t:"Follow on Instagram",u:IG_URL},{t:"Star on GitHub",u:GH_URL}].filter(function(x){return x.u})}
+  function closeSupp(){supp.classList.remove("open")}
+  suppBtn.addEventListener("click",function(){
+    var L=suppLinks();
+    if(L.length===1){window.open(L[0].u,"_blank","noopener");return}
+    if(supp.classList.contains("open")){closeSupp();return}
+    supp.innerHTML=L.map(function(x){return '<a href="'+x.u+'" target="_blank" rel="noopener">'+x.t+'</a>'}).join("");
+    supp.classList.add("open");
+  });
+  window.addEventListener("pointerdown",function(e){if(!e.target.closest("#supp,#support"))closeSupp()},true);
+  document.getElementById("home").addEventListener("click",function(){
+    closeSupp();goal=1;round=1;saveRounds();document.body.classList.remove("done");
+    try{sessionStorage.setItem("bh_card_s","0")}catch(e){}
+    updateRounds();goTo(0);if(window.__showSplash)window.__showSplash();
+  });
 })();
 </script>
 </body>
