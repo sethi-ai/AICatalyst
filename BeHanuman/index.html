@@ -165,6 +165,25 @@ body.hi .v-hi{display:block}
   #again{margin-top:6px;padding:9px 20px}
 }
 
+/* phone audit fixes (v0.23): bigger tap targets, narrow-phone footer, tiny-phone header and Jaikara */
+#top .pill{min-height:42px;padding:11px 16px}
+#ui button{min-height:44px}
+.more{min-height:40px}
+@media (max-width:400px){
+  #ui button{padding:11px 15px;font-size:13px}
+  #foot{left:calc(50% - 10px)}
+  #top .pill{min-width:70px;padding:11px 14px}
+}
+@media (max-width:340px){
+  #top .pill{min-width:0;padding:10px 11px;font-size:13px}
+  #top b{font-size:20px}
+  #top span{font-size:13px}
+  #hint{display:none}
+  #foot{left:calc(50% - 26px)}
+  #ui button{padding:11px 12px}
+}
+@media (max-height:600px){.jk .art{display:none}}
+
 </style>
 </head>
 <body>
