@@ -234,6 +234,36 @@ body.hi .v-hi{display:block}
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e8454f' d='M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z'/%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 1px 2px rgba(180,30,40,.35))}
 @keyframes heart{0%{opacity:0;transform:translate(0,6px) scale(.4)}18%{opacity:1;transform:translate(calc(var(--hx) * .3),-14px) scale(1)}100%{opacity:0;transform:translate(var(--hx),-92px) scale(.85)}}
 @media (prefers-reduced-motion:reduce){#splash .hearts{display:none}}
+/* v0.32 */
+#lang{visibility:hidden!important;pointer-events:none!important}
+.jk .rounds{display:none}
+.jk.fin .rounds{display:block;animation:fin .6s ease both}
+.jk.fin .repbtn{display:none}
+@keyframes fin{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+.repbtn{margin-top:6px;min-height:52px;padding:6px 22px;border-radius:22px;border:1.5px solid #111;background:transparent;color:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;font-family:Khand,Inter,sans-serif;transition:transform .15s}
+.repbtn .rl{font-weight:500;font-size:clamp(18px,5vw,22px);letter-spacing:.04em;line-height:1.15;color:#333}
+.repbtn .rl b{color:#e06b0a;font-weight:600;display:inline-block;min-width:1.1em}
+.repbtn em{font-style:normal;font-family:Inter,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#555;opacity:.85}
+.repbtn:active{transform:scale(.96)}
+.repbtn.pop b{animation:pop .3s ease}
+@keyframes pop{0%{transform:scale(1.5);color:#f08a2c}100%{transform:scale(1)}}
+.rr{display:grid;justify-items:center;align-items:start;width:100%}
+.rr>*{grid-area:1/1}
+.jk .rounds{display:block;visibility:hidden;opacity:0;margin-top:0}
+.jk.fin .rounds{visibility:visible;opacity:1;animation:fin .6s ease both}
+.jk.fin .repbtn{display:flex;visibility:hidden}
+.rr .repbtn{margin:6px auto 0}
+/* v0.33 sankalp slider */
+.sl{width:min(calc(100% - 28px),380px);margin:clamp(12px,2.2cqh,22px) auto;padding:0 20px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer;--sp:0%}
+.sl-in{position:relative;height:84px}
+.sl-track{position:absolute;left:0;right:0;top:20px;height:8px;border-radius:99px;background:#c9c9c6;overflow:hidden}
+.sl-fill{position:absolute;left:0;top:0;bottom:0;width:var(--sp);background:#e06b0a;border-radius:99px}
+.sl-thumb{position:absolute;top:8px;left:var(--sp);width:32px;height:32px;margin-left:-16px;border-radius:50%;background:#111;box-shadow:0 0 0 4px rgba(224,107,10,.35),0 3px 8px rgba(0,0,0,.25);transition:left .12s ease-out}
+.sl-fill{transition:width .12s ease-out}
+.sl-l{position:absolute;top:50px;transform:translateX(-50%);font-family:Khand,Inter,sans-serif;font-weight:500;font-size:20px;line-height:1;color:#555;transition:transform .15s,color .15s;padding:6px 8px}
+.sl-l.on{color:#e06b0a;font-size:30px;top:44px;font-weight:600}
+@media (max-height:700px){.sl-in{height:70px}.sl-l{top:42px}.sl-l.on{top:36px;font-size:26px}}
+@container (max-height:610px){.skw{--ah:clamp(64px,13cqh,100px)}.skw .sl{margin:6px auto}}
 
 </style>
 </head>
@@ -597,7 +627,7 @@ window.CHALISA_JK = {
     if(c.t==="sankalp"){
       return '<section class="card"><div class="wrap skw">'+artHTML(c,i)+
         '<div class="sk"><h2>Sankalp</h2><p class="mt">How many times will you read the Chalisa today?</p>'+
-        '<div class="goals">'+GOALS.map(function(g){return '<button data-g="'+g+'">'+g+'</button>'}).join("")+'</div>'+
+        '<div class="sl" id="sl" role="slider" aria-label="Times to read today" aria-valuemin="1" aria-valuemax="21" aria-valuenow="1"><div class="sl-in"><div class="sl-track"><div class="sl-fill"></div></div><div class="sl-thumb"></div>'+GOALS.map(function(g,k){return '<span class="sl-l" data-k="'+k+'" style="left:'+(k*100/(GOALS.length-1))+'%">'+g+'</span>'}).join("")+'</div></div>'+
         '<div class="mus"><span>Language</span><button data-l="hing">Hinglish</button><button data-l="hi">हिन्दी</button></div>'+
         '<div class="mus"><span>Music</span><button data-m="1">On</button><button data-m="0">Off</button></div>'+
         '<p class="ex">Take a deep breath and be ready with a steady mind.</p>'+
@@ -610,8 +640,8 @@ window.CHALISA_JK = {
         return '<div class="jv"><div class="v-hing">'+esc(l.hing)+'</div><div class="v-hi">'+esc(l.dev)+'</div><p class="mt">'+esc(l.en)+'</p></div>';
       }).join("");
       return '<section class="card"><div class="wrap jk">'+artHTML(c,i)+L+
-        '<div class="jv rn"><div class="v-hing">'+esc(JK.rn.hing[0])+'<br>'+esc(JK.rn.hing[1])+'</div><div class="v-hi">'+esc(JK.rn.dev[0])+'<br>'+esc(JK.rn.dev[1])+'</div><p class="rep"><i class="bar">||</i> '+esc(JK.rn.note)+' <i class="bar">||</i></p></div>'+
-        '<div class="rounds"><p id="rtxt"></p><button id="again"></button></div></div></section>';
+        '<div class="jv rn"><div class="v-hing">'+esc(JK.rn.hing[0])+'<br>'+esc(JK.rn.hing[1])+'</div><div class="v-hi">'+esc(JK.rn.dev[0])+'<br>'+esc(JK.rn.dev[1])+'</div></div>'+
+        '<div class="rr"><button id="rep" class="repbtn" aria-label="Tap after each repeat"><span class="rl"><i class="bar">||</i> Repeat <b id="rn">11</b> <span id="rt">Times</span> <i class="bar">||</i></span><em>Tap after each repeat</em></button><div class="rounds"><p id="rtxt"></p><button id="again"></button></div></div></div></section>';
     }
     var B='<i class="bar">||</i>';
     var h1=B+' '+esc(c.hing[0]), h2=esc(c.hing[1])+' '+B;
@@ -629,7 +659,7 @@ window.CHALISA_JK = {
   var cards=[].slice.call(stage.children);
   var cur=0,dy=0,dragging=false,leaving=-1,leaveT=0;
   // A fresh launch opens on Sankalp. If the browser reloads the page mid-session (memory pressure on phones), resume where the reader was.
-  try{var s0=sessionStorage.getItem("bh_card_s");if(s0!==null){var s1=parseInt(s0,10);if(s1>=0&&s1<N)cur=s1}}catch(e){}
+  try{var s0=sessionStorage.getItem("bh_card_s");if(s0!==null){var s1=parseInt(s0,10);if(s1>=0&&s1<N)cur=s1}else{goal=1;round=1;saveRounds()}}catch(e){}
   var prog=document.getElementById("prog"),hint=document.getElementById("hint"),fl=document.getElementById("flabel"),fc=document.getElementById("fcount");
 
   function layout(){
@@ -660,7 +690,7 @@ window.CHALISA_JK = {
     if(n!==cur){
       leaving=cur;clearTimeout(leaveT);stage.classList.add("moving");
       leaveT=setTimeout(function(){leaving=-1;stage.classList.remove("moving");layout()},700);
-      var was=cur;cur=n;save();hint.classList.add("gone");closeBubble();updateExplain();
+      var was=cur;cur=n;save();hint.classList.add("gone");closeBubble();updateExplain();if(n===N-1)resetCount();
       musicSync();
     }
     dy=0;layout();
@@ -669,7 +699,7 @@ window.CHALISA_JK = {
 
   var sy=0,st=0;
   stage.addEventListener("pointerdown",function(e){
-    if(e.target.closest("button,#sheet"))return;
+    if(e.target.closest("button,#sheet,.sl"))return;
     dragging=true;sy=e.clientY;st=Date.now();dy=0;stage.classList.add("drag","moving");
     try{stage.setPointerCapture(e.pointerId)}catch(x){}
   });
@@ -797,8 +827,50 @@ window.CHALISA_JK = {
   },true);
 
   // Sankalp and rounds
+  var hapEl=null;
+  function haptic(ms){
+    try{if(navigator.vibrate){navigator.vibrate(ms||10);return}}catch(e){}
+    try{
+      if(!hapEl){hapEl=document.createElement("label");hapEl.setAttribute("aria-hidden","true");hapEl.style.cssText="position:fixed;left:-99px;top:0;width:1px;height:1px;opacity:0;pointer-events:none";hapEl.innerHTML='<input type="checkbox" switch tabindex="-1">';document.body.appendChild(hapEl)}
+      hapEl.click();
+    }catch(e){}
+  }
+  function slIndex(){var i=GOALS.indexOf(goal||1);return i<0?0:i}
+  function slPaint(){
+    var sl=document.getElementById("sl");if(!sl)return;
+    var i=slIndex(),p=i*100/(GOALS.length-1);
+    sl.style.setProperty("--sp",p+"%");sl.setAttribute("aria-valuenow",GOALS[i]);
+    [].forEach.call(sl.querySelectorAll(".sl-l"),function(l){l.classList.toggle("on",+l.dataset.k===i)});
+  }
+  function slSet(i){
+    i=Math.max(0,Math.min(GOALS.length-1,i));
+    if(GOALS[i]===goal)return;
+    goal=GOALS[i];round=1;saveRounds();updateRounds();haptic(12);
+  }
+  (function(){
+    var sl=document.getElementById("sl");if(!sl)return;
+    var inn=sl.querySelector(".sl-in"),act=false;
+    function fromX(x){var r=inn.getBoundingClientRect();return Math.round(Math.max(0,Math.min(1,(x-r.left)/r.width))*(GOALS.length-1))}
+    sl.addEventListener("pointerdown",function(e){act=true;try{sl.setPointerCapture(e.pointerId)}catch(x){}slSet(fromX(e.clientX));e.stopPropagation()});
+    sl.addEventListener("pointermove",function(e){if(act)slSet(fromX(e.clientX))});
+    function up(){act=false}
+    sl.addEventListener("pointerup",up);sl.addEventListener("pointercancel",up);
+  })();
+  var rc=11;
+  function resetCount(){
+    rc=11;var w=stage.querySelector(".jk");if(w)w.classList.remove("fin");
+    var n=document.getElementById("rn"),t=document.getElementById("rt");if(n)n.textContent=rc;if(t)t.textContent="Times";
+  }
+  function tapRepeat(){
+    if(rc<=0)return;rc--;
+    var n=document.getElementById("rn"),t=document.getElementById("rt"),w=stage.querySelector(".jk"),rb=document.getElementById("rep");
+    if(n)n.textContent=rc;if(t)t.textContent=rc===1?"Time":"Times";
+    if(rb){rb.classList.remove("pop");void rb.offsetWidth;rb.classList.add("pop")}
+    haptic(rc===0?30:12);
+    if(rc===0&&w)setTimeout(function(){w.classList.add("fin");layout()},260);
+  }
   function updateRounds(){
-    [].forEach.call(stage.querySelectorAll("[data-g]"),function(b){b.classList.toggle("on",+b.dataset.g===goal)});
+    resetCount();slPaint();
     var g=goal||1,r=Math.min(round,g),t=document.getElementById("rtxt"),btn=document.getElementById("again");
     if(!t)return;
     // Jaikara picture alternates by round: celebration, Ram Darbar, celebration...
@@ -816,11 +888,11 @@ window.CHALISA_JK = {
   document.getElementById("explain").addEventListener("click",function(){toggleBubble(this)});
   stage.addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
+    if(b.id==="rep"){tapRepeat();return}
     if(b.dataset.l){setMode(b.dataset.l);fit();return}
     if(b.dataset.m){setMusic(b.dataset.m==="1");return}
-    if(b.dataset.g){goal=+b.dataset.g;round=1;saveRounds();updateRounds();musicSync();setTimeout(function(){goTo(1)},180)}
-    else if(b.id==="again"){
-      if(b.dataset.a==="new"){goal=0;round=1;saveRounds();updateRounds();backToMain();goTo(0)}
+    if(b.id==="again"){
+      if(b.dataset.a==="new"){goal=1;round=1;saveRounds();updateRounds();backToMain();goTo(0)}
       else{round=Math.min(round,goal||1)+1;saveRounds();updateRounds();backToMain();goTo(1)}
     }
     else if(b.id==="install")installApp();
@@ -842,7 +914,7 @@ window.CHALISA_JK = {
   var mf=document.createElement("link");mf.rel="manifest";mf.href=BASE+"manifest.webmanifest";document.head.appendChild(mf);
 
   var ai=document.createElement("link");ai.rel="apple-touch-icon";ai.href=BASE+"icon-180.png";document.head.appendChild(ai);
-  document.getElementById("reset").onclick=function(){goal=0;round=1;saveRounds();updateRounds();backToMain();goTo(0);hint.classList.remove("gone")};
+  document.getElementById("reset").onclick=function(){goal=1;round=1;saveRounds();updateRounds();backToMain();goTo(0);hint.classList.remove("gone")};
   if(cur>0)hint.classList.add("gone");
   // Keep the illustration a good size: shrink the meaning text (never the verse) on cards where the text is long.
   function fit(){
