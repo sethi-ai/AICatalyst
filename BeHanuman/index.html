@@ -628,7 +628,7 @@ window.CHALISA_JK = {
   stage.innerHTML=D.map(cardHTML).join("");
   var cards=[].slice.call(stage.children);
   var cur=0,dy=0,dragging=false,leaving=-1,leaveT=0;
-  try{var s=parseInt(localStorage.getItem("bh_card")||"0",10);if(s>=0&&s<N)cur=s}catch(e){}
+  // always open on the Sankalp screen after a reload
   var prog=document.getElementById("prog"),hint=document.getElementById("hint"),fl=document.getElementById("flabel"),fc=document.getElementById("fcount");
 
   function layout(){
