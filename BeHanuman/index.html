@@ -36,11 +36,11 @@ button{font:inherit;cursor:pointer;border:0}
 
 .card{container-type:size}
 .wrap{height:100%;max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;
-  padding:calc(max(12px,env(safe-area-inset-top)) + 78px) clamp(18px,5vw,40px) 84px;gap:clamp(10px,2cqh,18px);--ah:clamp(150px,27cqh,300px)}
+  padding:calc(max(12px,env(safe-area-inset-top)) + 78px) clamp(18px,5vw,40px) 84px;gap:clamp(10px,2cqh,18px);--ah:clamp(140px,calc(27cqh + (100cqh - 560px) * .55),360px)}
 .art{flex:none;height:var(--ah);aspect-ratio:1/1;max-width:80%;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .art img{width:100%;height:100%;object-fit:contain;display:block}
 
-.verse{flex:none;width:100%;font-family:Khand,Inter,sans-serif;font-weight:500;color:#111;line-height:1.2;--vs:clamp(24px,6.6vw,34px)}
+.verse{flex:none;width:100%;font-family:Khand,Inter,sans-serif;font-weight:500;color:#111;line-height:1.2;--vs:clamp(26px,7vw,36px)}
 .verse span{display:block;white-space:normal;text-wrap:balance;font-size:var(--vs)}
 .bar{font-style:normal;font-weight:400;opacity:.8;letter-spacing:-.06em;margin:0 .1em}
 .v-hi{display:none}
@@ -48,11 +48,11 @@ body.hi .v-hing{display:none}
 body.hi .v-hi{display:block}
 .mean{flex:none;margin-top:clamp(2px,1cqh,10px);width:min(calc(100% - 52px),500px);font-family:Kalam,'Comic Sans MS',cursive;font-weight:400;line-height:1.4}
 .mean p,.mt,.ex{margin:0;font-family:Kalam,'Comic Sans MS',cursive;font-weight:400;line-height:1.4}
-.mt{color:#e06b0a;font-size:calc(var(--ms,1) * clamp(14px,4.2vw,18px))}
+.mt{color:#e06b0a;font-size:calc(var(--ms,1) * clamp(12px,3.6vw,16px))}
 .ex{color:#111;font-size:calc(var(--ms,1) * clamp(14.5px,4.1vw,17px));margin-top:clamp(6px,1.4cqh,12px);line-height:1.38}
 
 /* controls */
-#ui{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:flex-end;
+#ui{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:space-between;align-items:flex-end;
   padding:0 clamp(16px,5vw,40px) max(16px,env(safe-area-inset-bottom));pointer-events:none}
 #ui button{pointer-events:auto;background:#111;color:#fff;font-size:14px;letter-spacing:.06em;
   padding:11px 18px;border-radius:999px}
@@ -183,8 +183,20 @@ body.hi .v-hi{display:block}
 }
 @media (max-height:600px){.jk .art{display:none}}
 /* v0.24: Safari-visible-height aware sankalp */
-.skw{--ah:clamp(110px,22cqh,260px)}
-@container (max-height:720px){.skw{--ah:clamp(90px,17cqh,170px);gap:6px}.sk .ex{display:none}.goals{margin:10px 0}}
+.skw{--ah:clamp(110px,30cqh,300px)}
+@container (max-height:720px){.skw{--ah:clamp(90px,24cqh,200px);gap:6px}.sk .ex{display:none}.goals{margin:10px 0}}
+
+/* v0.25: explanation button in footer, swipe cue */
+#explain{visibility:hidden}
+.skw{padding-bottom:138px}
+.swipe{position:absolute;left:0;right:0;bottom:calc(max(16px,env(safe-area-inset-bottom)) + 52px);display:flex;flex-direction:column;align-items:center;pointer-events:none;color:#111;font-family:Inter,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.swipe i{display:block;width:14px;height:14px;border-left:3px solid #e06b0a;border-top:3px solid #e06b0a;transform:rotate(45deg);margin-bottom:-6px;opacity:0;animation:swp 1.6s ease-in-out infinite}
+.swipe i:nth-child(2){animation-delay:.25s}
+.swipe span{margin-top:12px;opacity:.75}
+@keyframes swp{0%{opacity:0;transform:translateY(14px) rotate(45deg)}50%{opacity:1}100%{opacity:0;transform:translateY(-8px) rotate(45deg)}}
+@container (max-height:640px){.swipe{display:none}.skw{padding-bottom:84px}}
+@media (prefers-reduced-motion:reduce){.swipe i{animation:none;opacity:.8}}
+#hint{display:none!important}
 
 </style>
 </head>
@@ -193,7 +205,7 @@ body.hi .v-hi{display:block}
 <div id="stage"></div>
 <header id="top"><button id="lang" class="pill">हिन्दी</button><div class="ttl"><b>Be Hanuman</b><span><i class="bar">||</i> Hanuman Chalisa <i class="bar">||</i></span></div><button id="music" class="pill">Play</button></header>
 <div id="foot"><b id="flabel">Opening Doha</b><span id="fcount">1 / 42<em id="hint"> · swipe up &#8593;</em></span></div>
-<div id="ui"><button id="reset" aria-label="Back to page one">&#8634; Reset</button></div>
+<div id="ui"><button id="explain" aria-label="Show explanation">Explanation</button><button id="reset" aria-label="Back to page one">&#8634; Reset</button></div>
 <div id="bubble"><p></p><i class="tail"></i></div>
 <div id="a2hs"><div class="in"><b>Add Be Hanuman to your Home Screen</b><p>1. Tap the <i>Share</i> button (the square with an arrow) in your browser's toolbar.<br>2. Scroll down and tap <i>Add to Home Screen</i>, then <i>Add</i>.</p><button id="a2close">Got it</button></div></div>
 <div id="sheet"><div class="in"><div class="hd"><span>Press play on the track below.</span><button id="closeSheet">Close</button></div></div></div>
@@ -551,6 +563,7 @@ window.CHALISA_JK = {
         '<div class="mus"><span>Music</span><button data-m="1">On</button><button data-m="0">Off</button></div>'+
         '<p class="ex">Take a breath, pick a number, and read with a steady mind.</p>'+
         '<button id="install" class="lnk" style="display:none">Add to Home Screen</button></div>'+
+        '<div class="swipe" aria-hidden="true"><i></i><i></i><span>Swipe up to begin</span></div>'+
         '</div></section>';
     }
     if(c.t==="jaikara"){
@@ -568,7 +581,7 @@ window.CHALISA_JK = {
     return '<section class="card" style="--lh:'+lh+';--ld:'+ld+'"><div class="wrap">'+artHTML(c,i)+
       '<div class="verse"><div class="v-hing"><span>'+h1+'</span><span>'+h2+'</span></div>'+
       '<div class="v-hi"><span>'+d1+'</span><span>'+d2+'</span></div></div>'+
-      '<div class="mean"><p class="mt">'+esc(c.mt)+'</p><button class="more" data-i="'+i+'">Explanation</button></div>'+
+      '<div class="mean"><p class="mt">'+esc(c.mt)+'</p></div>'+
       '</div></section>';
   }
 
@@ -606,7 +619,7 @@ window.CHALISA_JK = {
     if(n!==cur){
       leaving=cur;clearTimeout(leaveT);stage.classList.add("moving");
       leaveT=setTimeout(function(){leaving=-1;stage.classList.remove("moving");layout()},700);
-      var was=cur;cur=n;save();hint.classList.add("gone");closeBubble();
+      var was=cur;cur=n;save();hint.classList.add("gone");closeBubble();updateExplain();
       musicSync();
     }
     dy=0;layout();
@@ -666,7 +679,8 @@ window.CHALISA_JK = {
   var sheet=document.getElementById("sheet"),host=document.createElement("div"),ctrl=null,playing=false,wantPlay=false,pendingSync=false,loaded=TRACK_A,lastPos=0,lastDur=0;
   var mbtn=document.getElementById("music");
   sheet.querySelector(".in").appendChild(host);
-  function label(){mbtn.textContent=muted?"Unmute":"Mute";mbtn.setAttribute("aria-label",muted?"Unmute music":"Mute music");mbtn.style.visibility=(musicOn&&cur>0)?"visible":"hidden"}
+  function label(){mbtn.textContent=muted?"Unmute":"Mute";mbtn.setAttribute("aria-label",muted?"Unmute music":"Mute music");mbtn.style.visibility=(musicOn&&cur>0)?"visible":"hidden";updateExplain()}
+  function updateExplain(){var b=document.getElementById("explain"),c=D[cur];if(!b)return;var ok=c&&!c.t&&c.ex;b.style.visibility=ok?"visible":"hidden";b.dataset.i=cur}
   function plainIframe(){
     if(ctrl||host.querySelector("iframe"))return;
     var f=document.createElement("iframe");
@@ -737,7 +751,7 @@ window.CHALISA_JK = {
     bub.style.setProperty("--tx",Math.max(24,Math.min(br.width-24,r.left+r.width/2-br.left))+"px");
   }
   window.addEventListener("pointerdown",function(e){
-    if(bubFor&&!e.target.closest("#bubble,.more"))closeBubble();
+    if(bubFor&&!e.target.closest("#bubble,#explain"))closeBubble();
   },true);
 
   // Sankalp and rounds
@@ -757,9 +771,9 @@ window.CHALISA_JK = {
     }
     layout();
   }
+  document.getElementById("explain").addEventListener("click",function(){toggleBubble(this)});
   stage.addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
-    if(b.classList.contains("more")){toggleBubble(b);return}
     if(b.dataset.m){setMusic(b.dataset.m==="1");return}
     if(b.dataset.g){goal=+b.dataset.g;round=1;saveRounds();updateRounds();musicSync();setTimeout(function(){goTo(1)},180)}
     else if(b.id==="again"){
@@ -793,7 +807,7 @@ window.CHALISA_JK = {
       var m=el.querySelector(".mean"),w=el.querySelector(".wrap");if(!m||!w)return;
       var lim=w.clientHeight-parseFloat(getComputedStyle(w).paddingBottom),k=1;
       m.style.setProperty("--ms",1);
-      while(k>.7&&m.offsetTop+m.offsetHeight>lim){k=Math.round((k-.03)*100)/100;m.style.setProperty("--ms",k)}
+      while(k>.8&&m.offsetTop+m.offsetHeight>lim){k=Math.round((k-.03)*100)/100;m.style.setProperty("--ms",k)}
     });
   }
   window.addEventListener("resize",fit);
