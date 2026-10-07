@@ -628,7 +628,8 @@ window.CHALISA_JK = {
   stage.innerHTML=D.map(cardHTML).join("");
   var cards=[].slice.call(stage.children);
   var cur=0,dy=0,dragging=false,leaving=-1,leaveT=0;
-  // always open on the Sankalp screen after a reload
+  // A fresh launch opens on Sankalp. If the browser reloads the page mid-session (memory pressure on phones), resume where the reader was.
+  try{var s0=sessionStorage.getItem("bh_card_s");if(s0!==null){var s1=parseInt(s0,10);if(s1>=0&&s1<N)cur=s1}}catch(e){}
   var prog=document.getElementById("prog"),hint=document.getElementById("hint"),fl=document.getElementById("flabel"),fc=document.getElementById("fcount");
 
   function layout(){
@@ -653,7 +654,7 @@ window.CHALISA_JK = {
     fc.firstChild.nodeValue=c.n?(c.n+" / 40"):"";
     document.getElementById("lang").style.visibility=cur===0?"hidden":"visible";
   }
-  function save(){try{localStorage.setItem("bh_card",String(cur))}catch(e){}}
+  function save(){try{sessionStorage.setItem("bh_card_s",String(cur))}catch(e){}}
   function goTo(n){
     n=Math.max(0,Math.min(N-1,n));
     if(n!==cur){
@@ -863,6 +864,7 @@ window.CHALISA_JK = {
   (function(){
     var sp=document.getElementById("splash"),im=document.getElementById("spimg");
     if(!sp)return;
+    if(cur>0){sp.style.display="none";return}
     im.onerror=function(){im.onerror=function(){sp.classList.add("noimg")};im.src=BASE+"images/sankalp.jpg"};
     im.src=BASE+"images/splash.png";
     var P=document.getElementById("parts");
