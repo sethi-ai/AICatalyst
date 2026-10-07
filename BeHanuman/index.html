@@ -348,6 +348,13 @@ window.CHALISA = [
 </script>
 <script>(function(){
   var D=window.CHALISA,N=D.length,SPOTIFY="4ETeJgfB6fTHZuIpFDZkCP";
+  // Folder this page lives in, so images load from /BeHanuman/images/ even when the URL has no trailing slash.
+  var BASE=(function(){
+    if(location.protocol==="file:")return "";
+    var p=location.pathname;
+    if(!/\/$/.test(p)&&!/\.[a-z0-9]+$/i.test(p))p+="/";
+    return p.replace(/[^\/]*$/,"");
+  })();
   function pad(n){return(n<10?"0":"")+n}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 
@@ -356,7 +363,7 @@ window.CHALISA = [
   var EXT=["jpg","jpeg","png","webp"];
   window.__imgFail=function(img){
     var i=+img.dataset.i,k=+img.dataset.k||0;
-    if(k<EXT.length-1){img.dataset.k=k+1;img.src="images/"+pad(i)+"."+EXT[k+1]}
+    if(k<EXT.length-1){img.dataset.k=k+1;img.src=BASE+"images/"+pad(i)+"."+EXT[k+1]}
     else{img.onerror=null;img.src=placeholder(i)}
   };
 
@@ -369,7 +376,7 @@ window.CHALISA = [
     var lh=Math.max(c.hing[0].length,c.hing[1].length)+3, ld=Math.max(strip(c.dev[0]).length,strip(c.dev[1]).length)+3;
     var lm=Math.max(c.m[0].length,c.m[1].length);
     return '<section class="card" style="--lh:'+lh+';--ld:'+ld+';--lm:'+lm+'"><div class="wrap">'+
-      '<div class="art"><img alt="Hanuman, card '+n+'" data-i="'+n+'" data-k="0" src="images/'+pad(n)+'.jpg" onerror="__imgFail(this)" draggable="false"></div>'+
+      '<div class="art"><img alt="Hanuman, card '+n+'" data-i="'+n+'" data-k="0" src="'+BASE+'images/'+pad(n)+'.jpg" onerror="__imgFail(this)" draggable="false"></div>'+
       '<div class="verse"><div class="v-hing"><span>'+h1+'</span><span>'+h2+'</span></div>'+
       '<div class="v-hi"><span>'+d1+'</span><span>'+d2+'</span></div></div>'+
       '<p class="mean"><span>'+esc(c.m[0])+'</span><span>'+esc(c.m[1])+'</span></p>'+
