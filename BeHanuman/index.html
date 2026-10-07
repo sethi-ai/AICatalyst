@@ -35,9 +35,9 @@ button{font:inherit;cursor:pointer;border:0}
 #stage.drag .card{transition:none}
 
 .card{container-type:size}
-.wrap{height:100%;max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  padding:clamp(70px,9vh,86px) clamp(18px,5vw,40px) 84px;gap:clamp(12px,2.6vh,26px)}
-.art{flex:0 1 auto;width:min(80%,448px);aspect-ratio:1/1;min-height:90px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.wrap{height:100%;max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;
+  padding:calc(max(12px,env(safe-area-inset-top)) + 78px) clamp(18px,5vw,40px) 84px;gap:clamp(10px,2vh,18px);--ah:clamp(150px,27vh,300px)}
+.art{flex:none;height:var(--ah);aspect-ratio:1/1;max-width:80%;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .art img{width:100%;height:100%;object-fit:contain;display:block}
 
 .verse{flex:none;width:100%;font-family:Khand,Inter,sans-serif;font-weight:500;color:#111;line-height:1.2;--vs:clamp(21px,5.8vw,30px)}
@@ -97,10 +97,9 @@ body.hi .v-hi{display:block}
 
 /* short phones (iPhone SE / mini): tighter text so the image stays visible */
 @media (max-height:700px){
-  .wrap{gap:8px;padding-top:66px;padding-bottom:70px}
+  .wrap{gap:8px;padding-bottom:70px}
   .mean .mt{line-height:1.3}
   .mean .ex{line-height:1.3;margin-top:5px}
-  .art{width:min(80%,448px)}
 }
 
 /* sankalp screen */
@@ -136,6 +135,14 @@ body.hi .v-hi{display:block}
 #a2hs i{font-style:normal;color:#fff;font-weight:500}
 #a2hs button{background:#f08a2c;color:#111;border-radius:999px;padding:10px 22px;font-size:14px;font-weight:500}
 .jv.rn .rep{margin-top:6px;font-family:Khand,Inter,sans-serif;font-weight:500;font-size:clamp(16px,4.6vw,20px);color:#444;letter-spacing:.04em}
+
+.wrap.jk{justify-content:center}
+/* sankalp: music choice */
+.mus{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 clamp(8px,1.6vh,14px);font-family:Inter,sans-serif;font-size:14px;color:#111}
+.mus span{letter-spacing:.06em;text-transform:uppercase;font-size:12px;color:#333;margin-right:2px}
+.mus button{padding:8px 18px;border-radius:999px;background:#111;color:#f08a2c;font-family:Inter,sans-serif;font-size:14px;font-weight:500;letter-spacing:.04em}
+.mus button.on{background:#e06b0a;color:#fff}
+@media (max-height:700px){.sk .ex{display:none}}
 
 </style>
 </head>
@@ -466,7 +473,7 @@ window.CHALISA_JK = {
   D.push({t:"sankalp",kl:"Sankalp",img:"sankalp"});
   CH.forEach(function(c,i){c.img=pad(i+1);D.push(c);if(i===0){window.CHALISA_OP2.img="opening2";D.push(window.CHALISA_OP2)}});
   D.push({t:"jaikara",kl:"Jaikara"});
-  var N=D.length,MAIN="6MvqtaK8RDuFlTu9wuH8vy",GOALS=[1,3,7,11];
+  var N=D.length,TRACK_A="3IyAOXe1IP6qbnvSrZqeiE",TRACK_B="6MvqtaK8RDuFlTu9wuH8vy",GOALS=[1,3,7,11];
   var goal=0,round=1;
   try{goal=parseInt(localStorage.getItem("bh_goal")||"0",10)||0;round=parseInt(localStorage.getItem("bh_round")||"1",10)||1}catch(e){}
   function saveRounds(){try{localStorage.setItem("bh_goal",String(goal));localStorage.setItem("bh_round",String(round))}catch(e){}}
@@ -498,6 +505,7 @@ window.CHALISA_JK = {
       return '<section class="card"><div class="wrap">'+artHTML(c,i)+
         '<div class="sk"><h2>Sankalp</h2><p class="mt">How many times will you read the Chalisa today?</p>'+
         '<div class="goals">'+GOALS.map(function(g){return '<button data-g="'+g+'">'+g+'</button>'}).join("")+'</div>'+
+        '<div class="mus"><span>Music</span><button data-m="1">On</button><button data-m="0">Off</button></div>'+
         '<p class="ex">Take a breath, pick a number, and read with a steady mind.</p>'+
         '<button id="install" class="lnk" style="display:none">Add to Home Screen</button></div>'+
         '</div></section>';
@@ -546,6 +554,7 @@ window.CHALISA_JK = {
     });
     prog.style.setProperty("--p",(N>1?cur/(N-1):0));
     var c=D[cur];fl.textContent=c.n?("Chaupai "+c.n):c.kl;
+    if(typeof mbtn!=="undefined"&&mbtn)mbtn.style.visibility=(musicOn&&cur>0)?"visible":"hidden";
     fc.firstChild.nodeValue=c.t==="jaikara"?("Round "+Math.min(round,goal||1)+" of "+(goal||1)):c.n?(c.n+" / 40"):((cur+1)+" / "+N);
   }
   function save(){try{localStorage.setItem("bh_card",String(cur))}catch(e){}}
@@ -555,7 +564,7 @@ window.CHALISA_JK = {
       leaving=cur;clearTimeout(leaveT);stage.classList.add("moving");
       leaveT=setTimeout(function(){leaving=-1;stage.classList.remove("moving");layout()},700);
       var was=cur;cur=n;save();hint.classList.add("gone");
-      if(cur===N-1&&was!==N-1)onJaikara();
+      musicSync();
     }
     dy=0;layout();
   }
@@ -606,54 +615,70 @@ window.CHALISA_JK = {
   tgl.onclick=function(){setMode(mode==="hi"?"hing":"hi")};
   setMode(mode);
 
-  // Spotify. Music never starts by itself, except the Jaikara track, which starts when you arrive at the last screen.
-  var sheet=document.getElementById("sheet"),host=document.createElement("div"),ctrl=null,playing=false,jkWant=false,pendingJK=false,onJK=false,wantPlay=false,lastPos=0,lastDur=0;
+  // Music. Two tracks, chosen by screen: TRACK_A from the Sankalp screen to the Closing Doha, TRACK_B on the Jaikara screen.
+  // Browsers only allow sound after a touch, so it starts on the first tap or swipe (picking a number, switching Music On, or swiping on).
+  // Spotify's embed has no volume control, so the 50% level cannot be set from here.
+  var musicOn=true,muted=false;
+  try{if(localStorage.getItem("bh_music")==="0")musicOn=false}catch(e){}
+  var sheet=document.getElementById("sheet"),host=document.createElement("div"),ctrl=null,playing=false,wantPlay=false,pendingSync=false,loaded=TRACK_A,lastPos=0,lastDur=0;
   var mbtn=document.getElementById("music");
   sheet.querySelector(".in").appendChild(host);
-  function label(){mbtn.textContent=playing?"Pause":"Play";mbtn.setAttribute("aria-label",playing?"Pause music":"Play music")}
+  function label(){mbtn.textContent=muted?"Unmute":"Mute";mbtn.setAttribute("aria-label",muted?"Unmute music":"Mute music");mbtn.style.visibility=(musicOn&&cur>0)?"visible":"hidden"}
   function plainIframe(){
     if(ctrl||host.querySelector("iframe"))return;
     var f=document.createElement("iframe");
-    f.src="https://open.spotify.com/embed/track/"+MAIN+"?utm_source=generator&theme=0";
+    f.src="https://open.spotify.com/embed/track/"+TRACK_A+"?utm_source=generator&theme=0";
     f.style.cssText="display:block;width:100%;height:80px;border:0;border-radius:12px";
     f.allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
     f.title="Hanuman Chalisa on Spotify";host.appendChild(f);
   }
-  function startJK(){
-    if(!ctrl){pendingJK=true;return}
-    if(playing)return;
-    try{ctrl.play();setTimeout(function(){if(jkWant&&!playing){try{ctrl.play()}catch(e){}}},600)}catch(e){}
+  function wantTrack(){return cur===N-1?TRACK_B:TRACK_A}
+  function musicSync(){
+    if(!musicOn||muted)return;
+    if(!ctrl){pendingSync=true;return}
+    try{
+      var t=wantTrack();
+      if(loaded!==t){loaded=t;lastPos=0;lastDur=0;ctrl.loadUri("spotify:track:"+t);ctrl.play()}
+      else if(!playing)ctrl.play();
+      wantPlay=true;
+      setTimeout(function(){if(musicOn&&!muted&&!playing){try{ctrl.play()}catch(e){}}},700);
+    }catch(e){}
   }
-  function onJaikara(){onJK=true;jkWant=true;startJK()}
-  function backToMain(){onJK=false;jkWant=false;pendingJK=false}
+  function backToMain(){}
   window.onSpotifyIframeApiReady=function(API){
-    API.createController(host,{uri:"spotify:track:"+MAIN,width:"100%",height:80,theme:0},function(c){
+    API.createController(host,{uri:"spotify:track:"+TRACK_A,width:"100%",height:80,theme:0},function(c){
       ctrl=c;
       c.addListener("playback_update",function(e){
         if(!e||!e.data)return;var d=e.data;
-        playing=d.isPaused===false;if(playing){jkWant=false;wantPlay=true}label();
-        // loop: when the track ends (it reports paused near the end), start it again unless the visitor paused it
-        if(d.isPaused&&wantPlay&&lastDur>0&&lastPos>=lastDur-3500&&(d.position||0)<2500){lastPos=0;try{c.seek(0);c.play()}catch(x){}return}
+        playing=d.isPaused===false;if(playing)wantPlay=true;
+        // loop: when the track ends (it reports paused near the end), start it again unless muted or switched off
+        if(d.isPaused&&wantPlay&&musicOn&&!muted&&lastDur>0&&lastPos>=lastDur-3500&&(d.position||0)<2500){lastPos=0;try{c.seek(0);c.play()}catch(x){}return}
         if(!d.isPaused){lastPos=d.position||0;lastDur=d.duration||lastDur}
       });
-      if(pendingJK||cur===N-1&&onJK){pendingJK=false;startJK()}
+      if(pendingSync){pendingSync=false;musicSync()}
     });
   };
   var sc=document.createElement("script");sc.src="https://open.spotify.com/embed/iframe-api/v1";sc.async=true;
   sc.onerror=plainIframe;document.body.appendChild(sc);
   setTimeout(plainIframe,5000);
-  label();
-  // If the browser blocked the Jaikara autoplay, the next touch on that screen starts it.
+  // If the browser blocked playback after a screen change, the next touch starts it.
   ["pointerdown","touchend","click"].forEach(function(ev){
     window.addEventListener(ev,function(e){
-      if(jkWant&&cur===N-1&&!playing&&ctrl&&!(e.target.closest&&e.target.closest("#music"))){try{ctrl.play()}catch(x){}}
+      if(musicOn&&!muted&&cur>0&&!playing&&ctrl&&!(e.target.closest&&e.target.closest("#music,[data-m]"))){try{ctrl.play()}catch(x){}}
     },{passive:true});
   });
   mbtn.onclick=function(){
-    jkWant=false;wantPlay=!playing;
-    if(ctrl){try{ctrl.togglePlay();playing=!playing;label()}catch(e){sheet.classList.add("open")}}
-    else{plainIframe();sheet.classList.add("open")}
+    if(!ctrl){plainIframe();sheet.classList.add("open");return}
+    if(!muted){muted=true;wantPlay=false;try{ctrl.pause()}catch(e){}}
+    else{muted=false;musicSync()}
+    label();
   };
+  function setMusic(on){
+    musicOn=on;try{localStorage.setItem("bh_music",on?"1":"0")}catch(e){}
+    if(on){muted=false;musicSync()}else{wantPlay=false;if(ctrl){try{ctrl.pause()}catch(e){}}}
+    updateMusicUI();label();
+  }
+  function updateMusicUI(){[].forEach.call(stage.querySelectorAll("[data-m]"),function(b){b.classList.toggle("on",(b.dataset.m==="1")===musicOn)})}
   document.getElementById("closeSheet").onclick=function(){sheet.classList.remove("open")};
 
   // Sankalp and rounds
@@ -672,7 +697,8 @@ window.CHALISA_JK = {
   }
   stage.addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
-    if(b.dataset.g){goal=+b.dataset.g;round=1;saveRounds();updateRounds();setTimeout(function(){goTo(1)},180)}
+    if(b.dataset.m){setMusic(b.dataset.m==="1");return}
+    if(b.dataset.g){goal=+b.dataset.g;round=1;saveRounds();updateRounds();musicSync();setTimeout(function(){goTo(1)},180)}
     else if(b.id==="again"){
       if(b.dataset.a==="new"){goal=0;round=1;saveRounds();updateRounds();backToMain();goTo(0)}
       else{round=Math.min(round,goal||1)+1;saveRounds();updateRounds();backToMain();goTo(1)}
@@ -700,17 +726,18 @@ window.CHALISA_JK = {
   if(cur>0)hint.classList.add("gone");
   // Keep the illustration a good size: shrink the meaning text (never the verse) on cards where the text is long.
   function fit(){
-    var H=window.innerHeight,nat=Math.min(stage.clientWidth*.8,448),target=Math.min(nat,Math.max(150,H*.3));
     cards.forEach(function(el){
-      var m=el.querySelector(".mean"),art=el.querySelector(".art");if(!m||!art)return;
-      var k=1;m.style.setProperty("--ms",1);
-      while(k>.7&&art.offsetHeight<target-1){k=Math.round((k-.04)*100)/100;m.style.setProperty("--ms",k)}
+      var m=el.querySelector(".mean"),w=el.querySelector(".wrap");if(!m||!w)return;
+      var lim=w.clientHeight-parseFloat(getComputedStyle(w).paddingBottom),k=1;
+      m.style.setProperty("--ms",1);
+      while(k>.7&&m.offsetTop+m.offsetHeight>lim){k=Math.round((k-.03)*100)/100;m.style.setProperty("--ms",k)}
     });
   }
   window.addEventListener("resize",fit);
   tgl.addEventListener("click",fit);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
   fit();
+  updateMusicUI();label();
   updateRounds();
 })();
 </script>
