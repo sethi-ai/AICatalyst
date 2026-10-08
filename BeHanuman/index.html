@@ -741,6 +741,9 @@ html.wm .verse,html.wm .v-hing,html.wm .v-hi{text-shadow:0 0 1px rgba(255,200,12
 #warmveil{position:fixed;inset:0;z-index:9999;pointer-events:none;background:rgba(255,160,70,.18);mix-blend-mode:multiply;opacity:0;transition:opacity .4s}
 html.wf #warmveil{opacity:1}
 html.dk.wf #warmveil{background:rgba(255,170,80,.13)}
+/* v0.63 transparent dark artwork needs no fade or dimming */
+html.dk .art img.tp{-webkit-mask-image:none;mask-image:none;filter:none}
+html.dk .art img.tp{filter:drop-shadow(0 8px 18px rgba(0,0,0,.45))}
 
 </style>
 </head>
@@ -1372,6 +1375,18 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     [].forEach.call(document.querySelectorAll("[data-vol]"),function(b){b.classList.toggle("on",+b.dataset.vol===vol)});
     var vr=document.getElementById("volrow");if(vr)vr.style.display=musicOn?"":"none";
     if(hideE&&typeof closeBubble==="function")closeBubble();
+    artTheme();
+  }
+
+  // Dark artwork: transparent WebP files in images/dark/. Add a name here when its file exists; others fall back to the dimmed light image.
+  var DARK_SET=["01","02","03","04","05"];
+  function artTheme(){
+    var dk=document.documentElement.classList.contains("dk");
+    [].forEach.call(document.querySelectorAll(".art img[data-n]"),function(im){
+      var n=im.dataset.n;if(DARK_SET.indexOf(n)<0)return;
+      if(dk){if(!im.classList.contains("tp")){im.classList.add("tp");im.onerror=function(){im.onerror=null;im.classList.remove("tp");im.src=BASE+"images/"+n+".jpg"};im.src=BASE+"images/dark/"+n+".webp"}}
+      else if(im.classList.contains("tp")){im.classList.remove("tp");im.onerror=function(){__imgFail(im)};im.src=BASE+"images/"+n+".jpg"}
+    });
   }
   function setPref(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
   function updateMusicUI(){applyPrefs();var sbm=document.getElementById("sbm");if(sbm)sbm.classList.toggle("on",musicOn);[].forEach.call(document.querySelectorAll("[data-m]"),function(b){b.classList.toggle("on",(b.dataset.m==="1")===musicOn)})}
