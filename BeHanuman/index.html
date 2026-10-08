@@ -644,6 +644,19 @@ body.hi .mt-hi{line-height:1.5}
 .wk-s{display:flex;justify-content:space-around;margin-top:10px;padding-top:8px;border-top:1px solid rgba(0,0,0,.08)}
 .wk-s span{display:flex;flex-direction:column;align-items:center;font-size:10.5px;color:#666}
 .wk-s b{font:600 18px Khand,Inter,sans-serif;color:#e06b0a;line-height:1.1}
+/* v0.56 monthly milestones */
+.ml{margin-top:10px;padding-top:9px;border-top:1px solid rgba(0,0,0,.08)}
+.ml-t{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.ml-t b{font:600 13px Khand,Inter,sans-serif;color:#555;letter-spacing:.03em}
+.ml-t span{font-size:11px;color:#e06b0a;font-weight:600}
+.ml-bar{height:8px;border-radius:4px;background:linear-gradient(145deg,#cfcfcc,#ebebe9);box-shadow:inset 1px 1px 3px rgba(0,0,0,.2);overflow:hidden}
+.ml-bar s{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#ffae5c,#e06b0a);text-decoration:none;transition:width .6s}
+.ml-b{display:flex;justify-content:space-between;margin-top:8px}
+.ml-b i{font-style:normal;display:flex;flex-direction:column;align-items:center;gap:3px}
+.ml-b u{width:11px;height:11px;border-radius:50%;background:#cfcfcc;box-shadow:inset 1px 1px 2px rgba(0,0,0,.25)}
+.ml-b i.hit u{background:radial-gradient(circle at 35% 30%,#ffae5c,#e06b0a 70%);box-shadow:0 0 6px rgba(224,107,10,.5)}
+.ml-b em{font-style:normal;font-size:10px;color:#777}
+.ml-b i.hit em{color:#e06b0a;font-weight:600}
 
 </style>
 </head>
@@ -1318,14 +1331,21 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   function skSave(){try{localStorage.setItem("bh_sank",JSON.stringify(sk))}catch(e){}}
   // Sankalp streak = consecutive days on which the day's sankalp (3, 11, 21... rounds) was completed.
   function stkRun(){var n=0,d=new Date();if(!sk[dkey(d)])d.setDate(d.getDate()-1);while(sk[dkey(d)]){n++;d.setDate(d.getDate()-1)}return n}
+  var MILES=[11,21,51,108,251,501,1008];
   function monthRounds(){var m=dkey(new Date()).slice(0,7),t=0;for(var k in stk)if(k.indexOf(m)===0)t+=stk[k];return t}
   function allRounds(){var t=0;for(var k in stk)t+=stk[k];return t}
+  function mileHTML(){
+    var m=monthRounds(),nx=null,pv=0,i;for(i=0;i<MILES.length;i++){if(m>=MILES[i])pv=MILES[i];else{nx=MILES[i];break}}
+    var beads=MILES.map(function(v){return '<i class="'+(m>=v?"hit":"")+'"><u></u><em>'+v+'</em></i>'}).join("");
+    var pct=nx?Math.round((m-pv)/(nx-pv)*100):100;
+    return '<div class="ml"><div class="ml-t"><b>Monthly milestone</b><span>'+(nx?(nx-m)+" more to "+nx:"All milestones reached \u{1F64F}")+'</span></div><div class="ml-bar"><s style="width:'+pct+'%"></s></div><div class="ml-b">'+beads+'</div></div>'
+  }
   function stkWeekHTML(){
     var t=new Date(),dow=(t.getDay()+6)%7,mon=new Date(t.getFullYear(),t.getMonth(),t.getDate()-dow),L=["M","T","W","T","F","S","S"],h="";
     for(var i=0;i<7;i++){var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i),k=dkey(d),v=stk[k]||0;
       h+='<i class="'+(v>0?"on":"")+(sk[k]?" sq":"")+(i===dow?" td":"")+'"><u>'+(v>0?v:"")+'</u><em>'+L[i]+'</em></i>'}
     var r=stkRun(),td=stk[dkey(t)]||0;
-    return '<div class="wk-t"><b>'+(r?r+"-day sankalp streak":"Sankalp streak: start today")+'</b></div><div class="wk-d">'+h+'</div><div class="wk-s"><span><b>'+td+'</b>today</span><span><b>'+monthRounds()+'</b>this month</span><span><b>'+allRounds()+'</b>all time</span></div><div class="wk-n">Number = rounds read (D1 to J1). Ring = sankalp completed that day.</div>'
+    return '<div class="wk-t"><b>'+(r?r+"-day sankalp streak":"Sankalp streak: start today")+'</b></div><div class="wk-d">'+h+'</div><div class="wk-s"><span><b>'+td+'</b>today</span><span><b>'+monthRounds()+'</b>this month</span><span><b>'+allRounds()+'</b>all time</span></div>'+mileHTML()+'<div class="wk-n">Number = rounds read (D1 to J1). Ring = sankalp completed that day.</div>'
   }
   function stkRender(){
     ["wkFin","wkSet"].forEach(function(id){var e=document.getElementById(id);if(e)e.innerHTML=stkWeekHTML()});
@@ -1338,7 +1358,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     else if(runNext!==null&&n>runNext)runNext=null;
     if(n===N-1&&runNext===N-1&&from===N-2){
       runNext=null;var k=dkey(new Date());stk[k]=(stk[k]||0)+1;stkSave();stkRender();fireFlip();
-      var tt=document.getElementById("streakToast");if(tt){tt.textContent="\u{1F525} Round "+stk[k]+" done today \u00B7 "+monthRounds()+" this month";tt.classList.add("show");clearTimeout(stkT);stkT=setTimeout(function(){tt.classList.remove("show")},3200)}
+      var tt=document.getElementById("streakToast");if(tt){var mm=monthRounds();tt.textContent=MILES.indexOf(mm)>=0?"\u{1F64F} "+mm+" rounds this month!":"\u{1F525} Round "+stk[k]+" done today \u00B7 "+mm+" this month";tt.classList.add("show");clearTimeout(stkT);stkT=setTimeout(function(){tt.classList.remove("show")},3200)}
     }
   }
   var fireEl=document.getElementById("fire");if(fireEl)fireEl.onclick=function(){stkRender();openSettings()};
