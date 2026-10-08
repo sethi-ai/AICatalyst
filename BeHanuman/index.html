@@ -1320,9 +1320,9 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   document.getElementById("suplist").addEventListener("click",function(e){
     var a=e.target.closest(".supitem");if(!a||a.dataset.k!=="share")return;
     e.preventDefault();
-    var url=location.href.split("#")[0],txt="Learn the Hanuman Chalisa verse by verse with Be Hanuman";
-    if(navigator.share){navigator.share({title:"Be Hanuman",text:txt,url:url}).catch(function(){})}
-    else window.open("https://wa.me/?text="+encodeURIComponent(txt+" "+url),"_blank","noopener");
+    var txt="Chant Hanuman Chalisa verse by verse with Be Hanuman https://hanuman.dyut.si/ on the go\nSupport the builder, follow on instagram.com/sethi.ai";
+    if(navigator.share){navigator.share({title:"Be Hanuman",text:txt}).catch(function(){})}
+    else window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank","noopener");
   });
   document.getElementById("home").addEventListener("click",function(){
     sp2.classList.remove("open");finEl.classList.remove("open");goal=1;round=1;saveRounds();
