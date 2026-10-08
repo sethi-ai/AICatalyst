@@ -621,6 +621,28 @@ body.hi .mt-hi{line-height:1.5}
 #fire.on{color:#e06b0a}
 .wk-n{margin-top:8px;font-size:10.5px;color:#777;text-align:center}
 .wk-d u{font-size:13px}
+/* v0.53 calmer header: bare gear, one flat capsule on the right (fire + voice), lighter subtitle */
+#top{grid-template-columns:1fr auto 1fr!important}
+#top #gear{background:none!important;box-shadow:none!important;width:40px;height:40px;min-height:40px;margin-left:-4px}
+#top .trr{gap:0;padding:0 4px;height:38px;border-radius:19px;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(0,0,0,.07)}
+#top .trr .pill{background:none!important;box-shadow:none!important;height:38px;min-height:38px;width:auto;min-width:0;padding:0 8px!important;margin:0}
+#top #music{width:34px!important}
+#top #music svg{width:20px;height:20px}
+#top #fire{font-size:14px;padding:0 8px 0 10px!important}
+#top #fire span{font-size:15px}
+#top #music[style*="visible"]{border-left:1px solid rgba(0,0,0,.09);border-radius:0!important}
+#top .ttl span{font-size:11.5px;letter-spacing:.06em;color:#777;margin-top:1px}
+#top .ttl span .bar{opacity:.5}
+@media (max-width:340px){#top .ttl b{font-size:19px}#top .ttl span{display:none}}
+#top{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important}
+#top #music{border-left:0!important;width:32px!important}
+#top #music[style*="hidden"]{display:none!important}
+#top #music svg{width:22px;height:22px}
+#top #fire:before{content:"";width:1px;height:18px;background:rgba(0,0,0,.13);margin-right:8px}
+#top #music[style*="hidden"]+#fire:before{display:none}
+@media (max-width:340px){#top #fire{padding:0 6px!important;font-size:13px}#top #fire:before{margin-right:5px}#top #music{width:28px!important}}
+#top #music svg{width:22px!important;height:22px!important;min-width:22px;flex:none;display:block}
+#top #fire{font-size:15px}
 
 </style>
 </head>
