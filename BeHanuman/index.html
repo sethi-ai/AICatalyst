@@ -1362,10 +1362,12 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   });
   window.__firstRun=function(){if(!setupDone&&cur===0)openSettings()};
   // Support + Home after the sankalp is complete
-  var GH_URL="https://github.com/Sethi-Ai/AICatalyst",IG_URL="https://www.instagram.com/sethi.ai/";
+  var GH_URL="https://github.com/Sethi-Ai/AICatalyst",IG_URL="https://www.instagram.com/sethi.ai/",WA_CHANNEL="",WA_COMMUNITY="";/* paste the WhatsApp Channel / Community invite links here; items stay hidden while empty */
   var sp2=document.getElementById("suppage");
   function openSupport(){
     var items=[
+      {k:"wch",t:"Daily verse on WhatsApp",d:"Join the Be Hanuman announcement channel",u:WA_CHANNEL},
+      {k:"wco",t:"Join the Be Hanuman community",d:"Chant together with other devotees on WhatsApp",u:WA_COMMUNITY},
       {k:"ig",t:"Follow on Instagram",d:"Updates, new features and daily inspiration",u:IG_URL},
       {k:"star",t:"Star on GitHub",d:"Free, and it helps others find the app",u:GH_URL},
       {k:"share",t:"Share with a friend",d:"Send the app on WhatsApp or anywhere",u:"#"},
