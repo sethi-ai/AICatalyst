@@ -1310,7 +1310,8 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     var items=[
       {k:"ig",t:"Follow on Instagram",d:"Updates, new features and daily inspiration",u:IG_URL},
       {k:"star",t:"Star on GitHub",d:"Free, and it helps others find the app",u:GH_URL},
-      {k:"share",t:"Share with a friend",d:"Send the app on WhatsApp or anywhere",u:"#"}
+      {k:"share",t:"Share with a friend",d:"Send the app on WhatsApp or anywhere",u:"#"},
+      {k:"fb",t:"Send feedback",d:"Tell us what to improve, on WhatsApp",u:"https://wa.me/9180082971415"}
     ].filter(function(x){return x.u});
     document.getElementById("suplist").innerHTML=items.map(function(x){return '<a class="supitem" data-k="'+x.k+'" href="'+x.u+'" target="_blank" rel="noopener"><b>'+x.t+'</b><span>'+x.d+'</span></a>'}).join("");
     sp2.classList.add("open");
