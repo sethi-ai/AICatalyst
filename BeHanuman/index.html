@@ -638,6 +638,12 @@ body.hi .mt-hi{line-height:1.5}
 @keyframes burnT{0%{background-position:0 0;filter:drop-shadow(0 0 2px rgba(255,110,0,.6))}100%{background-position:0 100%;filter:drop-shadow(0 -2px 5px rgba(255,80,0,.95))}}
 @keyframes burnF{0%{transform:translateY(0) scale(.85) rotate(-6deg);opacity:.8}100%{transform:translateY(-3px) scale(1.1) rotate(6deg);opacity:1}}
 @media (prefers-reduced-motion:reduce){#top #fire.burn b,#top #fire.burn.num:after{animation:none}}
+/* v0.55 sankalp streak + counts */
+.wk-d i.sq u{outline:2px solid #3f9b4a;outline-offset:2px}
+.wk-d i.td.sq u{outline-color:#3f9b4a}
+.wk-s{display:flex;justify-content:space-around;margin-top:10px;padding-top:8px;border-top:1px solid rgba(0,0,0,.08)}
+.wk-s span{display:flex;flex-direction:column;align-items:center;font-size:10.5px;color:#666}
+.wk-s b{font:600 18px Khand,Inter,sans-serif;color:#e06b0a;line-height:1.1}
 
 </style>
 </head>
@@ -1308,13 +1314,18 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   try{stk=JSON.parse(localStorage.getItem("bh_rounds")||"")||{}}catch(e){stk={}}
   function dkey(d){return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
   function stkSave(){try{localStorage.setItem("bh_rounds",JSON.stringify(stk))}catch(e){}}
-  function stkRun(){var n=0,d=new Date();if(!(stk[dkey(d)]>0))d.setDate(d.getDate()-1);while(stk[dkey(d)]>0){n++;d.setDate(d.getDate()-1)}return n}
+  var sk={};try{sk=JSON.parse(localStorage.getItem("bh_sank")||"")||{}}catch(e){sk={}}
+  function skSave(){try{localStorage.setItem("bh_sank",JSON.stringify(sk))}catch(e){}}
+  // Sankalp streak = consecutive days on which the day's sankalp (3, 11, 21... rounds) was completed.
+  function stkRun(){var n=0,d=new Date();if(!sk[dkey(d)])d.setDate(d.getDate()-1);while(sk[dkey(d)]){n++;d.setDate(d.getDate()-1)}return n}
+  function monthRounds(){var m=dkey(new Date()).slice(0,7),t=0;for(var k in stk)if(k.indexOf(m)===0)t+=stk[k];return t}
+  function allRounds(){var t=0;for(var k in stk)t+=stk[k];return t}
   function stkWeekHTML(){
-    var t=new Date(),dow=(t.getDay()+6)%7,mon=new Date(t.getFullYear(),t.getMonth(),t.getDate()-dow),L=["M","T","W","T","F","S","S"],h="",cnt=0;
-    for(var i=0;i<7;i++){var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i),v=stk[dkey(d)]||0;if(v>0)cnt++;
-      h+='<i class="'+(v>0?"on":"")+(i===dow?" td":"")+'"><u>'+(v>0?v:"")+'</u><em>'+L[i]+'</em></i>'}
-    var r=stkRun();
-    return '<div class="wk-t"><b>'+(r?r+"-day streak":"Start your streak")+'</b><span>'+cnt+" of 7 days this week</span></div><div class=\"wk-d\">"+h+"</div><div class=\"wk-n\">One round = Doha 1 to Jaikara. The number is rounds that day.</div>"
+    var t=new Date(),dow=(t.getDay()+6)%7,mon=new Date(t.getFullYear(),t.getMonth(),t.getDate()-dow),L=["M","T","W","T","F","S","S"],h="";
+    for(var i=0;i<7;i++){var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i),k=dkey(d),v=stk[k]||0;
+      h+='<i class="'+(v>0?"on":"")+(sk[k]?" sq":"")+(i===dow?" td":"")+'"><u>'+(v>0?v:"")+'</u><em>'+L[i]+'</em></i>'}
+    var r=stkRun(),td=stk[dkey(t)]||0;
+    return '<div class="wk-t"><b>'+(r?r+"-day sankalp streak":"Sankalp streak: start today")+'</b></div><div class="wk-d">'+h+'</div><div class="wk-s"><span><b>'+td+'</b>today</span><span><b>'+monthRounds()+'</b>this month</span><span><b>'+allRounds()+'</b>all time</span></div><div class="wk-n">Number = rounds read (D1 to J1). Ring = sankalp completed that day.</div>'
   }
   function stkRender(){
     ["wkFin","wkSet"].forEach(function(id){var e=document.getElementById(id);if(e)e.innerHTML=stkWeekHTML()});
@@ -1327,12 +1338,13 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     else if(runNext!==null&&n>runNext)runNext=null;
     if(n===N-1&&runNext===N-1&&from===N-2){
       runNext=null;var k=dkey(new Date());stk[k]=(stk[k]||0)+1;stkSave();stkRender();fireFlip();
-      var tt=document.getElementById("streakToast");if(tt){tt.textContent="\u{1F525} Round "+stk[k]+" complete \u00B7 "+stkRun()+"-day streak";tt.classList.add("show");clearTimeout(stkT);stkT=setTimeout(function(){tt.classList.remove("show")},3200)}
+      var tt=document.getElementById("streakToast");if(tt){tt.textContent="\u{1F525} Round "+stk[k]+" done today \u00B7 "+monthRounds()+" this month";tt.classList.add("show");clearTimeout(stkT);stkT=setTimeout(function(){tt.classList.remove("show")},3200)}
     }
   }
   var fireEl=document.getElementById("fire");if(fireEl)fireEl.onclick=function(){stkRender();openSettings()};
   stkRender();fireFlip();
   function openFinish(){if(window.__stopVoice)window.__stopVoice();
+    (function(){var k=dkey(new Date());if(!sk[k]){sk[k]=goal||1;skSave()}})();
     var im=document.getElementById("finimg");
     if(im&&!im.getAttribute("src")){im.dataset.n="jaikara";im.dataset.k="0";im.onerror=function(){__imgFail(im)};im.src=BASE+"images/jaikara.jpg"}
     var fp=document.getElementById("fparts"),fh=document.getElementById("fhearts");
