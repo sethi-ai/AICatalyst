@@ -513,6 +513,21 @@ body.hi .mt-hi{line-height:1.5}
   #navbtns button{background:linear-gradient(145deg,#f3f3f1,#d9d9d6);color:#e06b0a;font-weight:700;box-shadow:5px 5px 10px rgba(0,0,0,.17),-4px -4px 9px rgba(255,255,255,.85)}
 }
 
+/* v0.44 climbing monkey on the real vine art */
+#nudge:before{left:50%;margin-left:-12px;width:24.5px;background:var(--vs) repeat-y 50% 100%/24.5px 74.5px}
+#nudge .vn{left:50%;margin-left:-12px;width:24.5px;height:auto;bottom:0;transform-origin:50% 80%;animation:vclimb4 3.4s cubic-bezier(.4,0,.3,1) infinite}
+@keyframes vclimb4{
+  0%{transform:translateY(34px);opacity:0}
+  14%{opacity:1}
+  22%{transform:translateY(22px) rotate(-2deg)}
+  34%{transform:translateY(14px) rotate(2deg)}
+  46%{transform:translateY(4px) rotate(-2deg)}
+  58%{transform:translateY(-6px) rotate(2deg)}
+  80%{transform:translateY(-22px) rotate(0);opacity:1}
+  100%{transform:translateY(-34px);opacity:0}}
+@media (prefers-reduced-motion:reduce){#nudge .vn{animation:none;opacity:1}}
+#nudge{height:max(46px,min(70px,calc(100dvh - 700px)))}
+
 </style>
 </head>
 <body>
@@ -1235,7 +1250,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   var ai=document.createElement("link");ai.rel="apple-touch-icon";ai.href=BASE+"icon-180.png";document.head.appendChild(ai);
   document.getElementById("reset").onclick=function(){goal=1;round=1;saveRounds();updateRounds();backToMain();goTo(0);hint.classList.remove("gone")};
   var nudgeEl=document.getElementById("nudge");
-  if(nudgeEl)nudgeEl.innerHTML='<img class="vn" alt="" src="'+BASE+'images/swipe-vine.png" draggable="false">';
+  if(nudgeEl){nudgeEl.style.setProperty("--vs",'url("'+BASE+'images/climb-vine.png")');nudgeEl.innerHTML='<img class="vn" alt="" src="'+BASE+'images/climb-monkey.png" draggable="false">';}
   function updateNudge(){if(nudgeEl)nudgeEl.style.display=(cur===0||cur===N-1)?"none":""}
   updateNudge();
   if(cur>0)hint.classList.add("gone");
