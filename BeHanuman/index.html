@@ -718,8 +718,10 @@ window.CHALISA_JK = {
         '<div class="rr"><button id="complete" class="cbtn">Complete Sankalp</button><div class="rounds"><p id="rtxt"></p><button id="again"></button></div></div></div></section>';
     }
     var B='<i class="bar">||</i>';
-    var h1=B+' '+esc(c.hing[0]), h2=esc(c.hing[1])+' '+B;
-    var d1=B+' '+esc(strip(c.dev[0])), d2=esc(strip(c.dev[1]))+' '+B;
+    // Dohas: || line 1 / line 2 ||.  Chaupais: line 1 | / line 2 ||  (no leading bar).
+    var S='<i class="bar">|</i>',isC=c.kl==="Chaupai";
+    var h1=(isC?'':B+' ')+esc(c.hing[0])+(isC?' '+S:''), h2=esc(c.hing[1])+' '+B;
+    var d1=(isC?'':B+' ')+esc(strip(c.dev[0]))+(isC?' '+S:''), d2=esc(strip(c.dev[1]))+' '+B;
     var lh=Math.max(c.hing[0].length,c.hing[1].length)+3, ld=Math.max(strip(c.dev[0]).length,strip(c.dev[1]).length)+3;
     return '<section class="card'+(c.kl==="Chaupai"?' chp':'')+'" style="--lh:'+lh+';--ld:'+ld+'"><div class="wrap">'+artHTML(c,i)+
       '<div class="verse"><div class="v-hing"><span>'+h1+'</span><span>'+h2+'</span></div>'+
