@@ -690,6 +690,11 @@ body.hi .mt-hi{line-height:1.5}
 .tr-chart i.sq:before{content:"";position:absolute;left:0;right:0;bottom:-5px;height:3px;border-radius:2px;background:#3f9b4a}
 .tr-chart em{position:absolute;left:50%;transform:translateX(-50%);bottom:-18px;font-size:8.5px;color:#888}
 .wk-more{display:block;margin:10px auto 0;border:0;background:none;color:#e06b0a;font:600 13px Inter,sans-serif;padding:4px 10px}
+/* v0.58 settings: hide meaning / explanation, volume */
+.hm .mean,.hm .jv .mt{display:none!important}
+.he #explain,.he #sbe{display:none!important}
+.setbtns.vols{flex-wrap:wrap;justify-content:center;gap:8px}
+.setbtns.vols button{min-width:56px;padding:0 12px}
 
 </style>
 </head>
@@ -702,9 +707,12 @@ body.hi .mt-hi{line-height:1.5}
 <div id="splash"><div class="sp-art"><div class="glow"></div><div class="parts" id="parts"></div><div class="hearts" id="hearts"></div><img id="spimg" alt="Hanuman meditating" draggable="false"></div><b>Be Hanuman</b><span><i class="bar">||</i> Hanuman Chalisa <i class="bar">||</i></span></div>
 <div id="finish"><div class="fin-art"><div class="glow"></div><div class="parts" id="fparts"></div><div class="hearts" id="fhearts"></div><img id="finimg" alt="Hanuman celebrating" draggable="false"></div><h2>Jai Hanuman</h2><div class="wk" id="wkFin"></div><div class="finbtns"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button></div></div>
 <div id="suppage"><button id="supback" aria-label="Back">&#8249; Back</button><div class="supin"><div class="suph">&#9825;</div><h2>Support Be Hanuman</h2><p>Free, with no ads. If it helped your reading, here are a few ways to help it reach more people.</p><div id="suplist"></div><a class="supfoot" href="https://growthx.club/" target="_blank" rel="noopener" aria-label="Built at growthX"><img src="https://built.growthx.club/built-logo.svg" alt="Built at growthX" width="116" loading="lazy"></a></div></div>
-<div id="settings"><div class="supin"><h2>Settings</h2><div class="wk" id="wkSet"></div><p>Choose once. You can change these any time from the gear icon.</p>
+<div id="settings"><div class="supin"><h2>Settings</h2>
 <div class="setrow"><span>Language</span><div class="setbtns"><button data-l="hing">English</button><button data-l="hi">हिन्दी</button></div></div>
-<div class="setrow"><span>Music</span><div class="setbtns"><button data-m="1">On</button><button data-m="0">Off</button></div></div>
+<div class="setrow"><span>Hide meaning</span><div class="setbtns"><button data-hm="1">Yes</button><button data-hm="0">No</button></div></div>
+<div class="setrow"><span>Hide explanation</span><div class="setbtns"><button data-he="1">Yes</button><button data-he="0">No</button></div></div>
+<div class="setrow"><span>Recitation</span><div class="setbtns"><button data-m="1">On</button><button data-m="0">Off</button></div></div>
+<div class="setrow" id="volrow"><span>Recitation volume</span><div class="setbtns vols"><button data-vol="10">10</button><button data-vol="25">25</button><button data-vol="50">50</button><button data-vol="75">75</button><button data-vol="100">100</button></div></div>
 <button id="setdone">Done</button></div></div>
 <div id="trends"><button id="trback" aria-label="Back">&#8249; Back</button><div class="trin"><h2>Your practice</h2><div class="trtabs"><button data-v="w" class="on">Weekly</button><button data-v="m">Monthly</button></div><div class="trnav"><button id="trprev" aria-label="Previous">&#8249;</button><b id="trlab"></b><button id="trnext" aria-label="Next">&#8250;</button></div><div id="trbody"></div></div></div>
 <div id="streakToast" aria-live="polite"></div>
@@ -1300,7 +1308,21 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(on){muted=false;if(cur>0)playCard(cur,true)}else{stopVoice()}
     updateMusicUI();label();
   }
-  function updateMusicUI(){var sbm=document.getElementById("sbm");if(sbm)sbm.classList.toggle("on",musicOn);[].forEach.call(document.querySelectorAll("[data-m]"),function(b){b.classList.toggle("on",(b.dataset.m==="1")===musicOn)})}
+
+  // Settings: hide meaning / hide explanation / recitation volume (saved on the device)
+  var hideM=0,hideE=0,vol=100;
+  try{hideM=+localStorage.getItem("bh_hm")||0;hideE=+localStorage.getItem("bh_he")||0;var vv=parseInt(localStorage.getItem("bh_vol")||"100",10);if([10,25,50,75,100].indexOf(vv)>=0)vol=vv}catch(e){}
+  function applyPrefs(){
+    var h=document.documentElement;h.classList.toggle("hm",!!hideM);h.classList.toggle("he",!!hideE);
+    try{VO.volume=vol/100;NX.volume=vol/100}catch(e){}
+    [].forEach.call(document.querySelectorAll("[data-hm]"),function(b){b.classList.toggle("on",+b.dataset.hm===hideM)});
+    [].forEach.call(document.querySelectorAll("[data-he]"),function(b){b.classList.toggle("on",+b.dataset.he===hideE)});
+    [].forEach.call(document.querySelectorAll("[data-vol]"),function(b){b.classList.toggle("on",+b.dataset.vol===vol)});
+    var vr=document.getElementById("volrow");if(vr)vr.style.display=musicOn?"":"none";
+    if(hideE&&typeof closeBubble==="function")closeBubble();
+  }
+  function setPref(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
+  function updateMusicUI(){applyPrefs();var sbm=document.getElementById("sbm");if(sbm)sbm.classList.toggle("on",musicOn);[].forEach.call(document.querySelectorAll("[data-m]"),function(b){b.classList.toggle("on",(b.dataset.m==="1")===musicOn)})}
   document.getElementById("closeSheet").onclick=function(){sheet.classList.remove("open")};
 
   // Explanation bubble: tap the button under the orange meaning to pop it up; tap anywhere else to close.
@@ -1532,6 +1554,9 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     var b=e.target.closest("button");if(!b)return;
     if(b.dataset.l){setMode(b.dataset.l);fit();return}
     if(b.dataset.m){setMusic(b.dataset.m==="1");return}
+    if(b.dataset.hm!==undefined){hideM=+b.dataset.hm;setPref("bh_hm",hideM);applyPrefs();fit();return}
+    if(b.dataset.he!==undefined){hideE=+b.dataset.he;setPref("bh_he",hideE);applyPrefs();return}
+    if(b.dataset.vol){vol=+b.dataset.vol;setPref("bh_vol",vol);applyPrefs();return}
     if(b.id==="setdone")closeSettings();
   });
   window.__firstRun=function(){if(!setupDone&&cur===0)openSettings()};
@@ -1573,7 +1598,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     var en=c.hing?c.hing[0]:"",hi=c.dev?strip(c.dev[0]):"";
     sbHTML+='<button class="sb-i" data-i="'+i+'"><em>'+esc(lab)+'</em></button>';
   });
-  sbHTML+='</div><div class="sb-f"><div class="sb-l"><button data-sl="hing">English</button><button data-sl="hi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</button></div><button id="sbe" class="sb-sw" aria-label="Explanation"><span>Explanation</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbm" class="sb-sw" aria-label="Music on or off"><span>Music</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbu" class="sb-sw" aria-label="Mute or unmute"><span>Mute</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbp" class="sb-sw" aria-label="Play this verse again"><span>Replay</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbg" class="sb-sw" aria-label="Settings"><span>Settings</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbr" class="sb-sw" aria-label="Restart from the beginning"><span>Restart</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbs" class="sb-b">&#9825; Support us</button></div>';
+  sbHTML+='</div><div class="sb-f"><div class="sb-l"><button data-sl="hing">English</button><button data-sl="hi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</button></div><button id="sbe" class="sb-sw" aria-label="Explanation"><span>Explanation</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbm" class="sb-sw" aria-label="Music on or off"><span>Recitation</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbu" class="sb-sw" aria-label="Mute or unmute"><span>Mute</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbp" class="sb-sw" aria-label="Play this verse again"><span>Replay</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbg" class="sb-sw" aria-label="Settings"><span>Settings</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbr" class="sb-sw" aria-label="Restart from the beginning"><span>Restart</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbs" class="sb-b">&#9825; Support us</button></div>';
   side.innerHTML=sbHTML;document.documentElement.appendChild(side);
   function updateSide(){
     if(!side)return;
