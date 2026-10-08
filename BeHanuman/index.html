@@ -532,6 +532,21 @@ body.hi .mt-hi{line-height:1.5}
 .supfoot{display:block;margin:28px auto 0;text-align:center;font:500 13px/1.4 Inter,sans-serif;color:#6b6b66;text-decoration:none;letter-spacing:.02em}
 .supfoot:active{color:#a24400}
 
+/* v0.46 desktop sidebar: label-only list, action rows in switch style, main-column controls hidden */
+@media (min-width:1000px) and (hover:hover) and (pointer:fine){
+  #gear,#music{visibility:hidden}
+  #ui{opacity:0;pointer-events:none}
+  #side .sb-i{padding:7px 12px 7px 34px;margin:2px 0}
+  #side .sb-i em{font-size:13px;color:#444;letter-spacing:.1em}
+  #side .sb-i.cur em{color:#b94f00;font-weight:600}
+  #side .sb-f{gap:2px;padding:10px 18px 16px}
+  #side .sb-l{margin-bottom:6px}
+  #side .sb-sw{height:42px}
+  #side .sb-b{margin-top:8px}
+}
+
+@media (min-width:1000px) and (hover:hover) and (pointer:fine){#music{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -1090,7 +1105,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   var MU=window.MUSIC||{},TIMES=MU.times||[],VOL=50;
   var mbtn=document.getElementById("music");
   var yt=null,ytReady=false,playing=false,wantPlay=false,pendingSync=false,lastSeek=-1,rampT=null;
-  function label(){mbtn.textContent=muted?"Unmute":"Mute";mbtn.setAttribute("aria-label",muted?"Unmute music":"Mute music");mbtn.style.visibility=(musicOn&&cur>0)?"visible":"hidden";updateExplain()}
+  function label(){var su=document.getElementById("sbu");if(su)su.classList.toggle("on",!!muted);mbtn.textContent=muted?"Unmute":"Mute";mbtn.setAttribute("aria-label",muted?"Unmute music":"Mute music");mbtn.style.visibility=(musicOn&&cur>0)?"visible":"hidden";updateExplain()}
   function updateExplain(){var b=document.getElementById("explain"),c=D[cur];if(!b)return;var ok=c&&!c.t&&c.ex;b.style.visibility=ok?"visible":"hidden";b.dataset.i=cur}
   function startFor(n){var v=TIMES[n];return typeof v==="number"?v:null}
   function ramp(to,cb){
@@ -1158,7 +1173,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     bub.style.setProperty("--tx",Math.max(24,Math.min(br.width-24,r.left+r.width/2-br.left))+"px");
   }
   window.addEventListener("pointerdown",function(e){
-    if(bubFor&&!e.target.closest("#bubble,#explain"))closeBubble();
+    if(bubFor&&!e.target.closest("#bubble,#explain,#sbe"))closeBubble();
   },true);
 
   // Sankalp and rounds
@@ -1336,9 +1351,9 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   D.forEach(function(c,i){
     var lab=c.t==="sankalp"?"Sankalp":c.t==="jaikara"?"Jaikara":c.n?"Chaupai "+c.n:c.kl;
     var en=c.hing?c.hing[0]:"",hi=c.dev?strip(c.dev[0]):"";
-    sbHTML+='<button class="sb-i" data-i="'+i+'"><em>'+esc(lab)+'</em>'+(en?'<span class="sb-en">'+esc(en)+'</span><span class="sb-hi">'+esc(hi)+'</span>':'')+'</button>';
+    sbHTML+='<button class="sb-i" data-i="'+i+'"><em>'+esc(lab)+'</em></button>';
   });
-  sbHTML+='</div><div class="sb-f"><div class="sb-l"><button data-sl="hing">English</button><button data-sl="hi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</button></div><button id="sbm" class="sb-sw" aria-label="Music on or off"><span>Music</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbs" class="sb-b">&#9825; Support us</button></div>';
+  sbHTML+='</div><div class="sb-f"><div class="sb-l"><button data-sl="hing">English</button><button data-sl="hi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</button></div><button id="sbe" class="sb-sw" aria-label="Explanation"><span>Explanation</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbm" class="sb-sw" aria-label="Music on or off"><span>Music</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbu" class="sb-sw" aria-label="Mute or unmute"><span>Mute</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbg" class="sb-sw" aria-label="Settings"><span>Settings</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbr" class="sb-sw" aria-label="Restart from the beginning"><span>Restart</span><i class="sw-tr"><b class="sw-th"></b></i></button><button id="sbs" class="sb-b">&#9825; Support us</button></div>';
   side.innerHTML=sbHTML;document.documentElement.appendChild(side);
   function updateSide(){
     if(!side)return;
@@ -1352,7 +1367,13 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(b.dataset.sl){setMode(b.dataset.sl);fit();return}
     if(b.id==="sbm"){setMusic(!musicOn);return}
     if(b.id==="sbs"){openSupport()}
+    if(b.id==="sbu"){mbtn.click();return}
+    if(b.id==="sbe"){if(D[cur]&&D[cur].ex)document.getElementById("explain").click();return}
+    if(b.id==="sbg"||b.id==="sbr"){b.classList.add("on");setTimeout(function(){b.classList.remove("on")},450);
+      if(b.id==="sbg")openSettings();else document.getElementById("reset").click()}
   });
+  var sbe=document.getElementById("sbe");
+  if(window.MutationObserver)new MutationObserver(function(){sbe.classList.toggle("on",bub.classList.contains("open"))}).observe(bub,{attributes:true,attributeFilter:["class"]});
   setMode(mode);updateMusicUI();updateSide();
 
 })();
