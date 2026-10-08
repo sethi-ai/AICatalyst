@@ -592,6 +592,14 @@ body.hi .mt-hi{line-height:1.5}
 @keyframes cdin{from{transform:translateX(26px);opacity:0}to{transform:none;opacity:1}}
 #nudge{opacity:0;transition:opacity .35s}
 #nudge.on{opacity:1}
+/* v0.50 support ask */
+#payask{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.35);display:flex;align-items:flex-end;justify-content:center;opacity:0;transition:opacity .3s;pointer-events:none}
+#payask.open{opacity:1;pointer-events:auto}
+#payask .pa-c{width:min(440px,100%);box-sizing:border-box;margin:0 0 max(14px,env(safe-area-inset-bottom));border-radius:22px 22px 0 0;background:#f3f3f1;padding:24px 22px 18px;text-align:center;font-family:Inter,system-ui,sans-serif;color:#222;box-shadow:0 -8px 30px rgba(0,0,0,.2)}
+#payask b{display:block;font:600 22px Khand,Inter,sans-serif;color:#e06b0a;margin-bottom:6px}
+#payask p{font-size:14px;line-height:1.55;margin:0 0 16px}
+#payask .pa-go{display:block;border-radius:999px;background:#e06b0a;color:#fff;text-decoration:none;font-weight:600;padding:13px;margin-bottom:8px}
+#payask .pa-later{border:0;background:none;color:#666;font:inherit;font-size:13px;padding:8px}
 
 </style>
 </head>
@@ -1082,7 +1090,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(n!==cur){
       leaving=cur;clearTimeout(leaveT);stage.classList.add("moving");
       document.documentElement.classList.add("mv");leaveT=setTimeout(function(){leaving=-1;stage.classList.remove("moving");document.documentElement.classList.remove("mv");layout()},700);
-      var was=cur;cur=n;save();hint.classList.add("gone");updateNudge();if(typeof updateSide==="function")updateSide();closeBubble();updateExplain();if(n===N-1)resetCount();
+      var was=cur;cur=n;save();hint.classList.add("gone");updateNudge();if(typeof updateSide==="function")updateSide();closeBubble();updateExplain();setTimeout(maybeAskSupport,2500);if(n===N-1)resetCount();
       label();deferVoice();
     }
     dy=0;layout();
@@ -1371,6 +1379,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
       {k:"ig",t:"Follow on Instagram",d:"Updates, new features and daily inspiration",u:IG_URL},
       {k:"star",t:"Star on GitHub",d:"Free, and it helps others find the app",u:GH_URL},
       {k:"share",t:"Share with a friend",d:"Send the app on WhatsApp or anywhere",u:"#"},
+      {k:"pay",t:"Buy us a coffee",d:"Support Be Hanuman with \u20B9"+PAY_AMT,u:PAY_URL},
       {k:"fb",t:"Send feedback",d:"Tell us what to improve, on WhatsApp",u:"https://wa.me/918082971514"}
     ].filter(function(x){return x.u});
     document.getElementById("suplist").innerHTML=items.map(function(x){return '<a class="supitem" data-k="'+x.k+'" href="'+x.u+'" target="_blank" rel="noopener"><b>'+x.t+'</b><span>'+x.d+'</span></a>'}).join("");
@@ -1420,6 +1429,24 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   });
   var sbe=document.getElementById("sbe");
   if(window.MutationObserver)new MutationObserver(function(){sbe.classList.toggle("on",bub.classList.contains("open"))}).observe(bub,{attributes:true,attributeFilter:["class"]});
+
+  // Support ask: after 7 different days of use, once, with a soft "Maybe later" (snoozes 10 days). Off while PAY_URL is empty.
+  var PAY_URL="",PAY_AMT="199";
+  var sup={d:[],snooze:0,done:0};
+  try{sup=JSON.parse(localStorage.getItem("bh_sup")||"")||sup}catch(e){}
+  function supSave(){try{localStorage.setItem("bh_sup",JSON.stringify(sup))}catch(e){}}
+  (function(){var t=new Date().toISOString().slice(0,10);if(sup.d.indexOf(t)<0){sup.d.push(t);supSave()}})();
+  var supAsked=false;
+  function maybeAskSupport(){
+    if(!PAY_URL||supAsked||sup.done||sup.d.length<7||Date.now()<sup.snooze||cur<5)return;
+    supAsked=true;
+    var o=document.createElement("div");o.id="payask";
+    o.innerHTML='<div class="pa-c"><b>Jai Hanuman \u{1F64F}</b><p>You have chanted with Be Hanuman on '+sup.d.length+' days. It is free, ad-free and built by one person. If it helps your practice, please support us with \u20B9'+PAY_AMT+' \u2013 the price of a coffee.</p><a class="pa-go" href="'+PAY_URL+'" target="_blank" rel="noopener">Support with \u20B9'+PAY_AMT+'</a><button class="pa-later">Maybe later</button></div>';
+    document.documentElement.appendChild(o);
+    requestAnimationFrame(function(){o.classList.add("open")});
+    o.querySelector(".pa-go").onclick=function(){sup.done=1;supSave();setTimeout(function(){o.remove()},400)};
+    o.querySelector(".pa-later").onclick=function(){sup.snooze=Date.now()+10*864e5;supSave();o.classList.remove("open");setTimeout(function(){o.remove()},300)};
+  }
   setMode(mode);updateMusicUI();updateSide();label();
 
 })();
