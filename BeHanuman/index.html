@@ -528,6 +528,10 @@ body.hi .mt-hi{line-height:1.5}
 @media (prefers-reduced-motion:reduce){#nudge .vn{animation:none;opacity:1}}
 #nudge{height:max(46px,min(70px,calc(100dvh - 700px)))}
 
+/* v0.45 support page footer */
+.supfoot{display:block;margin:28px auto 0;text-align:center;font:500 13px/1.4 Inter,sans-serif;color:#6b6b66;text-decoration:none;letter-spacing:.02em}
+.supfoot:active{color:#a24400}
+
 </style>
 </head>
 <body>
@@ -538,7 +542,7 @@ body.hi .mt-hi{line-height:1.5}
 <div id="ui"><button id="explain" aria-label="Show explanation">Explanation</button><button id="reset" aria-label="Restart from the beginning">&#8634; Restart</button></div>
 <div id="splash"><div class="sp-art"><div class="glow"></div><div class="parts" id="parts"></div><div class="hearts" id="hearts"></div><img id="spimg" alt="Hanuman meditating" draggable="false"></div><b>Be Hanuman</b><span><i class="bar">||</i> Hanuman Chalisa <i class="bar">||</i></span></div>
 <div id="finish"><div class="fin-art"><div class="glow"></div><div class="parts" id="fparts"></div><div class="hearts" id="fhearts"></div><img id="finimg" alt="Hanuman celebrating" draggable="false"></div><h2>Jai Hanuman</h2><div class="finbtns"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button></div></div>
-<div id="suppage"><button id="supback" aria-label="Back">&#8249; Back</button><div class="supin"><div class="suph">&#9825;</div><h2>Support Be Hanuman</h2><p>Free, with no ads. If it helped your reading, here are a few ways to help it reach more people.</p><div id="suplist"></div></div></div>
+<div id="suppage"><button id="supback" aria-label="Back">&#8249; Back</button><div class="supin"><div class="suph">&#9825;</div><h2>Support Be Hanuman</h2><p>Free, with no ads. If it helped your reading, here are a few ways to help it reach more people.</p><div id="suplist"></div><a class="supfoot" href="https://built.growthx.club/" target="_blank" rel="noopener">Built at growthX</a></div></div>
 <div id="settings"><div class="supin"><h2>Settings</h2><p>Choose once. You can change these any time from the gear icon.</p>
 <div class="setrow"><span>Language</span><div class="setbtns"><button data-l="hing">English</button><button data-l="hi">हिन्दी</button></div></div>
 <div class="setrow"><span>Music</span><div class="setbtns"><button data-m="1">On</button><button data-m="0">Off</button></div></div>
@@ -1304,9 +1308,9 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   var sp2=document.getElementById("suppage");
   function openSupport(){
     var items=[
-      {k:"share",t:"Share with a friend",d:"Send the app on WhatsApp or anywhere",u:"#"},
-      {k:"star",t:"Star us on GitHub",d:"Free, and it helps others find the app",u:GH_URL},
-      {k:"ig",t:"Follow on Instagram",d:"Updates, new features and daily inspiration",u:IG_URL}
+      {k:"ig",t:"Follow on Instagram",d:"Updates, new features and daily inspiration",u:IG_URL},
+      {k:"star",t:"Star on GitHub",d:"Free, and it helps others find the app",u:GH_URL},
+      {k:"share",t:"Share with a friend",d:"Send the app on WhatsApp or anywhere",u:"#"}
     ].filter(function(x){return x.u});
     document.getElementById("suplist").innerHTML=items.map(function(x){return '<a class="supitem" data-k="'+x.k+'" href="'+x.u+'" target="_blank" rel="noopener"><b>'+x.t+'</b><span>'+x.d+'</span></a>'}).join("");
     sp2.classList.add("open");
