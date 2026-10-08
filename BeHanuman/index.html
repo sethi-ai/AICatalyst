@@ -657,6 +657,39 @@ body.hi .mt-hi{line-height:1.5}
 .ml-b i.hit u{background:radial-gradient(circle at 35% 30%,#ffae5c,#e06b0a 70%);box-shadow:0 0 6px rgba(224,107,10,.5)}
 .ml-b em{font-style:normal;font-size:10px;color:#777}
 .ml-b i.hit em{color:#e06b0a;font-weight:600}
+/* v0.57 trends page */
+#trends{position:fixed;inset:0;z-index:420;background:var(--bg);display:none;flex-direction:column;align-items:center;padding:calc(max(12px,env(safe-area-inset-top)) + 64px) 18px 30px;overflow:auto}
+#trends.open{display:flex}
+#trback{position:absolute;left:16px;top:max(14px,env(safe-area-inset-top));height:42px;padding:0 18px;border-radius:999px;font-family:Inter,sans-serif;font-size:14px;font-weight:500;color:#c25a00;background:linear-gradient(145deg,#f3f3f1,#d9d9d6);box-shadow:5px 5px 10px rgba(0,0,0,.17),-4px -4px 9px rgba(255,255,255,.85)}
+.trin{width:min(100%,440px);font-family:Inter,system-ui,sans-serif;color:#222}
+.trin h2{margin:0 0 12px;text-align:center;font:500 34px Khand,Inter,sans-serif;color:#111}
+.trtabs{display:flex;gap:10px;justify-content:center;margin-bottom:12px}
+.trtabs button{height:38px;padding:0 20px;border-radius:999px;font:500 14px Inter,sans-serif;color:#555;background:linear-gradient(145deg,#f3f3f1,#d9d9d6);box-shadow:4px 4px 8px rgba(0,0,0,.15),-3px -3px 7px rgba(255,255,255,.85)}
+.trtabs button.on{color:#fff;background:linear-gradient(145deg,#ff9a3c,#e06b0a)}
+.trnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.trnav b{font:600 16px Inter,sans-serif;color:#333}
+.trnav button{width:38px;height:38px;border-radius:50%;font-size:22px;line-height:1;color:#c25a00;background:linear-gradient(145deg,#f3f3f1,#d9d9d6);box-shadow:4px 4px 8px rgba(0,0,0,.15),-3px -3px 7px rgba(255,255,255,.85)}
+.trnav button:disabled{opacity:.35}
+#trbody{padding:14px;border-radius:18px;background:linear-gradient(145deg,#f3f3f1,#d9d9d6);box-shadow:5px 5px 10px rgba(0,0,0,.17),-4px -4px 9px rgba(255,255,255,.85)}
+.tr-sum{display:flex;justify-content:space-around;margin-bottom:12px}
+.tr-sum span,.tr-big span{display:flex;flex-direction:column;align-items:center;font-size:11px;color:#666}
+.tr-sum b{font:600 22px Khand,Inter,sans-serif;color:#e06b0a;line-height:1.1}
+.tr-big{text-align:center;margin-bottom:10px}.tr-big b{display:block;font:600 54px Khand,Inter,sans-serif;color:#e06b0a;line-height:1}
+.tr-h,.tr-r{display:grid;grid-template-columns:62px 58px 1fr 30px;align-items:center;gap:8px}
+.tr-h{font-size:10.5px;color:#777;padding:0 4px 4px;text-transform:uppercase;letter-spacing:.06em}
+.tr-r{padding:7px 4px;border-top:1px solid rgba(0,0,0,.07);font-size:13px}
+.tr-r.td{background:rgba(224,107,10,.07);border-radius:8px}
+.tr-d em{font-style:normal;color:#888;margin-left:5px;font-size:11px}
+.tr-s{font-weight:600;font-size:12px;border-radius:10px;text-align:center;padding:3px 0}
+.tr-s.yes{color:#2d7a38;background:rgba(63,155,74,.15)}.tr-s.no{color:#a33;background:rgba(170,50,50,.1)}.tr-s.na{color:#aaa}
+.tr-b{height:8px;border-radius:4px;background:rgba(0,0,0,.07);overflow:hidden}.tr-b s{display:block;height:100%;background:linear-gradient(90deg,#ffae5c,#e06b0a);border-radius:4px;text-decoration:none}
+.tr-n{text-align:right;font-weight:600}
+.tr-chart{display:flex;align-items:flex-end;gap:2px;height:120px;padding-bottom:16px;margin-top:6px}
+.tr-chart i{flex:1;height:100%;position:relative;display:flex;align-items:flex-end;font-style:normal}
+.tr-chart s{display:block;width:100%;border-radius:3px 3px 0 0;background:linear-gradient(0deg,#e06b0a,#ffae5c);text-decoration:none}
+.tr-chart i.sq:before{content:"";position:absolute;left:0;right:0;bottom:-5px;height:3px;border-radius:2px;background:#3f9b4a}
+.tr-chart em{position:absolute;left:50%;transform:translateX(-50%);bottom:-18px;font-size:8.5px;color:#888}
+.wk-more{display:block;margin:10px auto 0;border:0;background:none;color:#e06b0a;font:600 13px Inter,sans-serif;padding:4px 10px}
 
 </style>
 </head>
@@ -673,6 +706,7 @@ body.hi .mt-hi{line-height:1.5}
 <div class="setrow"><span>Language</span><div class="setbtns"><button data-l="hing">English</button><button data-l="hi">हिन्दी</button></div></div>
 <div class="setrow"><span>Music</span><div class="setbtns"><button data-m="1">On</button><button data-m="0">Off</button></div></div>
 <button id="setdone">Done</button></div></div>
+<div id="trends"><button id="trback" aria-label="Back">&#8249; Back</button><div class="trin"><h2>Your practice</h2><div class="trtabs"><button data-v="w" class="on">Weekly</button><button data-v="m">Monthly</button></div><div class="trnav"><button id="trprev" aria-label="Previous">&#8249;</button><b id="trlab"></b><button id="trnext" aria-label="Next">&#8250;</button></div><div id="trbody"></div></div></div>
 <div id="streakToast" aria-live="polite"></div>
 <div id="nudge" aria-hidden="true"></div>
 <div id="bubble"><p></p><i class="tail"></i></div>
@@ -1345,7 +1379,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     for(var i=0;i<7;i++){var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i),k=dkey(d),v=stk[k]||0;
       h+='<i class="'+(v>0?"on":"")+(sk[k]?" sq":"")+(i===dow?" td":"")+'"><u>'+(v>0?v:"")+'</u><em>'+L[i]+'</em></i>'}
     var r=stkRun(),td=stk[dkey(t)]||0;
-    return '<div class="wk-t"><b>'+(r?r+"-day sankalp streak":"Sankalp streak: start today")+'</b></div><div class="wk-d">'+h+'</div><div class="wk-s"><span><b>'+td+'</b>today</span><span><b>'+monthRounds()+'</b>this month</span><span><b>'+allRounds()+'</b>all time</span></div>'+mileHTML()+'<div class="wk-n">Number = rounds read (D1 to J1). Ring = sankalp completed that day.</div>'
+    return '<div class="wk-t"><b>'+(r?r+"-day sankalp streak":"Sankalp streak: start today")+'</b></div><div class="wk-d">'+h+'</div><div class="wk-s"><span><b>'+td+'</b>today</span><span><b>'+monthRounds()+'</b>this month</span><span><b>'+allRounds()+'</b>all time</span></div>'+mileHTML()+'<button class="wk-more" data-tr="1">See trends &#8250;</button><div class="wk-n">Number = rounds read (D1 to J1). Ring = sankalp completed that day.</div>'
   }
   function stkRender(){
     ["wkFin","wkSet"].forEach(function(id){var e=document.getElementById(id);if(e)e.innerHTML=stkWeekHTML()});
@@ -1361,7 +1395,38 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
       var tt=document.getElementById("streakToast");if(tt){var mm=monthRounds();tt.textContent=MILES.indexOf(mm)>=0?"\u{1F64F} "+mm+" rounds this month!":"\u{1F525} Round "+stk[k]+" done today \u00B7 "+mm+" this month";tt.classList.add("show");clearTimeout(stkT);stkT=setTimeout(function(){tt.classList.remove("show")},3200)}
     }
   }
-  var fireEl=document.getElementById("fire");if(fireEl)fireEl.onclick=function(){stkRender();openSettings()};
+
+  // Trends page: weekly (sankalp yes/no + rounds per day) and monthly (daily rounds + month total)
+  var trEl=document.getElementById("trends"),trV="w",trO=0,MN=["January","February","March","April","May","June","July","August","September","October","November","December"],DN=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  function trRender(){
+    var now=new Date(),body=document.getElementById("trbody"),lab=document.getElementById("trlab"),h="";
+    document.getElementById("trnext").disabled=trO>=0;
+    [].forEach.call(trEl.querySelectorAll(".trtabs button"),function(b){b.classList.toggle("on",b.dataset.v===trV)});
+    if(trV==="w"){
+      var dow=(now.getDay()+6)%7,mon=new Date(now.getFullYear(),now.getMonth(),now.getDate()-dow+trO*7),sun=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+6);
+      lab.textContent=mon.getDate()+" "+MN[mon.getMonth()].slice(0,3)+" \u2013 "+sun.getDate()+" "+MN[sun.getMonth()].slice(0,3);
+      var rows="",tot=0,sd=0,mx=1,i,d,k,v;
+      for(i=0;i<7;i++){d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i);mx=Math.max(mx,stk[dkey(d)]||0)}
+      for(i=0;i<7;i++){d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i);k=dkey(d);v=stk[k]||0;tot+=v;var fut=d>now&&k!==dkey(now),yes=!!sk[k];if(yes)sd++;
+        rows+='<div class="tr-r'+(k===dkey(now)?" td":"")+'"><span class="tr-d">'+DN[i]+'<em>'+d.getDate()+'</em></span><span class="tr-s '+(fut?"na":yes?"yes":"no")+'">'+(fut?"\u2013":yes?"Yes":"No")+'</span><span class="tr-b"><s style="width:'+Math.round(v/mx*100)+'%"></s></span><span class="tr-n">'+v+'</span></div>'}
+      h='<div class="tr-sum"><span><b>'+sd+' / 7</b>sankalp days</span><span><b>'+tot+'</b>rounds this week</span></div><div class="tr-h"><span>Day</span><span>Sankalp</span><span>Rounds</span><span></span></div>'+rows;
+    }else{
+      var m0=new Date(now.getFullYear(),now.getMonth()+trO,1),dim=new Date(m0.getFullYear(),m0.getMonth()+1,0).getDate(),pre=dkey(m0).slice(0,7);
+      lab.textContent=MN[m0.getMonth()]+" "+m0.getFullYear();
+      var vals=[],tot2=0,sd2=0,best=0,mx2=1;
+      for(var j=1;j<=dim;j++){var kk=pre+"-"+("0"+j).slice(-2),vv=stk[kk]||0;vals.push(vv);tot2+=vv;if(sk[kk])sd2++;if(vv>best)best=vv;mx2=Math.max(mx2,vv)}
+      var bars="";vals.forEach(function(vv,ix){var kk=pre+"-"+("0"+(ix+1)).slice(-2);bars+='<i class="'+(sk[kk]?"sq":"")+'" title="'+(ix+1)+': '+vv+'"><s style="height:'+Math.max(vv?6:2,Math.round(vv/mx2*100))+'%"></s><em>'+((ix+1)%5===0||ix===0?ix+1:"")+'</em></i>'});
+      h='<div class="tr-big"><b>'+tot2+'</b><span>rounds in '+MN[m0.getMonth()]+'</span></div><div class="tr-sum"><span><b>'+sd2+'</b>sankalp days</span><span><b>'+best+'</b>best day</span><span><b>'+(dim?(tot2/dim).toFixed(1):0)+'</b>daily average</span></div><div class="tr-chart">'+bars+'</div><div class="wk-n">Green base = sankalp completed that day.</div>';
+    }
+    body.innerHTML=h;
+  }
+  function openTrends(){trO=0;trRender();trEl.classList.add("open")}
+  document.getElementById("trback").onclick=function(){trEl.classList.remove("open")};
+  document.getElementById("trprev").onclick=function(){trO--;trRender()};
+  document.getElementById("trnext").onclick=function(){if(trO<0){trO++;trRender()}};
+  [].forEach.call(trEl.querySelectorAll(".trtabs button"),function(b){b.onclick=function(){trV=b.dataset.v;trO=0;trRender()}});
+  document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest("[data-tr]"))openTrends()});
+  var fireEl=document.getElementById("fire");if(fireEl)fireEl.onclick=openTrends;
   stkRender();fireFlip();
   function openFinish(){if(window.__stopVoice)window.__stopVoice();
     (function(){var k=dkey(new Date());if(!sk[k]){sk[k]=goal||1;skSave()}})();
