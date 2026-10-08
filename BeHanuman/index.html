@@ -402,6 +402,61 @@ body.hi .mt-hi{line-height:1.5}
 .sl.drag .sl-thumb{transform:translateX(-50%) scale(1.1);box-shadow:8px 8px 16px rgba(0,0,0,.22),-5px -5px 10px rgba(255,255,255,.85)}
 @media (max-height:700px){.sl-in{height:76px}.sl-track{top:25px}.sl-bd{top:23px}.sl-thumb{top:8px;height:48px}.sl-lb{top:54px;font-size:15px}.sl-thumb b{font-size:17px}}
 
+/* v0.42 vine monkey cue on every card, pointing monkey on Sankalp, desktop column */
+#nudge{width:34px;height:46px;margin-left:-17px;bottom:calc(max(16px,env(safe-area-inset-bottom)) + 56px);overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 22%,#000 72%,transparent);mask-image:linear-gradient(transparent,#000 22%,#000 72%,transparent)}
+#nudge .vn{position:absolute;left:50%;bottom:0;height:50px;width:auto;margin-left:-23px;animation:vclimb 2.6s ease-in-out infinite}
+@keyframes vclimb{0%{transform:translateY(22px)}100%{transform:translateY(-22px)}}
+.swipe .swpt{display:block;height:58px;width:auto;animation:ptbob 1.8s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes ptbob{0%,100%{transform:translateY(3px) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
+.swipe .sw-d{display:none}
+.swipe span{margin-top:8px}
+#navbtns{display:none}
+@media (prefers-reduced-motion:reduce){#nudge .vn,.swipe .swpt{animation:none}}
+@media (min-width:700px){
+  html{background:#c5c5c2}
+  body{position:relative;width:min(100%,480px);margin:0 auto;transform:translateZ(0);box-shadow:0 0 70px rgba(0,0,0,.2)}
+  .verse{--vs:clamp(26px,7cqw,36px)}
+  .doh .verse{--vs:calc(clamp(26px,7cqw,36px) - 1.5px)}
+  .mt{font-size:calc(var(--ms,1) * clamp(12px,3.6cqw,16px))}
+  .chp .mt{font-size:calc(var(--ms,1) * clamp(13.7px,calc(3.6cqw + 1.67px),17.7px))}
+  .jv .mt{font-size:clamp(15px,4.2cqw,18px)}
+  .jv .v-hing,.jv .v-hi{font-size:clamp(24px,7.6cqw,36px)}
+  .jv.rn .v-hing,.jv.rn .v-hi{font-size:clamp(21px,6.4cqw,28px)}
+}
+@media (hover:hover) and (pointer:fine){
+  .swipe .sw-t{display:none}.swipe .sw-d{display:block}
+  #stage{cursor:grab}#stage.drag{cursor:grabbing}
+}
+@media (min-width:700px) and (hover:hover) and (pointer:fine){
+  #navbtns{display:flex;flex-direction:column;gap:10px;position:fixed;left:calc(50% + 262px);top:50%;transform:translateY(-50%);z-index:60}
+  #navbtns button{width:44px;height:44px;border-radius:50%;background:#111;color:#f08a2c;font-size:20px;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+  #navbtns button:active{transform:scale(.94)}
+}
+
+/* v0.42b livelier cues: hand-over-hand climb, pointing monkey pokes upward with rising chevrons */
+#nudge .vn{animation:vclimb2 2.8s cubic-bezier(.45,0,.3,1) infinite;transform-origin:50% 90%}
+@keyframes vclimb2{
+  0%{transform:translateY(24px) rotate(0) scaleY(1)}
+  16%{transform:translateY(14px) rotate(-3deg) scaleY(1.05)}
+  26%{transform:translateY(14px) rotate(2deg) scaleY(.98)}
+  42%{transform:translateY(3px) rotate(-3deg) scaleY(1.05)}
+  52%{transform:translateY(3px) rotate(2deg) scaleY(.98)}
+  68%{transform:translateY(-8px) rotate(-3deg) scaleY(1.05)}
+  78%{transform:translateY(-8px) rotate(2deg) scaleY(.98)}
+  100%{transform:translateY(-26px) rotate(0) scaleY(1)}}
+.swipe{position:absolute}
+.swipe .swpt{animation:ptpoke 1.6s cubic-bezier(.3,.7,.3,1) infinite}
+@keyframes ptpoke{
+  0%,100%{transform:translateY(4px) rotate(0) scale(1,.97)}
+  22%{transform:translateY(-12px) rotate(-4deg) scale(1,1.05)}
+  36%{transform:translateY(-4px) rotate(0) scale(1,1)}
+  52%{transform:translateY(-12px) rotate(-4deg) scale(1,1.05)}
+  68%{transform:translateY(0) rotate(0) scale(1,1)}}
+.swipe .swa{position:absolute;left:calc(50% - 30px);top:8px;width:9px;height:9px;border-left:3px solid #e06b0a;border-top:3px solid #e06b0a;transform:rotate(45deg);opacity:0;animation:swarr 1.6s ease-out infinite}
+.swipe .swa+.swa{animation-delay:.35s}
+@keyframes swarr{0%{opacity:0;transform:translateY(16px) rotate(45deg)}30%{opacity:.9}100%{opacity:0;transform:translateY(-10px) rotate(45deg)}}
+@media (prefers-reduced-motion:reduce){.swipe .swa{display:none}}
+
 </style>
 </head>
 <body>
@@ -417,7 +472,7 @@ body.hi .mt-hi{line-height:1.5}
 <div class="setrow"><span>Language</span><div class="setbtns"><button data-l="hing">English</button><button data-l="hi">हिन्दी</button></div></div>
 <div class="setrow"><span>Music</span><div class="setbtns"><button data-m="1">On</button><button data-m="0">Off</button></div></div>
 <button id="setdone">Done</button></div></div>
-<div id="nudge" aria-hidden="true"><svg class="mk" viewBox="0 0 32 44" aria-hidden="true"><path d="M11 38c-7 0-9-9-3-11" fill="none" stroke="#7a4b2e" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="16" cy="33" rx="6.5" ry="7" fill="#e06b0a"/><path d="M12 29l-3 6" stroke="#7a4b2e" stroke-width="2.6" stroke-linecap="round"/><g class="arm"><path d="M21 28l4-11" stroke="#7a4b2e" stroke-width="3" stroke-linecap="round"/><circle cx="25.4" cy="16.4" r="2.5" fill="#7a4b2e"/><path d="M25.8 15V8" stroke="#7a4b2e" stroke-width="2.3" stroke-linecap="round"/></g><circle cx="9" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="23" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="16" cy="21" r="7" fill="#7a4b2e"/><ellipse cx="16" cy="22.4" rx="4.7" ry="4.1" fill="#f2c9a0"/><circle cx="14" cy="21.4" r=".95" fill="#111"/><circle cx="18" cy="21.4" r=".95" fill="#111"/><path d="M14.3 24.3q1.7 1.3 3.4 0" fill="none" stroke="#7a4b2e" stroke-width=".9" stroke-linecap="round"/></svg></div>
+<div id="nudge" aria-hidden="true"></div>
 <div id="bubble"><p></p><i class="tail"></i></div>
 <div id="a2hs"><div class="in"><b>Add Be Hanuman to your Home Screen</b><p>1. Tap the <i>Share</i> button (the square with an arrow) in your browser's toolbar.<br>2. Scroll down and tap <i>Add to Home Screen</i>, then <i>Add</i>.</p><button id="a2close">Got it</button></div></div>
 <div id="sheet"><div class="in"><div class="hd"><span>Press play on the track below.</span><button id="closeSheet">Close</button></div></div></div>
@@ -831,7 +886,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
         '<div class="sl" id="sl" role="slider" aria-label="Times to read today" aria-valuemin="1" aria-valuemax="21" aria-valuenow="1"><div class="sl-in"><div class="sl-track"><div class="sl-fill"></div></div><i class="sl-bd" data-v="1" style="--f:0.0"></i><i class="sl-bd" data-v="3" style="--f:0.2"></i><i class="sl-bd" data-v="5" style="--f:0.4"></i><i class="sl-bd" data-v="7" style="--f:0.6"></i><i class="sl-bd" data-v="11" style="--f:0.8"></i><i class="sl-bd" data-v="21" style="--f:1.0"></i><span class="sl-lb" style="--f:0.0">1</span><span class="sl-lb" style="--f:0.2">3</span><span class="sl-lb" style="--f:0.4">5</span><span class="sl-lb" style="--f:0.6">7</span><span class="sl-lb" style="--f:0.8">11</span><span class="sl-lb" style="--f:1.0">21</span><div class="sl-thumb"><b id="slv">1</b></div></div></div>'+
         '<p class="ex">Take a deep breath and be ready with a steady mind.</p>'+
         '<button id="install" class="lnk" style="display:none">Add to Home Screen</button></div>'+
-        '<div class="swipe" aria-hidden="true"><svg class="mk" viewBox="0 0 32 44" aria-hidden="true"><path d="M11 38c-7 0-9-9-3-11" fill="none" stroke="#7a4b2e" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="16" cy="33" rx="6.5" ry="7" fill="#e06b0a"/><path d="M12 29l-3 6" stroke="#7a4b2e" stroke-width="2.6" stroke-linecap="round"/><g class="arm"><path d="M21 28l4-11" stroke="#7a4b2e" stroke-width="3" stroke-linecap="round"/><circle cx="25.4" cy="16.4" r="2.5" fill="#7a4b2e"/><path d="M25.8 15V8" stroke="#7a4b2e" stroke-width="2.3" stroke-linecap="round"/></g><circle cx="9" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="23" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="16" cy="21" r="7" fill="#7a4b2e"/><ellipse cx="16" cy="22.4" rx="4.7" ry="4.1" fill="#f2c9a0"/><circle cx="14" cy="21.4" r=".95" fill="#111"/><circle cx="18" cy="21.4" r=".95" fill="#111"/><path d="M14.3 24.3q1.7 1.3 3.4 0" fill="none" stroke="#7a4b2e" stroke-width=".9" stroke-linecap="round"/></svg><span>Swipe up to begin</span></div>'+
+        '<div class="swipe" aria-hidden="true"><img class="swpt" alt="" src="'+BASE+'images/swipe-point.png" draggable="false"><i class="swa"></i><i class="swa"></i><span class="sw-t">Swipe up to begin</span><span class="sw-d">Scroll or press &darr; to begin</span></div>'+
         '</div></section>';
     }
     if(c.t==="jaikara"){
@@ -921,11 +976,19 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   stage.addEventListener("pointerup",end);
   stage.addEventListener("pointercancel",end);
 
-  var wheelLock=0;
+  // Mouse wheel / trackpad: one card per gesture. A trackpad keeps sending small wheel events (inertia) after a swipe, so we wait until they stop.
+  var wheelLock=0,wheelHeld=false,wheelIdle=null;
   window.addEventListener("wheel",function(e){
-    if(Math.abs(e.deltaY)<12||Date.now()<wheelLock)return;
-    wheelLock=Date.now()+650;go(e.deltaY>0?1:-1);
+    var dyw=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?400:1);
+    clearTimeout(wheelIdle);wheelIdle=setTimeout(function(){wheelHeld=false},170);
+    if(wheelHeld||Date.now()<wheelLock||Math.abs(dyw)<8)return;
+    wheelHeld=true;wheelLock=Date.now()+450;go(dyw>0?1:-1);
   },{passive:true});
+  // On-screen arrows for desktop (hidden on phones)
+  var navb=document.createElement("div");navb.id="navbtns";
+  navb.innerHTML='<button id="navup" aria-label="Previous card">&#8593;</button><button id="navdn" aria-label="Next card">&#8595;</button>';
+  document.documentElement.appendChild(navb);
+  navb.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;go(b.id==="navup"?-1:1)});
   document.addEventListener("keydown",function(e){
     if(["ArrowDown","ArrowRight","PageDown"," "].indexOf(e.key)>-1){e.preventDefault();go(1)}
     if(["ArrowUp","ArrowLeft","PageUp"].indexOf(e.key)>-1){e.preventDefault();go(-1)}
@@ -1116,6 +1179,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   var ai=document.createElement("link");ai.rel="apple-touch-icon";ai.href=BASE+"icon-180.png";document.head.appendChild(ai);
   document.getElementById("reset").onclick=function(){goal=1;round=1;saveRounds();updateRounds();backToMain();goTo(0);hint.classList.remove("gone")};
   var nudgeEl=document.getElementById("nudge");
+  if(nudgeEl)nudgeEl.innerHTML='<img class="vn" alt="" src="'+BASE+'images/swipe-vine.png" draggable="false">';
   function updateNudge(){if(nudgeEl)nudgeEl.style.display=(cur===0||cur===N-1)?"none":""}
   updateNudge();
   if(cur>0)hint.classList.add("gone");
