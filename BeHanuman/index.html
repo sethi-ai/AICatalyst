@@ -733,6 +733,7 @@ html.wm .verse,html.wm .v-hing,html.wm .v-hi{text-shadow:0 0 1px rgba(255,200,12
 :is(html.dk,html.wm) :is(.mt,.mean p,.mean .mt,.jv .mt,.card .mt){color:var(--ac)!important}
 :is(html.dk,html.wm) .setbtns button:not(.on){color:var(--t2)!important}
 .fs .verse{--vs:clamp(21px,5.6vw,31px)}
+.bn{font-weight:inherit}.br .bn{font-weight:700}
 
 </style>
 </head>
@@ -749,6 +750,7 @@ html.wm .verse,html.wm .v-hing,html.wm .v-hi{text-shadow:0 0 1px rgba(255,200,12
 <div class="setrow"><span>Language</span><div class="setbtns"><button data-l="hing">English</button><button data-l="hi">हिन्दी</button></div></div>
 <div class="setrow"><span>Theme</span><div class="setbtns"><button data-th="">Light</button><button data-th="wm">Warm</button><button data-th="dk">Dark</button></div></div>
 <div class="setrow"><span>Verse font</span><div class="setbtns"><button data-ft="0">Modern</button><button data-ft="1">Serif</button></div></div>
+<div class="setrow"><span>Bionic reading</span><div class="setbtns"><button data-br="1">Yes</button><button data-br="0">No</button></div></div>
 <div class="setrow"><span>Hide meaning</span><div class="setbtns"><button data-hm="1">Yes</button><button data-hm="0">No</button></div></div>
 <div class="setrow"><span>Hide explanation</span><div class="setbtns"><button data-he="1">Yes</button><button data-he="0">No</button></div></div>
 <div class="setrow"><span>Recitation</span><div class="setbtns"><button data-m="1">On</button><button data-m="0">Off</button></div></div>
@@ -1148,6 +1150,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     return p.replace(/[^\/]*$/,"");
   })();
   function pad(n){return(n<10?"0":"")+n}
+  function bio(t){return esc(t).replace(/([A-Za-z'\u2019]+)/g,function(w){var n=Math.max(1,Math.ceil(w.length*0.4));return '<span class="bn">'+w.slice(0,n)+'</span>'+w.slice(n)})}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 
   // Test image (the sample Hanuman) shows until a real one exists at images/NN.jpg (.jpeg .png .webp also work)
@@ -1175,7 +1178,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     }
     if(c.t==="jaikara"){
       var L=JK.lines.map(function(l,q){
-        return '<div class="jv"><div class="v-hing">'+esc(l.hing)+'</div><div class="v-hi">'+esc(l.dev)+'</div><p class="mt mt-en">'+esc(l.en)+'</p><p class="mt mt-hi">'+esc(HI["J"+(q+1)]||l.en)+'</p></div>';
+        return '<div class="jv"><div class="v-hing">'+esc(l.hing)+'</div><div class="v-hi">'+esc(l.dev)+'</div><p class="mt mt-en">'+bio(l.en)+'</p><p class="mt mt-hi">'+esc(HI["J"+(q+1)]||l.en)+'</p></div>';
       }).join("");
       return '<section class="card"><div class="wrap jk">'+artHTML(c,i)+L+
         '<div class="jv rn"><div class="v-hing">'+esc(JK.rn.hing[0])+'<br>'+esc(JK.rn.hing[1])+'</div><div class="v-hi">'+esc(JK.rn.dev[0])+'<br>'+esc(JK.rn.dev[1])+'</div></div>'+
@@ -1191,7 +1194,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     return '<section class="card'+(c.kl==="Chaupai"?' chp':' doh')+'" style="--lh:'+lh+';--ld:'+ld+'"><div class="wrap">'+artHTML(c,i)+
       '<div class="verse"><div class="v-hing"><span>'+h1+'</span><span>'+h2+'</span></div>'+
       '<div class="v-hi"><span>'+d1+'</span><span>'+d2+'</span></div></div>'+
-      '<div class="mean"><p class="mt mt-en">'+esc(c.mt)+'</p><p class="mt mt-hi">'+esc(hm(c))+'</p></div>'+
+      '<div class="mean"><p class="mt mt-en">'+bio(c.mt)+'</p><p class="mt mt-hi">'+esc(hm(c))+'</p></div>'+
       '</div></section>';
   }
 
@@ -1350,10 +1353,10 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   }
 
   // Settings: hide meaning / hide explanation / recitation volume (saved on the device)
-  var hideM=0,hideE=0,vol=100,theme="",fontSel=0;
-  try{theme=localStorage.getItem("bh_theme")||"";if(theme!=="dk"&&theme!=="wm")theme="";fontSel=+localStorage.getItem("bh_font")||0;hideM=+localStorage.getItem("bh_hm")||0;hideE=+localStorage.getItem("bh_he")||0;var vv=parseInt(localStorage.getItem("bh_vol")||"100",10);if([10,25,50,75,100].indexOf(vv)>=0)vol=vv}catch(e){}
+  var hideM=0,hideE=0,vol=100,theme="",fontSel=0,bionic=0;
+  try{theme=localStorage.getItem("bh_theme")||"";if(theme!=="dk"&&theme!=="wm")theme="";fontSel=+localStorage.getItem("bh_font")||0;bionic=+localStorage.getItem("bh_br")||0;hideM=+localStorage.getItem("bh_hm")||0;hideE=+localStorage.getItem("bh_he")||0;var vv=parseInt(localStorage.getItem("bh_vol")||"100",10);if([10,25,50,75,100].indexOf(vv)>=0)vol=vv}catch(e){}
   function applyPrefs(){
-    var h=document.documentElement;h.classList.toggle("hm",!!hideM);h.classList.toggle("dk",theme==="dk");h.classList.toggle("wm",theme==="wm");h.classList.toggle("fs",!!fontSel);var tm=document.querySelector('meta[name="theme-color"]');if(tm)tm.setAttribute("content",theme==="dk"?"#151518":theme==="wm"?"#1f1710":"#e3e3e1");[].forEach.call(document.querySelectorAll("[data-th]"),function(b){b.classList.toggle("on",b.dataset.th===theme)});[].forEach.call(document.querySelectorAll("[data-ft]"),function(b){b.classList.toggle("on",+b.dataset.ft===fontSel)});h.classList.toggle("he",!!hideE);
+    var h=document.documentElement;h.classList.toggle("hm",!!hideM);h.classList.toggle("br",!!bionic);[].forEach.call(document.querySelectorAll("[data-br]"),function(b){b.classList.toggle("on",+b.dataset.br===bionic)});h.classList.toggle("dk",theme==="dk");h.classList.toggle("wm",theme==="wm");h.classList.toggle("fs",!!fontSel);var tm=document.querySelector('meta[name="theme-color"]');if(tm)tm.setAttribute("content",theme==="dk"?"#151518":theme==="wm"?"#1f1710":"#e3e3e1");[].forEach.call(document.querySelectorAll("[data-th]"),function(b){b.classList.toggle("on",b.dataset.th===theme)});[].forEach.call(document.querySelectorAll("[data-ft]"),function(b){b.classList.toggle("on",+b.dataset.ft===fontSel)});h.classList.toggle("he",!!hideE);
     try{VO.volume=vol/100;NX.volume=vol/100}catch(e){}
     [].forEach.call(document.querySelectorAll("[data-hm]"),function(b){b.classList.toggle("on",+b.dataset.hm===hideM)});
     [].forEach.call(document.querySelectorAll("[data-he]"),function(b){b.classList.toggle("on",+b.dataset.he===hideE)});
@@ -1370,7 +1373,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   function closeBubble(){bub.classList.remove("open");bubFor=null}
   function toggleBubble(btn){
     if(bubFor===btn){closeBubble();return}
-    var bc=D[+btn.dataset.i];bubP.textContent=mode==="hi"?hx(bc):bc.ex;
+    var bc=D[+btn.dataset.i];if(mode==="hi")bubP.textContent=hx(bc);else bubP.innerHTML=bio(bc.ex);
     var r=btn.getBoundingClientRect();
     bub.style.bottom=(window.innerHeight-r.top+14)+"px";
     bub.classList.add("open");bubFor=btn;
@@ -1596,6 +1599,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(b.dataset.m){setMusic(b.dataset.m==="1");return}
     if(b.dataset.th!==undefined){theme=b.dataset.th;setPref("bh_theme",theme);applyPrefs();return}
     if(b.dataset.ft!==undefined){fontSel=+b.dataset.ft;setPref("bh_font",fontSel);applyPrefs();fit();return}
+    if(b.dataset.br!==undefined){bionic=+b.dataset.br;setPref("bh_br",bionic);applyPrefs();return}
     if(b.dataset.hm!==undefined){hideM=+b.dataset.hm;setPref("bh_hm",hideM);applyPrefs();fit();return}
     if(b.dataset.he!==undefined){hideE=+b.dataset.he;setPref("bh_he",hideE);applyPrefs();return}
     if(b.dataset.vol){vol=+b.dataset.vol;setPref("bh_vol",vol);applyPrefs();return}
