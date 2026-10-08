@@ -352,6 +352,7 @@ body.hi .mt-hi{line-height:1.5}
 .swipe span{margin-top:10px;color:#a24400;opacity:1;font-weight:500;letter-spacing:.18em}
 @keyframes swpup{0%{transform:translateY(0)}100%{transform:translateY(-64px)}}
 @media (prefers-reduced-motion:reduce){#nudge i{animation:none;opacity:.5}.swipe .swp i{animation:none;bottom:0}}
+#ytp{position:fixed;left:-400px;bottom:0;width:200px;height:200px;pointer-events:none;opacity:0}
 
 </style>
 </head>
@@ -735,6 +736,11 @@ J1:"सीता जी के पति श्रीराम की जय!",
 J2:"पवनपुत्र हनुमान की जय!"
 };
 </script>
+<script>// Music: YouTube video id and, per card, the second where that card's music starts (null = keep playing).
+// Card order: 0 Sankalp, 1 Doha 1, 2 Doha 2, 3..42 Chaupai 1..40, 43 Closing Doha, 44 Jaikara.
+// Fill the times with tools: open hanuman.dyut.si/tapper.html, tap at the start of each verse, paste the result here.
+window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]};
+</script>
 <script>(function(){
   var CH=window.CHALISA,JK=window.CHALISA_JK,HI=window.HINDI||{},D=[];
   function hk(c){return c.n?"C"+c.n:c.kl==="Doha 1"?"D0":c.kl==="Doha 2"?"D2":"D41"}
@@ -743,7 +749,7 @@ J2:"पवनपुत्र हनुमान की जय!"
   D.push({t:"sankalp",kl:"Sankalp",img:"sankalp"});
   CH.forEach(function(c,i){c.img=pad(i+1);D.push(c);if(i===0){window.CHALISA_OP2.img="opening2";D.push(window.CHALISA_OP2)}});
   D.push({t:"jaikara",kl:"Jaikara",img:"jaikara"});
-  var N=D.length,TRACK_A="3IyAOXe1IP6qbnvSrZqeiE",TRACK_B="6MvqtaK8RDuFlTu9wuH8vy",GOALS=[1,3,7,11,21];
+  var N=D.length,GOALS=[1,3,7,11,21];
   var goal=0,round=1;
   try{goal=parseInt(localStorage.getItem("bh_goal")||"0",10)||0;round=parseInt(localStorage.getItem("bh_round")||"1",10)||1}catch(e){}
   function saveRounds(){try{localStorage.setItem("bh_goal",String(goal));localStorage.setItem("bh_round",String(round))}catch(e){}}
@@ -890,68 +896,64 @@ J2:"पवनपुत्र हनुमान की जय!"
   tgl.onclick=function(){setMode(mode==="hi"?"hing":"hi")};
   setMode(mode);
 
-  // Music. Two tracks, chosen by screen: TRACK_A from the Sankalp screen to the Closing Doha, TRACK_B on the Jaikara screen.
-  // Browsers only allow sound after a touch, so it starts on the first tap or swipe (picking a number, switching Music On, or swiping on).
-  // Spotify's embed has no volume control, so the 50% level cannot be set from here.
+  // Music: one YouTube track (window.MUSIC.video). Each card has a start time in window.MUSIC.times (seconds, null = keep playing).
+  // On every card change the music fades down, jumps to that card's time and fades back up. Browsers only allow sound after a touch,
+  // so it starts on the first swipe. The track loops when it ends.
   var musicOn=true,muted=false;
   try{if(localStorage.getItem("bh_music")==="0")musicOn=false}catch(e){}
-  var sheet=document.getElementById("sheet"),host=document.createElement("div"),ctrl=null,playing=false,wantPlay=false,pendingSync=false,loaded=TRACK_A,lastPos=0,lastDur=0;
+  var MU=window.MUSIC||{},TIMES=MU.times||[],VOL=50;
   var mbtn=document.getElementById("music");
-  sheet.querySelector(".in").appendChild(host);
+  var yt=null,ytReady=false,playing=false,wantPlay=false,pendingSync=false,lastSeek=-1,rampT=null;
   function label(){mbtn.textContent=muted?"Unmute":"Mute";mbtn.setAttribute("aria-label",muted?"Unmute music":"Mute music");mbtn.style.visibility=(musicOn&&cur>0)?"visible":"hidden";updateExplain()}
   function updateExplain(){var b=document.getElementById("explain"),c=D[cur];if(!b)return;var ok=c&&!c.t&&c.ex;b.style.visibility=ok?"visible":"hidden";b.dataset.i=cur}
-  function plainIframe(){
-    if(ctrl||host.querySelector("iframe"))return;
-    var f=document.createElement("iframe");
-    f.src="https://open.spotify.com/embed/track/"+TRACK_A+"?utm_source=generator&theme=0";
-    f.style.cssText="display:block;width:100%;height:80px;border:0;border-radius:12px";
-    f.allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
-    f.title="Hanuman Chalisa on Spotify";host.appendChild(f);
+  function startFor(n){var v=TIMES[n];return typeof v==="number"?v:null}
+  function ramp(to,cb){
+    clearInterval(rampT);var from=0,st=0;try{from=yt.getVolume()}catch(e){}
+    rampT=setInterval(function(){st++;try{yt.setVolume(Math.round(from+(to-from)*st/6))}catch(e){}if(st>=6){clearInterval(rampT);if(cb)cb()}},30);
   }
-  function wantTrack(){return cur===N-1?TRACK_B:TRACK_A}
   function musicSync(){
     if(!musicOn||muted)return;
-    if(!ctrl){pendingSync=true;return}
+    if(!ytReady){pendingSync=true;return}
     try{
-      var t=wantTrack();
-      if(loaded!==t){loaded=t;lastPos=0;lastDur=0;ctrl.loadUri("spotify:track:"+t);ctrl.play()}
-      else if(!playing)ctrl.play();
+      var t=startFor(cur);
+      if(t!==null&&cur!==lastSeek){
+        lastSeek=cur;
+        if(playing)ramp(0,function(){yt.seekTo(t,true);yt.playVideo();ramp(VOL)});
+        else{yt.setVolume(VOL);yt.seekTo(t,true);yt.playVideo()}
+      }else if(!playing){yt.setVolume(VOL);yt.playVideo()}
       wantPlay=true;
-      setTimeout(function(){if(musicOn&&!muted&&!playing){try{ctrl.play()}catch(e){}}},700);
     }catch(e){}
   }
   function backToMain(){}
-  window.onSpotifyIframeApiReady=function(API){
-    API.createController(host,{uri:"spotify:track:"+TRACK_A,width:"100%",height:80,theme:0},function(c){
-      ctrl=c;
-      c.addListener("playback_update",function(e){
-        if(!e||!e.data)return;var d=e.data;
-        playing=d.isPaused===false;if(playing)wantPlay=true;
-        // loop: when the track ends (it reports paused near the end), start it again unless muted or switched off
-        if(d.isPaused&&wantPlay&&musicOn&&!muted&&lastDur>0&&lastPos>=lastDur-3500&&(d.position||0)<2500){lastPos=0;try{c.seek(0);c.play()}catch(x){}return}
-        if(!d.isPaused){lastPos=d.position||0;lastDur=d.duration||lastDur}
-      });
-      if(pendingSync){pendingSync=false;musicSync()}
-    });
+  var ytDiv=document.createElement("div");ytDiv.id="ytp";document.body.appendChild(ytDiv);
+  window.onYouTubeIframeAPIReady=function(){
+    var pv={playsinline:1,controls:0,disablekb:1,fs:0,rel:0,modestbranding:1};
+    if(location.protocol.indexOf("http")===0)pv.origin=location.origin;
+    yt=new YT.Player("ytp",{width:200,height:200,videoId:MU.video,playerVars:pv,events:{
+      onReady:function(){ytReady=true;try{yt.setVolume(VOL)}catch(e){}if(pendingSync){pendingSync=false;musicSync()}},
+      onStateChange:function(e){
+        playing=e.data===1;if(playing)wantPlay=true;
+        if(e.data===0&&musicOn&&!muted){var t=startFor(cur);try{yt.seekTo(t===null?0:t,true);yt.playVideo()}catch(x){}}
+      },
+      onError:function(){ytReady=false;mbtn.style.visibility="hidden"}
+    }});
   };
-  var sc=document.createElement("script");sc.src="https://open.spotify.com/embed/iframe-api/v1";sc.async=true;
-  sc.onerror=plainIframe;document.body.appendChild(sc);
-  setTimeout(plainIframe,5000);
+  if(MU.video){var sc=document.createElement("script");sc.src="https://www.youtube.com/iframe_api";sc.async=true;document.body.appendChild(sc)}
   // If the browser blocked playback after a screen change, the next touch starts it.
   ["pointerdown","touchend","click"].forEach(function(ev){
     window.addEventListener(ev,function(e){
-      if(musicOn&&!muted&&cur>0&&!playing&&ctrl&&!(e.target.closest&&e.target.closest("#music,[data-m]"))){try{ctrl.play()}catch(x){}}
+      if(musicOn&&!muted&&cur>0&&!playing&&ytReady&&!(e.target.closest&&e.target.closest("#music,[data-m]"))){musicSync();try{yt.playVideo()}catch(x){}}
     },{passive:true});
   });
   mbtn.onclick=function(){
-    if(!ctrl){plainIframe();sheet.classList.add("open");return}
-    if(!muted){muted=true;wantPlay=false;try{ctrl.pause()}catch(e){}}
+    if(!ytReady)return;
+    if(!muted){muted=true;wantPlay=false;try{yt.pauseVideo()}catch(e){}}
     else{muted=false;musicSync()}
     label();
   };
   function setMusic(on){
     musicOn=on;try{localStorage.setItem("bh_music",on?"1":"0")}catch(e){}
-    if(on){muted=false;if(cur>0)musicSync()}else{wantPlay=false;if(ctrl){try{ctrl.pause()}catch(e){}}}
+    if(on){muted=false;if(cur>0)musicSync()}else{wantPlay=false;if(yt&&ytReady){try{yt.pauseVideo()}catch(e){}}}
     updateMusicUI();label();
   }
   function updateMusicUI(){[].forEach.call(document.querySelectorAll("[data-m]"),function(b){b.classList.toggle("on",(b.dataset.m==="1")===musicOn)})}
