@@ -366,6 +366,42 @@ body.hi .mt-hi{line-height:1.5}
 @keyframes mkpt{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
 @media (prefers-reduced-motion:reduce){.mk,.mk .arm{animation:none!important}}
 
+/* v0.41 finish page animated like the splash */
+#finish .fin-art{position:relative;overflow:visible;box-shadow:none;border-radius:0;width:min(78vw,46dvh,340px)}
+#finish .fin-art img{position:relative;z-index:2;width:100%;height:100%;object-fit:contain;mix-blend-mode:darken;transform-origin:50% 90%;animation:breathe 4.2s ease-in-out infinite;border-radius:0}
+#finish .fin-art{position:relative;overflow:visible;animation:none}
+#finish .fin-art img{position:relative;z-index:2;transform-origin:50% 90%;animation:breathe 4.2s ease-in-out infinite}
+#finish .glow{position:absolute;left:50%;top:48%;width:135%;aspect-ratio:1/1;margin:0;transform:translate(-50%,-50%);border-radius:50%;z-index:1;
+  background:radial-gradient(circle,rgba(255,196,84,.62) 0%,rgba(255,170,60,.34) 32%,rgba(255,150,40,.12) 55%,rgba(255,150,40,0) 72%);animation:glowp 4.2s ease-in-out infinite}
+#finish .parts{position:absolute;inset:-6%;z-index:3;pointer-events:none}
+#finish .parts i{position:absolute;width:var(--s);height:var(--s);border-radius:50%;background:#f5b53a;box-shadow:0 0 8px 2px rgba(255,180,60,.7);opacity:0;animation:rise var(--d) ease-in infinite;animation-delay:var(--w)}
+
+
+
+@media (prefers-reduced-motion:reduce){#finish .fin-art img,#finish .glow,#finish .parts i{animation:none}#finish .parts{display:none}}
+/* v0.29 hearts above the monkey */
+#finish .hearts{position:absolute;inset:0;z-index:4;pointer-events:none}
+#finish .hearts i{position:absolute;top:51%;width:var(--hs);height:var(--hs);opacity:0;animation:heart var(--hd) ease-out infinite;animation-delay:var(--hw);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e8454f' d='M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z'/%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 1px 2px rgba(180,30,40,.35))}
+@keyframes heart{0%{opacity:0;transform:translate(0,6px) scale(.4)}18%{opacity:1;transform:translate(calc(var(--hx) * .3),-14px) scale(1)}100%{opacity:0;transform:translate(var(--hx),-92px) scale(.85)}}
+@media (prefers-reduced-motion:reduce){#finish .hearts{display:none}}
+#finish .hearts i{top:auto}
+#confetti,.fglow{display:none}
+/* v0.41 slider: raised thumb on a stepped track, like the reference */
+.sl{width:min(calc(100% - 20px),400px)}
+.sl-in{height:88px}
+.sl-track{top:30px;height:12px;background:#d6d6d3;box-shadow:inset 0 2px 4px rgba(0,0,0,.2),0 1px 0 rgba(255,255,255,.85);-webkit-backdrop-filter:none;backdrop-filter:none;overflow:hidden}
+.sl-fill{width:calc(26px + (100% - 52px) * var(--spn,0));background:linear-gradient(90deg,#f7b261,#e06b0a);box-shadow:none}
+.sl-bd{position:absolute;top:28px;left:calc(26px + (100% - 52px) * var(--f));width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#d6d6d3;box-shadow:inset 0 2px 3px rgba(0,0,0,.25),0 1px 0 rgba(255,255,255,.8);transition:background .15s,box-shadow .15s}
+.sl-bd.on{background:radial-gradient(circle at 35% 30%,#ffc07a,#e06b0a 70%);box-shadow:0 0 6px rgba(224,107,10,.55),inset 0 -2px 3px rgba(150,60,0,.35)}
+.sl-lb{position:absolute;top:62px;left:calc(26px + (100% - 52px) * var(--f));transform:translateX(-50%);font-family:Khand,Inter,sans-serif;font-size:17px;font-weight:500;color:#666;letter-spacing:.03em}
+.sl-end{display:none}
+.sl-thumb{top:12px;width:48px;height:48px;border-radius:50%;left:calc(26px + (100% - 52px) * var(--spn,0));background:linear-gradient(145deg,#f3f3f1,#d9d9d6);border:0;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:6px 6px 12px rgba(0,0,0,.2),-5px -5px 10px rgba(255,255,255,.85)}
+.sl-thumb::before{content:"";position:absolute;inset:9px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#ffb870,#e06b0a 72%);box-shadow:0 0 8px rgba(224,107,10,.5),inset 0 -3px 5px rgba(150,60,0,.35)}
+.sl-thumb b{position:relative;z-index:1;font-size:18px;color:#fff;text-shadow:0 1px 2px rgba(120,50,0,.5)}
+.sl.drag .sl-thumb{transform:translateX(-50%) scale(1.1);box-shadow:8px 8px 16px rgba(0,0,0,.22),-5px -5px 10px rgba(255,255,255,.85)}
+@media (max-height:700px){.sl-in{height:76px}.sl-track{top:25px}.sl-bd{top:23px}.sl-thumb{top:8px;height:48px}.sl-lb{top:54px;font-size:15px}.sl-thumb b{font-size:17px}}
+
 </style>
 </head>
 <body>
@@ -375,7 +411,7 @@ body.hi .mt-hi{line-height:1.5}
 <div id="foot"><b id="flabel">Doha 1</b><span id="fcount">1 / 42<em id="hint"> · swipe up &#8593;</em></span></div>
 <div id="ui"><button id="explain" aria-label="Show explanation">Explanation</button><button id="reset" aria-label="Restart from the beginning">&#8634; Restart</button></div>
 <div id="splash"><div class="sp-art"><div class="glow"></div><div class="parts" id="parts"></div><div class="hearts" id="hearts"></div><img id="spimg" alt="Hanuman meditating" draggable="false"></div><b>Be Hanuman</b><span><i class="bar">||</i> Hanuman Chalisa <i class="bar">||</i></span></div>
-<div id="finish"><div id="confetti"></div><div class="fin-art"><div class="fglow"></div><img id="finimg" alt="Hanuman celebrating" draggable="false"></div><h2>Jai Hanuman</h2><div class="finbtns"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button></div></div>
+<div id="finish"><div class="fin-art"><div class="glow"></div><div class="parts" id="fparts"></div><div class="hearts" id="fhearts"></div><img id="finimg" alt="Hanuman celebrating" draggable="false"></div><h2>Jai Hanuman</h2><div class="finbtns"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button></div></div>
 <div id="suppage"><button id="supback" aria-label="Back">&#8249; Back</button><div class="supin"><div class="suph">&#9825;</div><h2>Support Be Hanuman</h2><p>Free, with no ads. If it helped your reading, here are a few ways to help it reach more people.</p><div id="suplist"></div></div></div>
 <div id="settings"><div class="supin"><h2>Settings</h2><p>Choose once. You can change these any time from the gear icon.</p>
 <div class="setrow"><span>Language</span><div class="setbtns"><button data-l="hing">English</button><button data-l="hi">हिन्दी</button></div></div>
@@ -760,7 +796,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   function hx(c){var h=HI[hk(c)];return h&&h.e?h.e:c.ex}
   D.push({t:"sankalp",kl:"Sankalp",img:"sankalp"});
   CH.forEach(function(c,i){c.img=pad(i+1);D.push(c);if(i===0){window.CHALISA_OP2.img="opening2";D.push(window.CHALISA_OP2)}});
-  D.push({t:"jaikara",kl:"Jaikara",img:"jaikara"});
+  D.push({t:"jaikara",kl:"Jaikara",img:"jaikara2"});
   var N=D.length,GOALS=[1,3,7,11,21];
   var goal=0,round=1;
   try{goal=parseInt(localStorage.getItem("bh_goal")||"0",10)||0;round=parseInt(localStorage.getItem("bh_round")||"1",10)||1}catch(e){}
@@ -792,7 +828,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(c.t==="sankalp"){
       return '<section class="card"><div class="wrap skw">'+artHTML(c,i)+
         '<div class="sk"><h2>Sankalp</h2><p class="mt">How many times will you read the Chalisa today?</p>'+
-        '<div class="sl" id="sl" role="slider" aria-label="Times to read today" aria-valuemin="1" aria-valuemax="21" aria-valuenow="1"><div class="sl-in"><div class="sl-track"><div class="sl-fill"></div></div><span class="sl-end l">1</span><span class="sl-end r">21</span><div class="sl-thumb"><b id="slv">1</b></div></div></div>'+
+        '<div class="sl" id="sl" role="slider" aria-label="Times to read today" aria-valuemin="1" aria-valuemax="21" aria-valuenow="1"><div class="sl-in"><div class="sl-track"><div class="sl-fill"></div></div><i class="sl-bd" data-v="1" style="--f:0.0"></i><i class="sl-bd" data-v="6" style="--f:0.25"></i><i class="sl-bd" data-v="11" style="--f:0.5"></i><i class="sl-bd" data-v="16" style="--f:0.75"></i><i class="sl-bd" data-v="21" style="--f:1.0"></i><span class="sl-lb" style="--f:0.0">1</span><span class="sl-lb" style="--f:0.25">6</span><span class="sl-lb" style="--f:0.5">11</span><span class="sl-lb" style="--f:0.75">16</span><span class="sl-lb" style="--f:1.0">21</span><div class="sl-thumb"><b id="slv">1</b></div></div></div>'+
         '<p class="ex">Take a deep breath and be ready with a steady mind.</p>'+
         '<button id="install" class="lnk" style="display:none">Add to Home Screen</button></div>'+
         '<div class="swipe" aria-hidden="true"><svg class="mk" viewBox="0 0 32 44" aria-hidden="true"><path d="M11 38c-7 0-9-9-3-11" fill="none" stroke="#7a4b2e" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="16" cy="33" rx="6.5" ry="7" fill="#e06b0a"/><path d="M12 29l-3 6" stroke="#7a4b2e" stroke-width="2.6" stroke-linecap="round"/><g class="arm"><path d="M21 28l4-11" stroke="#7a4b2e" stroke-width="3" stroke-linecap="round"/><circle cx="25.4" cy="16.4" r="2.5" fill="#7a4b2e"/><path d="M25.8 15V8" stroke="#7a4b2e" stroke-width="2.3" stroke-linecap="round"/></g><circle cx="9" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="23" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="16" cy="21" r="7" fill="#7a4b2e"/><ellipse cx="16" cy="22.4" rx="4.7" ry="4.1" fill="#f2c9a0"/><circle cx="14" cy="21.4" r=".95" fill="#111"/><circle cx="18" cy="21.4" r=".95" fill="#111"/><path d="M14.3 24.3q1.7 1.3 3.4 0" fill="none" stroke="#7a4b2e" stroke-width=".9" stroke-linecap="round"/></svg><span>Swipe up to begin</span></div>'+
@@ -1002,6 +1038,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     var v=Math.max(1,Math.min(SMAX,goal||1));
     sl.style.setProperty("--spn",(v-1)/(SMAX-1));sl.setAttribute("aria-valuenow",v);
     var n=document.getElementById("slv");if(n)n.textContent=v;
+    [].forEach.call(sl.querySelectorAll(".sl-bd"),function(b){b.classList.toggle("on",+b.dataset.v<=v)});
   }
   function slSet(v){
     v=Math.max(1,Math.min(SMAX,v));
@@ -1011,7 +1048,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   (function(){
     var sl=document.getElementById("sl");if(!sl)return;
     var inn=sl.querySelector(".sl-in"),act=false;
-    function fromX(x){var r=inn.getBoundingClientRect(),pad=32;return 1+Math.round(Math.max(0,Math.min(1,(x-r.left-pad)/Math.max(1,r.width-2*pad)))*(SMAX-1))}
+    function fromX(x){var r=inn.getBoundingClientRect(),pad=26;return 1+Math.round(Math.max(0,Math.min(1,(x-r.left-pad)/Math.max(1,r.width-2*pad)))*(SMAX-1))}
     sl.addEventListener("pointerdown",function(e){act=true;sl.classList.add("drag");try{sl.setPointerCapture(e.pointerId)}catch(x){}slSet(fromX(e.clientX));e.stopPropagation()});
     sl.addEventListener("pointermove",function(e){if(act)slSet(fromX(e.clientX))});
     function up(){act=false;sl.classList.remove("drag")}
@@ -1022,14 +1059,9 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   function openFinish(){
     var im=document.getElementById("finimg");
     if(im&&!im.getAttribute("src")){im.dataset.n="jaikara";im.dataset.k="0";im.onerror=function(){__imgFail(im)};im.src=BASE+"images/jaikara.jpg"}
-    var cf=document.getElementById("confetti");
-    if(cf){
-      var cols=["#e06b0a","#f5a623","#ffd24a","#c0392b","#fff3d6","#f08a2c"],h="";
-      for(var q=0;q<36;q++){
-        h+='<i style="--c:'+cols[q%cols.length]+';--w:'+(6+Math.random()*7|0)+'px;--d:'+(2.6+Math.random()*2.4).toFixed(2)+'s;--dl:'+(Math.random()*1.4).toFixed(2)+'s;--x:'+(Math.random()*100).toFixed(1)+'%;--r:'+(Math.random()*720-360|0)+'deg"></i>';
-      }
-      cf.innerHTML=h;
-    }
+    var fp=document.getElementById("fparts"),fh=document.getElementById("fhearts");
+    if(fp&&!fp.firstChild)for(var q=0;q<18;q++){var e=document.createElement("i");e.style.cssText="left:"+(6+Math.random()*88).toFixed(1)+"%;bottom:"+(8+Math.random()*50).toFixed(1)+"%;--s:"+(3+Math.random()*5).toFixed(1)+"px;--d:"+(3.2+Math.random()*3).toFixed(1)+"s;--w:-"+(Math.random()*4).toFixed(1)+"s;--x:"+(Math.random()*30-15).toFixed(0)+"px";fp.appendChild(e)}
+    if(fh&&!fh.firstChild)for(var h=0;h<8;h++){var hh=document.createElement("i");hh.style.cssText="left:"+(32+Math.random()*36).toFixed(1)+"%;top:30%;--hs:"+(11+Math.random()*9).toFixed(0)+"px;--hd:"+(2.8+Math.random()*1.4).toFixed(1)+"s;--hw:-"+(h*0.5).toFixed(2)+"s;--hx:"+(Math.random()*40-20).toFixed(0)+"px";fh.appendChild(hh)}
     finEl.classList.add("open");haptic(30);
   }
   function completeSankalp(){
@@ -1041,9 +1073,6 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     var g=goal||1,r=Math.min(round,g),t=document.getElementById("rtxt"),btn=document.getElementById("again"),cb=document.getElementById("complete");
     if(!t)return;
     if(cb)cb.textContent=r<g?"Complete round "+r+" of "+g:"Complete Sankalp";
-    // Jaikara picture alternates by round: celebration, Ram Darbar, celebration...
-    var jimg=stage.querySelector(".jk .art img"),jn=(r%2===1)?"jaikara":"jaikara2";
-    if(jimg&&jimg.dataset.n!==jn){jimg.dataset.n=jn;jimg.dataset.k="0";jimg.onerror=function(){__imgFail(jimg)};jimg.src=BASE+"images/"+jn+".jpg"}
     if(r<g){
       t.innerHTML='<b>Round '+r+' of '+g+' complete</b><span>'+(g-r)+' more to go</span>';
       btn.textContent="Read again: round "+(r+1);btn.dataset.a="again";btn.style.display="";
