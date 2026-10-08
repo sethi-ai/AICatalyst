@@ -354,6 +354,18 @@ body.hi .mt-hi{line-height:1.5}
 @media (prefers-reduced-motion:reduce){#nudge i{animation:none;opacity:.5}.swipe .swp i{animation:none;bottom:0}}
 #ytp{position:fixed;left:-400px;bottom:0;width:200px;height:200px;pointer-events:none;opacity:0}
 
+/* v0.40 dohas 1.5px smaller; tiny monkey swipe cue */
+.doh .verse{--vs:calc(clamp(26px,7vw,36px) - 1.5px)}
+#nudge{width:22px;height:30px;margin-left:-11px;bottom:calc(max(16px,env(safe-area-inset-bottom)) + 58px)}
+#nudge i{all:unset}
+.mk{display:block;width:100%;height:100%;overflow:visible}
+#nudge .mk{animation:mkup 2s ease-in-out infinite}
+.swipe .mk{width:34px;height:46px;animation:mkup 1.8s ease-in-out infinite}
+.mk .arm{transform-origin:21px 28px;animation:mkpt 1s ease-in-out infinite}
+@keyframes mkup{0%,100%{transform:translateY(2px)}50%{transform:translateY(-6px)}}
+@keyframes mkpt{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
+@media (prefers-reduced-motion:reduce){.mk,.mk .arm{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -369,7 +381,7 @@ body.hi .mt-hi{line-height:1.5}
 <div class="setrow"><span>Language</span><div class="setbtns"><button data-l="hing">English</button><button data-l="hi">हिन्दी</button></div></div>
 <div class="setrow"><span>Music</span><div class="setbtns"><button data-m="1">On</button><button data-m="0">Off</button></div></div>
 <button id="setdone">Done</button></div></div>
-<div id="nudge" aria-hidden="true"><i></i></div>
+<div id="nudge" aria-hidden="true"><svg class="mk" viewBox="0 0 32 44" aria-hidden="true"><path d="M11 38c-7 0-9-9-3-11" fill="none" stroke="#7a4b2e" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="16" cy="33" rx="6.5" ry="7" fill="#e06b0a"/><path d="M12 29l-3 6" stroke="#7a4b2e" stroke-width="2.6" stroke-linecap="round"/><g class="arm"><path d="M21 28l4-11" stroke="#7a4b2e" stroke-width="3" stroke-linecap="round"/><circle cx="25.4" cy="16.4" r="2.5" fill="#7a4b2e"/><path d="M25.8 15V8" stroke="#7a4b2e" stroke-width="2.3" stroke-linecap="round"/></g><circle cx="9" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="23" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="16" cy="21" r="7" fill="#7a4b2e"/><ellipse cx="16" cy="22.4" rx="4.7" ry="4.1" fill="#f2c9a0"/><circle cx="14" cy="21.4" r=".95" fill="#111"/><circle cx="18" cy="21.4" r=".95" fill="#111"/><path d="M14.3 24.3q1.7 1.3 3.4 0" fill="none" stroke="#7a4b2e" stroke-width=".9" stroke-linecap="round"/></svg></div>
 <div id="bubble"><p></p><i class="tail"></i></div>
 <div id="a2hs"><div class="in"><b>Add Be Hanuman to your Home Screen</b><p>1. Tap the <i>Share</i> button (the square with an arrow) in your browser's toolbar.<br>2. Scroll down and tap <i>Add to Home Screen</i>, then <i>Add</i>.</p><button id="a2close">Got it</button></div></div>
 <div id="sheet"><div class="in"><div class="hd"><span>Press play on the track below.</span><button id="closeSheet">Close</button></div></div></div>
@@ -783,7 +795,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
         '<div class="sl" id="sl" role="slider" aria-label="Times to read today" aria-valuemin="1" aria-valuemax="21" aria-valuenow="1"><div class="sl-in"><div class="sl-track"><div class="sl-fill"></div></div><span class="sl-end l">1</span><span class="sl-end r">21</span><div class="sl-thumb"><b id="slv">1</b></div></div></div>'+
         '<p class="ex">Take a deep breath and be ready with a steady mind.</p>'+
         '<button id="install" class="lnk" style="display:none">Add to Home Screen</button></div>'+
-        '<div class="swipe" aria-hidden="true"><div class="swp"><i></i></div><span>Swipe up to begin</span></div>'+
+        '<div class="swipe" aria-hidden="true"><svg class="mk" viewBox="0 0 32 44" aria-hidden="true"><path d="M11 38c-7 0-9-9-3-11" fill="none" stroke="#7a4b2e" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="16" cy="33" rx="6.5" ry="7" fill="#e06b0a"/><path d="M12 29l-3 6" stroke="#7a4b2e" stroke-width="2.6" stroke-linecap="round"/><g class="arm"><path d="M21 28l4-11" stroke="#7a4b2e" stroke-width="3" stroke-linecap="round"/><circle cx="25.4" cy="16.4" r="2.5" fill="#7a4b2e"/><path d="M25.8 15V8" stroke="#7a4b2e" stroke-width="2.3" stroke-linecap="round"/></g><circle cx="9" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="23" cy="21" r="2.6" fill="#7a4b2e"/><circle cx="16" cy="21" r="7" fill="#7a4b2e"/><ellipse cx="16" cy="22.4" rx="4.7" ry="4.1" fill="#f2c9a0"/><circle cx="14" cy="21.4" r=".95" fill="#111"/><circle cx="18" cy="21.4" r=".95" fill="#111"/><path d="M14.3 24.3q1.7 1.3 3.4 0" fill="none" stroke="#7a4b2e" stroke-width=".9" stroke-linecap="round"/></svg><span>Swipe up to begin</span></div>'+
         '</div></section>';
     }
     if(c.t==="jaikara"){
@@ -801,7 +813,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     var h1=esc(c.hing[0])+' '+S, h2=esc(c.hing[1])+' '+B;
     var d1=esc(strip(c.dev[0]))+' '+S, d2=esc(strip(c.dev[1]))+' '+B;
     var lh=Math.max(c.hing[0].length,c.hing[1].length)+3, ld=Math.max(strip(c.dev[0]).length,strip(c.dev[1]).length)+3;
-    return '<section class="card'+(c.kl==="Chaupai"?' chp':'')+'" style="--lh:'+lh+';--ld:'+ld+'"><div class="wrap">'+artHTML(c,i)+
+    return '<section class="card'+(c.kl==="Chaupai"?' chp':' doh')+'" style="--lh:'+lh+';--ld:'+ld+'"><div class="wrap">'+artHTML(c,i)+
       '<div class="verse"><div class="v-hing"><span>'+h1+'</span><span>'+h2+'</span></div>'+
       '<div class="v-hi"><span>'+d1+'</span><span>'+d2+'</span></div></div>'+
       '<div class="mean"><p class="mt mt-en">'+esc(c.mt)+'</p><p class="mt mt-hi">'+esc(hm(c))+'</p></div>'+
