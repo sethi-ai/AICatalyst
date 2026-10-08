@@ -133,7 +133,7 @@ body.hi .v-hi{display:block}
 #a2hs p{margin:0 0 14px;font-size:15px;line-height:1.55}
 #a2hs i{font-style:normal;color:#fff;font-weight:500}
 #a2hs button{background:#f08a2c;color:#111;border-radius:999px;padding:10px 22px;font-size:14px;font-weight:500}
-.jv.rn .rep{margin-top:6px;font-family:Khand,Inter,sans-serif;font-weight:500;font-size:clamp(16px,4.6vw,20px);color:#444;letter-spacing:.04em}
+.jk .rep{margin:6px 0 0;text-align:center;margin-top:6px;font-family:Khand,Inter,sans-serif;font-weight:500;font-size:clamp(16px,4.6vw,20px);color:#444;letter-spacing:.04em}
 
 .wrap.jk{justify-content:center}
 /* sankalp: music choice */
@@ -265,19 +265,12 @@ body.hi .v-hi{display:block}
 @media (max-height:700px){.sl-in{height:70px}.sl-l{top:42px}.sl-l.on{top:36px;font-size:26px}}
 @container (max-height:610px){.skw{--ah:clamp(64px,13cqh,100px)}.skw .sl{margin:6px auto}}
 /* v0.34 end of sankalp */
-#endnav{position:fixed;left:0;right:0;bottom:max(16px,env(safe-area-inset-bottom));z-index:52;display:none;flex-direction:column;align-items:center;gap:10px;pointer-events:none}
-body.done #endnav{display:flex}
-body.done #foot,body.done #reset{display:none}
-body.done .jk{padding-bottom:128px}
-#endnav button{pointer-events:auto;height:44px;min-width:170px;padding:0 24px;border-radius:999px;font-family:Inter,sans-serif;font-size:14px;font-weight:500;letter-spacing:.05em}
 #support{background:#e06b0a;color:#fff}
 #home{background:#111;color:#f08a2c}
-#endnav button:active{transform:scale(.96)}
 #supp{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translate(-50%,8px) scale(.94);display:flex;flex-direction:column;gap:2px;background:#fff;border-radius:18px;padding:8px;box-shadow:0 10px 40px rgba(0,0,0,.22);opacity:0;pointer-events:none;transition:opacity .18s,transform .22s}
 #supp.open{opacity:1;pointer-events:auto;transform:translate(-50%,0) scale(1)}
 #supp a{display:block;padding:12px 22px;border-radius:12px;font-family:Inter,sans-serif;font-size:15px;color:#111;text-decoration:none;white-space:nowrap;text-align:center}
 #supp a:active{background:#eee}
-body.done #ui #reset,body.done #ui #explain{display:none!important}
 /* v0.35 support page */
 #suppage{position:fixed;inset:0;z-index:400;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;padding:calc(max(12px,env(safe-area-inset-top)) + 70px) 22px 30px;overflow:auto;opacity:0;transition:opacity .25s}
 #suppage.open{display:flex;opacity:1}
@@ -316,6 +309,31 @@ body.done #ui #reset,body.done #ui #explain{display:none!important}
 .sl-thumb b{font-family:Khand,Inter,sans-serif;font-weight:600;font-size:30px;line-height:1;color:#b94f00;text-shadow:0 1px 0 rgba(255,255,255,.8);pointer-events:none}
 @media (max-height:700px){.sl-in{height:74px}.sl-track{top:28px}.sl-thumb{top:9px;height:48px}.sl-thumb b{font-size:27px}.sl-end{top:54px}}
 
+/* v0.37 */
+.mt,.jv .mt{color:#a24400!important}
+.jk .rep{margin:6px 0 0;text-align:center}
+.cbtn{margin:6px auto 0;min-height:48px;padding:0 30px;border-radius:999px;background:#e06b0a;color:#fff;font-family:Inter,sans-serif;font-size:15px;font-weight:600;letter-spacing:.04em;transition:transform .15s}
+.cbtn:active{transform:scale(.96)}
+.jk.fin .cbtn{visibility:hidden}
+#finish{position:fixed;inset:0;z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#e3e3e1;padding:24px;overflow:hidden}
+#finish.open{display:flex;animation:fin .5s ease both}
+.fin-art{position:relative;width:min(78vw,340px);aspect-ratio:1;border-radius:24px;overflow:hidden;box-shadow:0 10px 40px rgba(224,107,10,.35)}
+.fin-art img{position:relative;width:100%;height:100%;object-fit:cover;display:block;animation:celeb 2.4s ease-in-out infinite}
+.fglow{position:absolute;inset:-20%;background:radial-gradient(circle,rgba(255,200,80,.55),transparent 62%);animation:fglow 2.4s ease-in-out infinite;z-index:1;pointer-events:none;mix-blend-mode:soft-light}
+#finish h2{margin:0;font-family:Khand,sans-serif;font-weight:600;font-size:clamp(34px,10vw,48px);color:#a24400;letter-spacing:.04em}
+.finbtns{display:flex;flex-direction:column;gap:10px;align-items:center}
+.finbtns button{height:46px;min-width:190px;padding:0 24px;border-radius:999px;font-family:Inter,sans-serif;font-size:15px;font-weight:500;letter-spacing:.05em}
+.finbtns button:active{transform:scale(.96)}
+#support{background:#e06b0a;color:#fff}
+#home{background:#111;color:#f08a2c}
+#confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#confetti i{position:absolute;top:-6%;left:var(--x);width:var(--w);height:calc(var(--w)*1.6);background:var(--c);border-radius:2px;opacity:0;animation:fall var(--d) linear var(--dl) infinite}
+@keyframes fall{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(110vh) rotate(var(--r));opacity:1}}
+@keyframes celeb{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+@keyframes fglow{0%,100%{opacity:.5}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){#confetti i,.fin-art img,.fglow{animation:none}#confetti{display:none}}
+@media (max-width:340px){#ui #explain{padding:8px 10px;font-size:11px}}
+
 </style>
 </head>
 <body>
@@ -325,7 +343,7 @@ body.done #ui #reset,body.done #ui #explain{display:none!important}
 <div id="foot"><b id="flabel">Doha 1</b><span id="fcount">1 / 42<em id="hint"> · swipe up &#8593;</em></span></div>
 <div id="ui"><button id="explain" aria-label="Show explanation">Explanation</button><button id="reset" aria-label="Restart from the beginning">&#8634; Restart</button></div>
 <div id="splash"><div class="sp-art"><div class="glow"></div><div class="parts" id="parts"></div><div class="hearts" id="hearts"></div><img id="spimg" alt="Hanuman meditating" draggable="false"></div><b>Be Hanuman</b><span><i class="bar">||</i> Hanuman Chalisa <i class="bar">||</i></span></div>
-<div id="endnav"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button></div>
+<div id="finish"><div id="confetti"></div><div class="fin-art"><div class="fglow"></div><img id="finimg" alt="Hanuman celebrating" draggable="false"></div><h2>Jai Hanuman</h2><div class="finbtns"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button></div></div>
 <div id="suppage"><button id="supback" aria-label="Back">&#8249; Back</button><div class="supin"><div class="suph">&#9825;</div><h2>Support Be Hanuman</h2><p>Free, with no ads. If it helped your reading, here are a few ways to help it reach more people.</p><div id="suplist"></div></div></div>
 <div id="settings"><div class="supin"><h2>Settings</h2><p>Choose once. You can change these any time from the gear icon.</p>
 <div class="setrow"><span>Language</span><div class="setbtns"><button data-l="hing">Hinglish</button><button data-l="hi">हिन्दी</button></div></div>
@@ -696,7 +714,8 @@ window.CHALISA_JK = {
       }).join("");
       return '<section class="card"><div class="wrap jk">'+artHTML(c,i)+L+
         '<div class="jv rn"><div class="v-hing">'+esc(JK.rn.hing[0])+'<br>'+esc(JK.rn.hing[1])+'</div><div class="v-hi">'+esc(JK.rn.dev[0])+'<br>'+esc(JK.rn.dev[1])+'</div></div>'+
-        '<div class="rr"><button id="rep" class="repbtn" aria-label="Tap after each repeat"><span class="rl"><i class="bar">||</i> Repeat <b id="rn">11</b> <span id="rt">Times</span> <i class="bar">||</i></span><em>Tap after each repeat</em></button><div class="rounds"><p id="rtxt"></p><button id="again"></button></div></div></div></section>';
+        '<p class="rep"><i class="bar">||</i> Chant 11 times <i class="bar">||</i></p>'+
+        '<div class="rr"><button id="complete" class="cbtn">Complete Sankalp</button><div class="rounds"><p id="rtxt"></p><button id="again"></button></div></div></div></section>';
     }
     var B='<i class="bar">||</i>';
     var h1=B+' '+esc(c.hing[0]), h2=esc(c.hing[1])+' '+B;
@@ -744,7 +763,7 @@ window.CHALISA_JK = {
     if(n!==cur){
       leaving=cur;clearTimeout(leaveT);stage.classList.add("moving");
       leaveT=setTimeout(function(){leaving=-1;stage.classList.remove("moving");layout()},700);
-      var was=cur;cur=n;save();hint.classList.add("gone");closeBubble();updateExplain();if(n!==N-1)document.body.classList.remove("done");if(n===N-1)resetCount();
+      var was=cur;cur=n;save();hint.classList.add("gone");closeBubble();updateExplain();if(n===N-1)resetCount();
       musicSync();
     }
     dy=0;layout();
@@ -910,23 +929,30 @@ window.CHALISA_JK = {
     function up(){act=false;sl.classList.remove("drag")}
     sl.addEventListener("pointerup",up);sl.addEventListener("pointercancel",up);
   })();
-  var rc=11;
-  function resetCount(){
-    rc=11;document.body.classList.remove("done");var w=stage.querySelector(".jk");if(w)w.classList.remove("fin");
-    var n=document.getElementById("rn"),t=document.getElementById("rt");if(n)n.textContent=rc;if(t)t.textContent="Times";
+  function resetCount(){var w=stage.querySelector(".jk");if(w)w.classList.remove("fin")}
+  var finEl=document.getElementById("finish");
+  function openFinish(){
+    var im=document.getElementById("finimg");
+    if(im&&!im.getAttribute("src")){im.dataset.n="jaikara";im.dataset.k="0";im.onerror=function(){__imgFail(im)};im.src=BASE+"images/jaikara.jpg"}
+    var cf=document.getElementById("confetti");
+    if(cf){
+      var cols=["#e06b0a","#f5a623","#ffd24a","#c0392b","#fff3d6","#f08a2c"],h="";
+      for(var q=0;q<36;q++){
+        h+='<i style="--c:'+cols[q%cols.length]+';--w:'+(6+Math.random()*7|0)+'px;--d:'+(2.6+Math.random()*2.4).toFixed(2)+'s;--dl:'+(Math.random()*1.4).toFixed(2)+'s;--x:'+(Math.random()*100).toFixed(1)+'%;--r:'+(Math.random()*720-360|0)+'deg"></i>';
+      }
+      cf.innerHTML=h;
+    }
+    finEl.classList.add("open");haptic(30);
   }
-  function tapRepeat(){
-    if(rc<=0)return;rc--;
-    var n=document.getElementById("rn"),t=document.getElementById("rt"),w=stage.querySelector(".jk"),rb=document.getElementById("rep");
-    if(n)n.textContent=rc;if(t)t.textContent=rc===1?"Time":"Times";
-    if(rb){rb.classList.remove("pop");void rb.offsetWidth;rb.classList.add("pop")}
-    haptic(rc===0?30:12);
-    if(rc===0&&w)setTimeout(function(){w.classList.add("fin");if(Math.min(round,goal||1)>=(goal||1))document.body.classList.add("done");layout()},260);
+  function completeSankalp(){
+    var g=goal||1,r=Math.min(round,g),w=stage.querySelector(".jk");
+    if(r<g){if(w){w.classList.add("fin");layout();haptic(20)}}else openFinish();
   }
   function updateRounds(){
     resetCount();slPaint();
-    var g=goal||1,r=Math.min(round,g),t=document.getElementById("rtxt"),btn=document.getElementById("again");
+    var g=goal||1,r=Math.min(round,g),t=document.getElementById("rtxt"),btn=document.getElementById("again"),cb=document.getElementById("complete");
     if(!t)return;
+    if(cb)cb.textContent=r<g?"Complete round "+r+" of "+g:"Complete Sankalp";
     // Jaikara picture alternates by round: celebration, Ram Darbar, celebration...
     var jimg=stage.querySelector(".jk .art img"),jn=(r%2===1)?"jaikara":"jaikara2";
     if(jimg&&jimg.dataset.n!==jn){jimg.dataset.n=jn;jimg.dataset.k="0";jimg.onerror=function(){__imgFail(jimg)};jimg.src=BASE+"images/"+jn+".jpg"}
@@ -942,7 +968,7 @@ window.CHALISA_JK = {
   document.getElementById("explain").addEventListener("click",function(){toggleBubble(this)});
   stage.addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
-    if(b.id==="rep"){tapRepeat();return}
+    if(b.id==="complete"){completeSankalp();return}
     if(b.dataset.l){setMode(b.dataset.l);fit();return}
     if(b.dataset.m){setMusic(b.dataset.m==="1");return}
     if(b.id==="again"){
@@ -1037,7 +1063,7 @@ window.CHALISA_JK = {
     else window.open("https://wa.me/?text="+encodeURIComponent(txt+" "+url),"_blank","noopener");
   });
   document.getElementById("home").addEventListener("click",function(){
-    sp2.classList.remove("open");goal=1;round=1;saveRounds();document.body.classList.remove("done");
+    sp2.classList.remove("open");finEl.classList.remove("open");goal=1;round=1;saveRounds();
     try{sessionStorage.setItem("bh_card_s","0")}catch(e){}
     updateRounds();goTo(0);if(window.__showSplash)window.__showSplash();
   });
