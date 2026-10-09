@@ -745,6 +745,9 @@ html.dk.wf #warmveil{background:rgba(255,170,80,.13)}
 html.dk .art img.tp{-webkit-mask-image:none;mask-image:none;filter:none}
 html.dk .art img.tp{filter:drop-shadow(0 8px 18px rgba(0,0,0,.45))}
 
+/* v0.67 dark finish image */
+html.dk #finimg.tp{filter:drop-shadow(0 8px 18px rgba(0,0,0,.45))}
+
 </style>
 </head>
 <body>
@@ -1379,10 +1382,10 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   }
 
   // Dark artwork: transparent WebP files in images/dark/. Add a name here when its file exists; others fall back to the dimmed light image.
-  var DARK_SET=["01","02","03","04","05","06","07","08","09","10","11","12","13","14"];
+  var DARK_SET=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","opening2","sankalp","jaikara","jaikara2"];
   function artTheme(){
     var dk=document.documentElement.classList.contains("dk");
-    [].forEach.call(document.querySelectorAll(".art img[data-n]"),function(im){
+    [].forEach.call(document.querySelectorAll(".art img[data-n],#finimg[data-n]"),function(im){
       var n=im.dataset.n;if(DARK_SET.indexOf(n)<0)return;
       if(dk){if(!im.classList.contains("tp")){im.classList.add("tp");im.onerror=function(){im.onerror=null;im.classList.remove("tp");im.src=BASE+"images/"+n+".jpg"};im.src=BASE+"images/dark/"+n+".webp"}}
       else if(im.classList.contains("tp")){im.classList.remove("tp");im.onerror=function(){__imgFail(im)};im.src=BASE+"images/"+n+".jpg"}
@@ -1520,7 +1523,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   function openFinish(){if(window.__stopVoice)window.__stopVoice();
     (function(){var k=dkey(new Date());if(!sk[k]){sk[k]=goal||1;skSave()}})();
     var im=document.getElementById("finimg");
-    if(im&&!im.getAttribute("src")){im.dataset.n="jaikara";im.dataset.k="0";im.onerror=function(){__imgFail(im)};im.src=BASE+"images/jaikara.jpg"}
+    if(im&&!im.getAttribute("src")){im.dataset.n="jaikara";im.dataset.k="0";im.onerror=function(){__imgFail(im)};im.src=BASE+"images/jaikara.jpg";artTheme()}
     var fp=document.getElementById("fparts"),fh=document.getElementById("fhearts");
     if(fp&&!fp.firstChild)for(var q=0;q<18;q++){var e=document.createElement("i");e.style.cssText="left:"+(6+Math.random()*88).toFixed(1)+"%;bottom:"+(8+Math.random()*50).toFixed(1)+"%;--s:"+(3+Math.random()*5).toFixed(1)+"px;--d:"+(3.2+Math.random()*3).toFixed(1)+"s;--w:-"+(Math.random()*4).toFixed(1)+"s;--x:"+(Math.random()*30-15).toFixed(0)+"px";fp.appendChild(e)}
     if(fh&&!fh.firstChild)for(var h=0;h<8;h++){var hh=document.createElement("i");hh.style.cssText="left:"+(32+Math.random()*36).toFixed(1)+"%;top:30%;--hs:"+(11+Math.random()*9).toFixed(0)+"px;--hd:"+(2.8+Math.random()*1.4).toFixed(1)+"s;--hw:-"+(h*0.5).toFixed(2)+"s;--hx:"+(Math.random()*40-20).toFixed(0)+"px";fh.appendChild(hh)}
