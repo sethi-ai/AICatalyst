@@ -1821,6 +1821,10 @@ html.dk .knob:before,html.wm .knob:before{background:linear-gradient(180deg,#8c8
 .knob b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif;color:#7a3a00;z-index:1;pointer-events:none;min-width:0!important;padding-top:6px}
 html.dk .knob b,html.wm .knob b{color:#ffe0b8}
 
+/* bionic inside verse lines */
+.verse span.bn{display:inline!important;font-size:inherit;white-space:inherit!important}
+html.br .verse .bn{font-weight:700}
+
 </style>
 </head>
 <body>
@@ -1831,11 +1835,11 @@ html.dk .knob b,html.wm .knob b{color:#ffe0b8}
 <div id="ui"><button id="explain" aria-label="Show explanation">Explanation</button><button id="reset" aria-label="Restart from the beginning">&#8634; Restart</button></div>
 <div id="splash"><div class="sp-art"><div class="glow"></div><div class="parts" id="parts"></div><div class="hearts" id="hearts"></div><img id="spimg" alt="Hanuman meditating" draggable="false"></div><b>Be Hanuman</b><span><i class="bar">||</i> Hanuman Chalisa <i class="bar">||</i></span></div>
 <div id="finish"><div class="fin-art"><div class="glow"></div><div class="parts" id="fparts"></div><div class="hearts" id="fhearts"></div><img id="finimg" alt="Hanuman celebrating" draggable="false"></div><h2>Jai Hanuman</h2><p id="finPr" class="finpr"></p><div class="finbtns"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button><button id="streakBtn" data-tr="1">&#128293; My Sankalp</button></div></div>
-<div id="suppage"><button id="supback" aria-label="Back">&#8249; Back</button><div class="supin"><div class="suph">&#9825;</div><h2>Support Be Hanuman</h2><p>Free, with no ads. If it helped your reading, here are a few ways to help it reach more people.</p><div id="suplist"></div><a class="supfoot" href="https://growthx.club/" target="_blank" rel="noopener" aria-label="Built at growthX"><img src="https://built.growthx.club/built-logo.svg" alt="Built at growthX" width="116" loading="lazy" onerror="this.replaceWith(document.createTextNode('Built at growthX'))"></a></div></div>
+<div id="suppage"><button id="supback" aria-label="Back">&#8249; Back</button><div class="supin"><div class="suph">&#9825;</div><h2>Support Be Hanuman</h2><p>Free, with no ads. If it helped your reading, here are a few ways to help it reach more people.</p><div id="suplist"></div></div></div>
 <div id="settings"><div class="supin set2"><div id="setArt"></div><h2>Settings</h2><p id="setHi"></p>
 <section class="sg"><h4>Recitation &amp; language</h4><div class="row"><span>Recitation</span><div class="pbs"><button class="pb" data-pb="rec" data-v="1">On</button><button class="pb" data-pb="rec" data-v="0">Off</button></div></div><div id="volrow" class="row"><span>Volume</span><div class="vbar"><button data-vol="10" aria-label="10"></button><button data-vol="25" aria-label="25"></button><button data-vol="50" aria-label="50"></button><button data-vol="75" aria-label="75"></button><button data-vol="100" aria-label="100"></button></div></div><div class="row"><span>Start fresh each visit</span><div class="pbs"><button class="pb" data-pb="fresh" data-v="1">On</button><button class="pb" data-pb="fresh" data-v="0">Off</button></div></div><div class="row"><span>Language</span><div class="pbs"><button class="pb" data-l="hing">English</button><button class="pb" data-l="hi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</button></div></div></section>
 <section class="sg"><h4>Display &amp; reading</h4><div class="row"><span>Theme</span><div class="pbs"><button class="pb" data-pb="theme" data-v="lt">Light</button><button class="pb" data-pb="theme" data-v="dk">Dark</button></div></div><div class="row"><span>Tone</span><div class="pbs"><button class="pb" data-pb="tone" data-v="c">Cold</button><button class="pb" data-pb="tone" data-v="w">Warm</button></div></div><div class="row"><span>Verse font</span><div class="pbs"><button class="pb" data-pb="font" data-v="m">Modern</button><button class="pb" data-pb="font" data-v="s">Serif</button><button class="pb" data-pb="font" data-v="l">Lexend</button></div></div><div class="row" id="rowBr"><span>Bionic reading</span><div class="pbs"><button class="pb" data-pb="br" data-v="1">On</button><button class="pb" data-pb="br" data-v="0">Off</button></div></div><div class="row"><span>Meaning</span><div class="pbs"><button class="pb" data-pb="mn" data-v="1">On</button><button class="pb" data-pb="mn" data-v="0">Off</button></div></div><div class="row"><span>Explanation</span><div class="pbs"><button class="pb" data-pb="ex" data-v="1">On</button><button class="pb" data-pb="ex" data-v="0">Off</button></div></div></section>
-<section class="sg"><h4>More</h4><div class="mgrid"><button class="pb" data-a2h>Add to Home Screen</button><button class="pb" data-sup="sp">Support us</button><button class="pb fbk" data-sup="fb" style="grid-column:1/3">Send feedback</button><button class="pb danger" data-tg="reset">Reset profile</button></div></section><p class="setver"><b>V1.0</b><br>Built with &#128153; on <a href="https://built.growthx.club" target="_blank" rel="noopener">growthX</a><br>Build Sprint 04</p>
+<section class="sg"><h4>More</h4><div class="mgrid"><button class="pb" data-a2h>Add to Home Screen</button><button class="pb" data-sup="sp">Support us</button><button class="pb fbk" data-sup="fb" style="grid-column:1/3">Send feedback</button><button class="pb danger" data-tg="reset">Reset profile</button></div></section><p class="setver"><b>V1.01</b><br>Built with &#128153; on <a href="https://built.growthx.club" target="_blank" rel="noopener">growthX</a><br>Build Sprint 04</p>
 </div></div>
 <div id="trends"><button id="trback" aria-label="Back">&#8249; Back</button><div id="hpPager"><div id="hp1b" class="hpg"><div id="hpIP"></div><div class="hgrp"><div id="hpGo"></div><div id="hpAct"></div></div></div><div id="hp1" class="hpg"><div class="hpin"><h2 id="hpHi">Jai Hanuman</h2><div id="hpSk"></div></div><div id="hpCount"></div><div id="hpGo2"></div></div><div id="hp2" class="hpg"><div id="hpSup" class="hs"><h4>Support us</h4><div class="hs-g"><button class="pb" data-sup="wa"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Share on WhatsApp</button><button class="pb" data-sup="ig"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" style="fill:currentColor"/></svg>Follow on Instagram</button><button class="pb" data-sup="igs"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" style="fill:currentColor"/></svg>Share on Instagram</button><button class="pb" data-a2h><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="6" y="3" width="12" height="18" rx="3"/><path d="M12 7v7M9 11l3 3 3-3"/></svg><b>Add to Home Screen</b></button><button class="pb fbk" data-sup="fb"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h7M8.5 14h4"/></svg>Drop us a feedback</button></div></div></div><div id="hpDots"><i></i><i></i><i></i></div></div><div id="trOld" hidden><div class="trin"><div class="trtabs"><button data-v="w" class="on">Weekly</button><button data-v="m">Monthly</button></div><div class="trnav"><button id="trprev">&#8249;</button><b id="trlab"></b><button id="trnext">&#8250;</button></div><div id="trbody"></div></div></div></div>
 <nav id="tabbar" aria-label="Main" style="--i:0"><button data-tab="chant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h2M8 8v8M12 4v16M16 8v8M20 12h-2"/></svg><span>Chant</span></button><button data-tab="home"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="7" rx="2"/><rect x="4" y="13" width="16" height="7" rx="2"/></svg><span>Feed</span></button><button data-tab="learn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg><span>Learn</span></button><button data-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.4"/><circle cx="8" cy="17" r="2.4"/></svg><span>Settings</span></button><button data-act="restart" id="tbRestart" aria-label="Restart recitation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.4-5.5M4.5 4.5v4h4"/></svg><span>Restart</span></button></nav>
@@ -2245,6 +2249,9 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   })();
   function pad(n){return(n<10?"0":"")+n}
   function bio(t){return esc(t).replace(/([A-Za-z'\u2019]+)/g,function(w){var n=Math.max(1,Math.ceil(w.length*0.4));return '<span class="bn">'+w.slice(0,n)+'</span>'+w.slice(n)})}
+  function bioDev(t){var seg=window.Intl&&Intl.Segmenter?new Intl.Segmenter("hi",{granularity:"grapheme"}):null;return String(t).split(" ").map(function(w){
+    if(!w)return w;var g=seg?Array.from(seg.segment(w),function(x){return x.segment}):null;if(!g||g.length<2)return esc(w);
+    var n=Math.max(1,Math.ceil(g.length*0.4));return '<span class="bn">'+esc(g.slice(0,n).join(""))+'</span>'+esc(g.slice(n).join(""))}).join(" ")}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 
   // Test image (the sample Hanuman) shows until a real one exists at images/NN.jpg (.jpeg .png .webp also work)
@@ -2282,8 +2289,8 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     var B='<i class="bar">||</i>';
     // Dohas and chaupais alike: line 1 ends with |, line 2 ends with ||. No leading bar.
     var S='<i class="bar">|</i>';
-    var h1=esc(c.hing[0])+' '+S, h2=esc(c.hing[1])+' '+B;
-    var d1=esc(strip(c.dev[0]))+' '+S, d2=esc(strip(c.dev[1]))+' '+B;
+    var h1=bio(c.hing[0])+' '+S, h2=bio(c.hing[1])+' '+B;
+    var d1=bioDev(strip(c.dev[0]))+' '+S, d2=bioDev(strip(c.dev[1]))+' '+B;
     var lh=Math.max(c.hing[0].length,c.hing[1].length)+3, ld=Math.max(strip(c.dev[0]).length,strip(c.dev[1]).length)+3;
     return '<section class="card'+(c.kl==="Chaupai"?' chp':' doh')+'" style="--lh:'+lh+';--ld:'+ld+'"><div class="wrap">'+artHTML(c,i)+
       '<div class="verse"><div class="v-hing"><span>'+h1+'</span><span>'+h2+'</span></div>'+
@@ -2718,7 +2725,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(b.dataset.wf!==undefined){warm=+b.dataset.wf;setPref("bh_wf",warm);applyPrefs();return}
     if(b.dataset.th!==undefined){theme=b.dataset.th;setPref("bh_theme",theme);applyPrefs();return}
     if(b.dataset.ft!==undefined){fontSel=+b.dataset.ft;if(fontSel!==2)bionic=0;setPref("bh_font",fontSel);applyPrefs();fit();return}
-    if(b.dataset.br!==undefined){bionic=+b.dataset.br;setPref("bh_br",bionic);applyPrefs();return}
+    if(b.dataset.br!==undefined){bionic=+b.dataset.br;setPref("bh_br",bionic);applyPrefs();fit();return}
     if(b.dataset.hm!==undefined){hideM=+b.dataset.hm;setPref("bh_hm",hideM);applyPrefs();fit();return}
     if(b.dataset.he!==undefined){hideE=+b.dataset.he;setPref("bh_he",hideE);applyPrefs();return}
     if(b.dataset.vol){vol=+b.dataset.vol;setPref("bh_vol",vol);applyPrefs();return}
@@ -2894,7 +2901,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     theme:{get:function(){return theme==="dk"?"dk":"lt"},set:function(v){theme=v==="dk"?"dk":"";setPref("bh_theme",theme);applyPrefs()}},
     tone:{get:function(){return warm?"w":"c"},set:function(v){warm=v==="w"?1:0;setPref("bh_wf",warm);applyPrefs()}},
     font:{get:function(){return fontSel===2?"l":fontSel===1?"s":"m"},set:function(v){fontSel=v==="l"?2:v==="s"?1:0;if(fontSel!==2){bionic=0;setPref("bh_br",0)}setPref("bh_font",fontSel);applyPrefs();fit()}},
-    br:{get:function(){return bionic?"1":"0"},set:function(v){bionic=+v;setPref("bh_br",bionic);applyPrefs()}},
+    br:{get:function(){return bionic?"1":"0"},set:function(v){bionic=+v;setPref("bh_br",bionic);applyPrefs();fit()}},
     mn:{get:function(){return hideM?"0":"1"},set:function(v){hideM=v==="1"?0:1;setPref("bh_hm",hideM);applyPrefs();fit()}},
     ex:{get:function(){return hideE?"0":"1"},set:function(v){hideE=v==="1"?0:1;setPref("bh_he",hideE);applyPrefs()}},
     fresh:{get:function(){return stg("bh_fresh","1")},set:function(v){stset("bh_fresh",v)}}};
@@ -2904,7 +2911,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(k==="dark"){theme=theme==="dk"?"":"dk";setPref("bh_theme",theme);applyPrefs()}
     else if(k==="wf"){warm=warm?0:1;setPref("bh_wf",warm);applyPrefs()}
     else if(k==="ft"){fontSel=fontSel===1?0:1;setPref("bh_font",fontSel);applyPrefs();fit()}
-    else if(k==="br"){bionic=bionic?0:1;setPref("bh_br",bionic);applyPrefs()}
+    else if(k==="br"){bionic=bionic?0:1;setPref("bh_br",bionic);applyPrefs();fit()}
     else if(k==="fresh"){stset("bh_fresh",stg("bh_fresh","1")==="1"?"0":"1");tilePaint()}
     else if(k==="reset"){if(!t.classList.contains("arm")){t.classList.add("arm");t.textContent="Tap again to confirm";setTimeout(function(){t.classList.remove("arm");t.textContent="Reset profile"},3500)}else{try{var ks=[],q;for(q=0;q<localStorage.length;q++){var kn=localStorage.key(q);if(kn&&kn.indexOf("bh_")===0)ks.push(kn)}ks.forEach(function(kn){localStorage.removeItem(kn)});sessionStorage.clear()}catch(x){}location.reload()}}
     else if(k==="mn"){hideM=hideM?0:1;setPref("bh_hm",hideM);applyPrefs();fit()}
@@ -3031,7 +3038,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   function lnLabel(q){var c=D[q];return q===1?"Doha 1":q===2?"Doha 2":q===43?"Closing Doha":"Chaupai "+c.n}
   function lnVerse(c){
     var B='<i class="bar">||</i>',S='<i class="bar">|</i>';
-    return '<div class="verse"><div class="v-hing"><span>'+esc(c.hing[0])+' '+S+'</span><span>'+esc(c.hing[1])+' '+B+'</span></div><div class="v-hi"><span>'+esc(strip(c.dev[0]))+' '+S+'</span><span>'+esc(strip(c.dev[1]))+' '+B+'</span></div></div>';
+    return '<div class="verse"><div class="v-hing"><span>'+bio(c.hing[0])+' '+S+'</span><span>'+bio(c.hing[1])+' '+B+'</span></div><div class="v-hi"><span>'+bioDev(strip(c.dev[0]))+' '+S+'</span><span>'+bioDev(strip(c.dev[1]))+' '+B+'</span></div></div>';
   }
   function renderLearn(h){
     var q=lrn+1,c=D[q],opts="";
