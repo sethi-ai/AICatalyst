@@ -1,0 +1,25 @@
+{
+  "name": "Durga Chalisa",
+  "short_name": "Durga Chalisa",
+  "description": "Learn the Durga Chalisa one verse at a time.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ebe0cd",
+  "theme_color": "#ebe0cd",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
