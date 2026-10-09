@@ -748,6 +748,402 @@ html.dk .art img.tp{filter:drop-shadow(0 8px 18px rgba(0,0,0,.45))}
 /* v0.67 dark finish image */
 html.dk #finimg.tp{filter:drop-shadow(0 8px 18px rgba(0,0,0,.45))}
 
+/* ===== v0.71 alpha: liquid-glass tab bar, Learn hub, Stories, Control Center settings, onboarding ===== */
+:root{--t1:#111;--t2:#444;--t3:#7a7a77;--ac:#c25a00;--s1:#f3f3f1;--s2:#d9d9d6;--sh1:rgba(0,0,0,.17);--sh2:rgba(255,255,255,.85);--in1:#d3d3d0;--in2:#f4f4f2;--tb:calc(78px + env(safe-area-inset-bottom))}
+
+/* floating liquid-glass tab bar */
+#tabbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom));width:min(calc(100% - 32px),380px);height:62px;box-sizing:border-box;padding:6px;z-index:120;display:flex;border-radius:31px;
+  background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.28));-webkit-backdrop-filter:blur(22px) saturate(1.9);backdrop-filter:blur(22px) saturate(1.9);
+  border:1px solid rgba(255,255,255,.65);box-shadow:0 12px 32px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.08),inset 0 1.5px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.05)}
+#tabbar:before{content:"";position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/var(--n,4));border-radius:25px;transform:translateX(calc(var(--i,0) * 100%));transition:transform .45s cubic-bezier(.3,1.35,.5,1);
+  background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.45));box-shadow:0 3px 10px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.95)}
+#tabbar button{position:relative;z-index:1;flex:1 1 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;cursor:pointer;color:#55554f;font:500 10.5px/1 Inter,system-ui,sans-serif;letter-spacing:.04em;-webkit-tap-highlight-color:transparent;transition:color .25s}
+#tabbar svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#tabbar button.on{color:#e06b0a}
+#tabbar button:active{transform:scale(.94)}
+html.dk #tabbar{background:linear-gradient(180deg,rgba(90,90,90,.55),rgba(60,60,60,.35));border-color:rgba(255,255,255,.18);box-shadow:0 12px 32px rgba(0,0,0,.45),inset 0 1.5px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.2)}
+html.dk #tabbar:before{background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.1));box-shadow:0 3px 10px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.3)}
+html.dk #tabbar button{color:#c8c8c4}
+html.dk #tabbar button.on{color:#ffa655}
+
+/* Home keeps clear of the bar; the other pages run underneath it so the glass has something to blur */
+#stage{bottom:var(--tb)}
+#ui{bottom:var(--tb);padding-bottom:12px}
+#foot{bottom:calc(var(--tb) + 12px)}
+#nudge{bottom:calc(var(--tb) + 56px)}
+#prog{bottom:calc(var(--tb) + max(9vh,70px))}
+#gear{display:none!important}
+#feed,#trends,#settings{inset:0!important;z-index:110!important}
+#trback,#setdone{display:none!important}
+#trends{padding:calc(max(12px,env(safe-area-inset-top)) + 18px) 18px calc(var(--tb) + 20px)}
+#settings{justify-content:flex-start;padding:calc(max(12px,env(safe-area-inset-top)) + 18px) 18px calc(var(--tb) + 20px)}
+#settings .supin{margin:0 auto}
+#setHi{font-family:Kalam,cursive;color:var(--t2);margin:0 0 14px}
+.sk-goal{display:flex;align-items:baseline;justify-content:center;gap:10px;margin:6px 0 10px}
+.sk-goal b{font:600 64px/1 Khand,Inter,sans-serif;color:#e06b0a}
+.sk-goal span{font:500 18px Inter,sans-serif;color:#444}
+html.dk .sk-goal span{color:var(--t2)}
+.sk .lnk[data-go]{display:inline-block;margin:0 0 10px;padding:6px 10px;border:0;background:none;box-shadow:none;font:500 14px Inter,sans-serif;color:#c25a00;text-decoration:underline;cursor:pointer}
+html.dk .sk .lnk[data-go]{color:var(--ac)}
+
+/* Learn hub */
+#feed{position:fixed;display:none;flex-direction:column;background:var(--bg);padding-top:calc(max(12px,env(safe-area-inset-top)) + 8px);color:var(--t1);font-family:Inter,system-ui,sans-serif}
+#feed.open{display:flex}
+.fd-top{flex:none;position:relative;padding:0 14px 8px;text-align:center;min-height:46px}
+.fd-top h2{margin:0;font:500 30px Khand,Inter,sans-serif;letter-spacing:.03em;color:var(--t1)}
+.fd-back{position:absolute;left:14px;top:3px;height:38px;padding:0 16px;border:0;border-radius:999px;font:500 14px Inter,sans-serif;color:#c25a00;background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:4px 4px 8px var(--sh1),-3px -3px 7px var(--sh2);cursor:pointer}
+html.dk .fd-back{color:var(--ac)}
+.fd-body{flex:1;min-height:0;position:relative}
+.fd-sec{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 18px calc(var(--tb) + 20px)}
+.fd-in{width:min(100%,440px);margin:0 auto}
+.fd-card{background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:5px 5px 10px var(--sh1),-4px -4px 9px var(--sh2);border-radius:22px}
+.fd-h4{margin:22px 0 10px;font:600 12px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+.lg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.lg button{aspect-ratio:1/1;border:0;border-radius:26px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;cursor:pointer;color:var(--t1);background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:6px 6px 12px var(--sh1),-5px -5px 11px var(--sh2)}
+.lg button:active{transform:scale(.97)}
+.lg svg{width:36px;height:36px;fill:none;stroke:#e06b0a;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.lg b{display:block;font:500 23px/1.1 Khand,Inter,sans-serif;margin-bottom:4px}
+.lg em{display:block;font:400 12.5px/1.3 Inter,sans-serif;font-style:normal;color:var(--t3)}
+.lg button.hot{background:linear-gradient(145deg,#ff9a3c,#e06b0a);color:#fff}
+.lg button.hot svg{stroke:#fff}.lg button.hot em{color:rgba(255,255,255,.85)}
+.lm{padding:16px 18px;margin-bottom:18px}
+.lm-t{display:flex;justify-content:space-between;align-items:baseline}
+.lm-t b{font:500 22px Khand,Inter,sans-serif;color:var(--t1)}
+.lm-t span{font:600 12px Inter,sans-serif;letter-spacing:.08em;color:#c25a00}
+html.dk .lm-t span{color:var(--ac)}
+.lm-bar{height:6px;border-radius:3px;background:var(--in1);overflow:hidden;margin:8px 0 10px}
+.lm-bar s{display:block;height:100%;background:#e06b0a;border-radius:3px}
+.lm p{margin:0 0 12px;font:400 16px/1.35 Kalam,cursive;color:var(--t2)}
+.lm button{height:42px;padding:0 20px;border:0;border-radius:999px;font:600 14px Inter,sans-serif;color:#fff;background:linear-gradient(145deg,#ff9a3c,#e06b0a);cursor:pointer}
+
+/* Music */
+.mp-now{padding:18px 18px 16px;text-align:center}
+.mp-art .art{height:min(26vh,190px);max-width:none;margin:0 auto}
+.mp-now b{display:block;margin-top:8px;font:500 28px Khand,Inter,sans-serif;color:var(--t1)}
+.mp-now p{margin:2px 0 12px;font:400 17px/1.3 Kalam,cursive;color:#a24400;min-height:1.3em}
+html.dk .mp-now p{color:var(--ac)}
+.mp-bar{height:6px;border-radius:3px;background:var(--in1);overflow:hidden}
+.mp-bar s{display:block;height:100%;width:0;background:#e06b0a;border-radius:3px;transition:width .25s linear}
+.mp-ctl{display:flex;align-items:center;justify-content:center;gap:22px;margin:14px 0 8px}
+.mp-ctl button{width:54px;height:54px;border:0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#c25a00;background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:5px 5px 10px var(--sh1),-4px -4px 9px var(--sh2);cursor:pointer}
+.mp-ctl button.big{width:70px;height:70px;color:#fff;background:linear-gradient(145deg,#ff9a3c,#e06b0a)}
+.mp-ctl button:active{transform:scale(.94)}
+.mp-n{font:500 12px Inter,sans-serif;letter-spacing:.06em;color:var(--t3)}
+.mp-list{display:flex;flex-direction:column;gap:6px}
+.mp-list button{display:flex;align-items:center;gap:12px;height:44px;padding:0 14px;border:0;border-radius:14px;background:transparent;color:var(--t2);font:500 14px Inter,sans-serif;text-align:left;cursor:pointer}
+.mp-list button em{font-style:normal;width:26px;color:var(--t3);font-size:12px}
+.mp-list button.cur{background:rgba(224,107,10,.14);color:#c25a00}
+html.dk .mp-list button.cur{color:var(--ac)}
+.mp-list button.pl span:after{content:" \266B"}
+
+/* Learn */
+.ln-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;font:600 12px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
+.ln-top select{height:38px;max-width:150px;padding:0 10px;border:0;border-radius:12px;font:500 14px Inter,sans-serif;color:var(--t1);background:var(--in2);box-shadow:inset 2px 2px 5px var(--in1)}
+.ln{text-align:center}
+.ln-art .art{height:min(26vh,200px);max-width:none;margin:0 auto}
+.ln-lab{margin:2px 0 4px;font:500 15px Khand,Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#c25a00}
+html.dk .ln-lab{color:var(--ac)}
+.ln .verse{--vs:clamp(22px,6vw,30px);color:var(--t1)}
+.ln-listen{margin:12px auto 4px;height:40px;padding:0 20px;border:0;border-radius:999px;font:600 14px Inter,sans-serif;color:#c25a00;background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:4px 4px 8px var(--sh1),-3px -3px 7px var(--sh2);cursor:pointer}
+.ln-sec{margin-top:16px;padding:14px 16px;text-align:left}
+.ln-sec{background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:5px 5px 10px var(--sh1),-4px -4px 9px var(--sh2);border-radius:20px}
+.ln-sec h4{margin:0 0 6px;font:600 11px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+.ln-sec .mt{font-size:17px;color:#a24400}
+.ln-sec .lnx{margin:0;font:400 16px/1.5 Kalam,cursive;color:var(--t1)}
+html.dk .ln-sec .mt{color:var(--ac)!important}
+.ln-sec .mt-hi,.ln-sec .lnx.mt-hi{display:none}
+body.hi .ln-sec .mt-hi{display:block}
+body.hi .ln-sec .mt-en{display:none}
+.ln-nav{display:flex;align-items:center;justify-content:space-between;margin-top:18px;font:500 13px Inter,sans-serif;color:var(--t3)}
+.ln-nav button{height:44px;padding:0 20px;border:0;border-radius:999px;font:600 14px Inter,sans-serif;color:#c25a00;background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:4px 4px 8px var(--sh1),-3px -3px 7px var(--sh2);cursor:pointer}
+.ln-nav button.pri{color:#fff;background:linear-gradient(145deg,#ff9a3c,#e06b0a)}
+.ln-nav button:disabled{opacity:.4}
+
+/* My Hanuman */
+.me h3{margin:0 0 4px;font:500 30px Khand,Inter,sans-serif;color:var(--t1);text-align:center}
+.me-q{margin:0 0 16px;text-align:center;font:400 16px/1.4 Kalam,cursive;color:var(--t2)}
+.me-add{display:flex;gap:10px;margin-bottom:14px}
+.me-add input{flex:1;min-width:0;height:48px;padding:0 16px;border:0;border-radius:16px;font:400 16px Inter,sans-serif;color:var(--t1);background:var(--in2);box-shadow:inset 3px 3px 6px var(--in1);outline:none}
+.me-add button{flex:none;width:48px;height:48px;border:0;border-radius:50%;font:400 28px/1 Inter,sans-serif;color:#fff;background:linear-gradient(145deg,#ff9a3c,#e06b0a);cursor:pointer}
+.me-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.me-l li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:16px;background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:4px 4px 8px var(--sh1),-3px -3px 7px var(--sh2)}
+.me-l li span{flex:1;min-width:0;font:400 16px/1.35 Inter,sans-serif;color:var(--t1);word-break:break-word}
+.me-ck{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid #e06b0a;background:transparent;cursor:pointer;position:relative}
+.me-l li.done .me-ck{background:#e06b0a}
+.me-l li.done .me-ck:after{content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.me-l li.done span{text-decoration:line-through;color:var(--t3)}
+.me-x{flex:none;width:30px;height:30px;border:0;background:none;font-size:22px;line-height:1;color:var(--t3);cursor:pointer}
+.me-empty{display:block!important;text-align:center;background:none!important;box-shadow:none!important;color:var(--t3);font:400 15px Kalam,cursive}
+.me-clr{display:block;margin:16px auto 0;border:0;background:none;font:500 13px Inter,sans-serif;color:var(--t3);text-decoration:underline;cursor:pointer}
+
+
+/* Stories tray + viewer */
+.tr-q{margin:0 0 18px;text-align:center;font:400 16px/1.4 Kalam,cursive;color:var(--t2)}
+.tray{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 8px}
+.tray button{display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:none;cursor:pointer;color:var(--t1);text-align:center}
+.tray .ring{width:92px;height:92px;border-radius:50%;padding:3px;background:conic-gradient(#ffb347,#e06b0a,#ff6a3d,#ffb347);display:block}
+.tray .ring.seen{background:var(--in1)}
+.tray .ci{display:flex;align-items:center;justify-content:center;position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;border:3px solid var(--bg);box-sizing:border-box;background:linear-gradient(160deg,#ffb066,#d9600a)}
+.tray .ci i{position:absolute;font:normal 34px Khand,serif;color:rgba(255,255,255,.8)}
+.tray .ci img{position:relative;width:100%;height:100%;object-fit:cover}
+.tray b{font:500 13px/1.2 Inter,sans-serif;max-width:104px}
+.tray em{font:400 11px Inter,sans-serif;font-style:normal;color:var(--t3)}
+#stories{position:fixed;inset:0;z-index:450;display:none;flex-direction:column;background:var(--bg);color:var(--t1);user-select:none;-webkit-user-select:none;touch-action:none;overflow:hidden}
+#stories.open{display:flex;animation:stin .28s ease both}
+@keyframes stin{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.st-img{flex:none;height:46%;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#ffb066,#d9600a)}
+.st-img i{position:absolute;font:normal 90px Khand,serif;color:rgba(255,255,255,.55)}
+.st-img img{position:relative;width:100%;height:100%;object-fit:cover;display:block}
+.st-body{flex:1;min-height:0;overflow:hidden;margin-top:-26px;border-radius:28px 28px 0 0;background:var(--bg);position:relative;padding:22px 24px calc(70px + env(safe-area-inset-bottom));text-align:left}
+.st-body h3{margin:0 0 10px;font:500 clamp(28px,8vw,36px)/1.1 Khand,Inter,sans-serif;color:var(--t1)}
+.st-body .fx-st{font-size:17px}
+.st-body .fx-h{font-size:19px}
+.fx-sh{display:inline-block;font:600 11px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#c25a00;margin-bottom:6px}
+html.dk .fx-sh{color:var(--ac)}
+.fx-st{margin:0 0 12px;font:400 15.5px/1.55 Inter,system-ui,sans-serif;color:var(--t2)}
+.fx-h{margin:0;padding:10px 12px;border-left:3px solid #e06b0a;border-radius:0 12px 12px 0;background:rgba(224,107,10,.1);font:400 17px/1.35 Kalam,cursive;color:#a24400}
+html.dk .fx-h{color:var(--ac)}
+.st-hit{position:absolute;inset:0;z-index:5}
+.st-top{position:absolute;left:0;right:0;top:0;z-index:6;padding:calc(max(10px,env(safe-area-inset-top)) + 4px) 12px 22px;pointer-events:none;background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,0))}
+.st-bars{display:flex;gap:3px}
+.st-bars i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.38);overflow:hidden}
+.st-bars i s{display:block;height:100%;width:0;background:#fff}
+.st-bars i.d s{width:100%}
+.st-bars i.c s{animation:stfill linear forwards}
+@keyframes stfill{from{width:0}to{width:100%}}
+#stories.hold .st-bars i.c s{animation-play-state:paused}
+.st-hd{display:flex;align-items:center;justify-content:space-between;margin-top:10px;color:#fff;font:600 13px Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.st-x{pointer-events:auto;width:40px;height:40px;border:0;background:none;color:#fff;font-size:30px;line-height:1;cursor:pointer;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.st-ft{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:10px 20px calc(14px + env(safe-area-inset-bottom));pointer-events:none;font:500 12px Inter,sans-serif;letter-spacing:.08em;color:var(--t3)}
+.st-sh{pointer-events:auto;height:38px;padding:0 18px;border:0;border-radius:999px;font:600 13px Inter,sans-serif;color:#fff;background:linear-gradient(145deg,#ff9a3c,#e06b0a);cursor:pointer}
+@media (max-height:700px){.st-img{height:36%}.st-body .fx-st{font-size:15.5px}}
+
+/* Settings: Control Center style groups and tiles */
+.set2{width:min(100%,440px);text-align:center}
+.sg{margin:0 0 18px;text-align:left}
+.sg h4{margin:0 0 8px 6px;font:600 11px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+.sg-card{padding:12px;border-radius:26px;background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:6px 6px 12px var(--sh1),-5px -5px 11px var(--sh2);display:flex;flex-direction:column;gap:10px}
+.sg-n{margin:0;text-align:center;font:500 12px Inter,sans-serif;letter-spacing:.06em;color:var(--t3)}
+.seg{display:flex;gap:4px;padding:4px;border-radius:18px;background:var(--in1);box-shadow:inset 2px 2px 5px rgba(0,0,0,.12)}
+.seg button{flex:1;height:42px;border:0;border-radius:14px;background:transparent;font:600 15px Inter,sans-serif;color:var(--t2);cursor:pointer}
+.seg button.on{color:#fff;background:linear-gradient(145deg,#ff9a3c,#e06b0a);box-shadow:2px 3px 7px rgba(0,0,0,.2)}
+.tiles{display:grid;gap:10px}
+.tiles.t3{grid-template-columns:repeat(3,1fr)}
+.tiles.t1{grid-template-columns:1fr}
+.tile{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:8px;min-height:92px;padding:12px;border:0;border-radius:20px;text-align:left;cursor:pointer;color:var(--t2);background:var(--in2);box-shadow:inset 0 0 0 1px rgba(0,0,0,.04),3px 3px 7px rgba(0,0,0,.08)}
+.tile svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tile b{display:block;font:600 13px/1.15 Inter,sans-serif;color:var(--t1)}
+.tile em{display:block;margin-top:2px;font:500 11px Inter,sans-serif;font-style:normal;color:var(--t3)}
+.tiles.t1 .tile{flex-direction:row;align-items:center;justify-content:flex-start;min-height:62px;gap:14px}
+.tiles.t1 .tile b{font-size:15px}
+.tile:active{transform:scale(.97)}
+.tile.on{color:#fff;background:linear-gradient(145deg,#ff9a3c,#e06b0a);box-shadow:3px 4px 10px rgba(224,107,10,.35)}
+.tile.on b,.tile.on em{color:#fff}
+.tile.on em{opacity:.9}
+.vbar{display:flex;gap:6px}
+.vbar button{flex:1;height:46px;border:0;border-radius:14px;background:var(--in1);box-shadow:inset 2px 2px 5px rgba(0,0,0,.12);cursor:pointer}
+.vbar button.on{background:linear-gradient(145deg,#ff9a3c,#e06b0a);box-shadow:none}
+.vbar button:nth-child(1){height:30px;align-self:flex-end}.vbar button:nth-child(2){height:36px;align-self:flex-end}.vbar button:nth-child(3){height:42px;align-self:flex-end}.vbar button:nth-child(4){height:48px;align-self:flex-end}.vbar button:nth-child(5){height:54px;align-self:flex-end}
+#volrow{display:flex;flex-direction:column;gap:8px}
+
+/* Onboarding */
+#onb{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;background:var(--bg);padding:calc(max(12px,env(safe-area-inset-top)) + 12px) 22px 24px;overflow:auto;color:var(--t1);font-family:Inter,system-ui,sans-serif}
+#onb.open{display:flex;animation:fin .4s ease both}
+.onb-card{width:min(100%,420px);margin:auto 0}
+.onb-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.onb-dots{display:flex;gap:6px}
+.onb-dots i{width:26px;height:5px;border-radius:3px;background:var(--in1)}
+.onb-dots i.on{background:#e06b0a}
+.onb-l button{height:34px!important;min-width:0!important;padding:0 14px!important;font-size:13px!important}
+.os{display:none;text-align:center}
+.os.on{display:block}
+.os h2{margin:0 0 8px;font:500 clamp(32px,9vw,40px)/1.1 Khand,Inter,sans-serif;color:var(--t1)}
+.os>p{margin:0 0 20px;font:400 17px/1.4 Kalam,cursive;color:var(--t2)}
+.os label{display:block;text-align:left;margin-bottom:14px;font:600 11px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
+.os label input[type=text],.os label input[type=tel]{display:block;width:100%;box-sizing:border-box;margin-top:6px;height:50px;padding:0 16px;border:0;border-radius:16px;font:400 17px Inter,sans-serif;letter-spacing:0;text-transform:none;color:var(--t1);background:var(--in2);box-shadow:inset 3px 3px 6px var(--in1);outline:none}
+.os label.onb-ck{display:flex;gap:12px;align-items:flex-start;font:400 14px/1.4 Inter,sans-serif;letter-spacing:0;text-transform:none;color:var(--t2)}
+.onb-ck input{flex:none;width:22px;height:22px;margin:1px 0 0;accent-color:#e06b0a}
+.onb-err{min-height:20px;margin:0 0 8px;font:500 14px Inter,sans-serif;color:#d23a2a;text-align:center}
+.os .cbtn{width:100%;margin:0}
+.onb-fine{margin:14px 0 0;font:400 12px Inter,sans-serif;color:var(--t3)}
+.onb-opts{display:flex;flex-direction:column;gap:12px}
+.onb-opts button{display:flex;align-items:baseline;gap:10px;padding:16px 18px;border:0;border-radius:20px;text-align:left;cursor:pointer;color:var(--t1);background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:5px 5px 10px var(--sh1),-4px -4px 9px var(--sh2)}
+.onb-opts b{font:600 40px/1 Khand,Inter,sans-serif;color:#e06b0a;min-width:34px}
+.onb-opts span{font:500 16px Inter,sans-serif}
+.onb-opts em{margin-left:auto;font:400 14px Kalam,cursive;font-style:normal;color:var(--t3)}
+.onb-opts button.on{background:linear-gradient(145deg,#ff9a3c,#e06b0a);color:#fff}
+.onb-opts button.on b,.onb-opts button.on em{color:#fff}
+.onb-skip{display:block;width:100%;margin-top:12px;height:48px;border:0;border-radius:999px;font:600 15px Inter,sans-serif;color:#c25a00;background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:4px 4px 8px var(--sh1),-3px -3px 7px var(--sh2);cursor:pointer}
+.sk .lnk[data-go]{display:inline-block;margin:0 0 10px;padding:6px 10px;border:0;background:none;box-shadow:none;font:500 14px Inter,sans-serif;color:#c25a00;text-decoration:underline;cursor:pointer}
+html.dk .sk .lnk[data-go]{color:var(--ac)}
+
+.onb-opts button.learn{background:linear-gradient(145deg,#2f6f4f,#1f5a3d);color:#fff}
+.onb-opts button.learn b{font-size:30px;min-width:34px}
+.onb-opts button.learn span,.onb-opts button.learn em{color:#fff}
+.onb-opts button.learn span{flex:1}
+.onb-opts button.learn em{margin-left:0;white-space:nowrap;font-size:13px}
+.set2 .sg-n{margin:0;text-align:center;font:500 12px/1.4 Inter,sans-serif;letter-spacing:.04em;color:var(--t3)}
+
+/* v0.72 sankalp: intention, promise, duration, streak */
+.ski{margin:2px 0 8px;text-align:center}
+.ski-d{display:inline-block;margin-bottom:6px;padding:5px 12px;border-radius:999px;font:600 12px Inter,sans-serif;letter-spacing:.06em;color:#a24400;background:rgba(224,107,10,.13)}
+html.dk .ski-d{color:var(--ac)}
+.ski p{margin:4px 0;font:400 15px/1.3 Kalam,cursive;color:#333;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html.dk .ski p{color:var(--t2)}
+.ski p b{display:block;font:600 10px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#c25a00}
+html.dk .ski p b{color:var(--ac)}
+.ski .lnk{display:inline-block;margin:4px 0 0;padding:4px 8px;border:0;background:none;box-shadow:none;font:500 14px Inter,sans-serif;color:#c25a00;text-decoration:underline;cursor:pointer}
+html.dk .ski .lnk{color:var(--ac)}
+.skw.has{--ah:clamp(80px,19cqh,200px)}
+.skw.has .sk .ex{display:none}
+.skw.has .sk-goal b{font-size:48px}
+.finpr{max-width:300px;margin:-4px 0 0;text-align:center;font:400 17px/1.35 Kalam,cursive;color:#a24400}
+.finpr:empty{display:none}
+.skv{padding:18px}
+.skv-t{display:flex;justify-content:space-between;align-items:baseline}
+.skv-t b{font:500 26px Khand,Inter,sans-serif;color:var(--t1)}
+.skv-t span{font:600 13px Inter,sans-serif;color:#c25a00}
+html.dk .skv-t span{color:var(--ac)}
+.skv-m{margin:0 0 6px;font:500 12px Inter,sans-serif!important;letter-spacing:.04em;color:var(--t3)!important}
+.skv h5{margin:14px 0 2px;font:600 11px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+.skv-p{margin:0;font:400 18px/1.35 Kalam,cursive;color:var(--t1)}
+.skv-b{display:flex;gap:10px;margin-top:18px}
+.skv-b button{flex:1;height:44px;border:0;border-radius:999px;font:600 14px Inter,sans-serif;color:#c25a00;background:linear-gradient(145deg,var(--s1),var(--s2));box-shadow:4px 4px 8px var(--sh1),-3px -3px 7px var(--sh2);cursor:pointer}
+.skv-b button.warn{color:#d23a2a}
+.skv-b button.arm{color:#fff;background:#d23a2a}
+.skf{padding:18px;display:flex;flex-direction:column;gap:14px}
+.skf h3{margin:0;font:500 26px Khand,Inter,sans-serif;color:var(--t1);text-align:center}
+.skf label,.os label{display:block;font:600 11px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);text-align:left}
+.skf label .seg,.os label .seg{margin-top:6px}
+.skf textarea,.os textarea{display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px 14px;border:0;border-radius:16px;resize:none;font:400 16px/1.4 Inter,sans-serif;letter-spacing:0;text-transform:none;color:var(--t1);background:var(--in2);box-shadow:inset 3px 3px 6px var(--in1);outline:none}
+.skf .cbtn,.os .cbtn{width:100%;margin:0}
+#remind{position:fixed;inset:0;z-index:480;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.45);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#remind.open{display:flex;animation:stin .3s ease both}
+.rm-c{width:min(100%,380px);padding:26px 24px;border-radius:30px;text-align:center;background:var(--bg);color:var(--t1);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.rm-k{display:inline-block;padding:5px 12px;border-radius:999px;font:600 12px Inter,sans-serif;letter-spacing:.06em;color:#a24400;background:rgba(224,107,10,.13)}
+html.dk .rm-k{color:var(--ac)}
+.rm-c h2{margin:12px 0 8px;font:500 34px Khand,Inter,sans-serif;color:var(--t1)}
+.rm-c h5{margin:12px 0 2px;font:600 11px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+.rm-c p{margin:0;font:400 19px/1.35 Kalam,cursive;color:var(--t1)}
+.rm-c .rm-n{margin:16px 0 18px;font-size:15px;color:var(--t3)}
+.rm-c .cbtn{width:100%;margin:0}
+
+.hpin{width:min(100%,440px)}
+.hpin h2{margin:0 0 10px;text-align:center;font:500 34px Khand,Inter,sans-serif;color:var(--t1,#111)}
+.hpin .fd-in{padding:0}
+.hp-h{margin:22px 0 8px;font:600 15px Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--t2,#666);text-align:center}
+.skv-td{display:flex;justify-content:space-between;align-items:center;margin:12px 0 10px;padding:10px 14px;border-radius:14px;background:rgba(224,107,10,.1);font:500 14px Inter,sans-serif}
+.skv-td span{font-weight:700;color:#e06b0a}
+.skv-go{width:100%;margin:0 0 6px}
+.lm-off{display:block;margin:10px auto 0;font-size:13px;opacity:.7}
+
+/* ===== v0.73 editorial pass: flat, quiet, type-led (matches the Chant slides) ===== */
+:root{--hl:rgba(0,0,0,.14);--ink2:#c25a00}
+html.dk,html.wm{--hl:rgba(255,255,255,.16);--ink2:var(--ac)}
+/* controls become plain type */
+.seg{gap:0;padding:0;border-radius:0;background:none!important;box-shadow:none!important;justify-content:center}
+.seg button{flex:0 1 auto;height:36px;padding:0 16px;border:0;border-bottom:2px solid transparent;border-radius:0;background:none!important;box-shadow:none!important;color:var(--t3);font:500 15px Inter,sans-serif;letter-spacing:.02em}
+.seg button.on{color:var(--ink2);border-bottom-color:#e06b0a}
+.skf label .seg,.os label .seg{justify-content:flex-start;margin-left:-16px}
+.trtabs button,.trtabs button.on{height:34px;padding:0 14px;border-radius:0;background:none!important;box-shadow:none!important;border-bottom:2px solid transparent;color:var(--t3);font:500 15px Inter,sans-serif}
+.trtabs button.on{color:var(--ink2);border-bottom-color:#e06b0a}
+.trnav button{background:none!important;box-shadow:none!important;color:var(--ink2);width:34px;height:34px}
+.trnav b{font:italic 400 19px Kalam,cursive;color:var(--ink2)}
+/* cards dissolve into the page */
+.fd-card{background:none!important;box-shadow:none!important;border-radius:0}
+.fd-in{padding-left:22px;padding-right:22px}
+/* Home */
+.hpin h2{font-size:clamp(32px,9vw,42px);letter-spacing:.03em;margin-bottom:2px}
+.hpin .fd-in{padding:0}
+.skv{padding:6px 0 0;text-align:center}
+.skv-t{flex-direction:column;align-items:center;gap:2px}
+.skv-t b{font:500 clamp(28px,8vw,36px)/1.1 Khand,Inter,sans-serif;letter-spacing:.03em}
+.skv-t span{font:italic 400 20px Kalam,cursive;color:var(--ink2)!important}
+.skv .lm-bar{height:2px;margin:14px auto 10px;width:60%;background:var(--hl)}
+.skv-m{text-align:center;font:500 12px Inter,sans-serif!important;letter-spacing:.08em!important}
+.skv-td{background:none;border-radius:0;border-top:1px solid var(--hl);border-bottom:1px solid var(--hl);margin:14px 0;padding:11px 2px;font:600 11px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.skv-td span{font:500 22px Khand,Inter,sans-serif;letter-spacing:.02em;color:#e06b0a}
+.skv h5,.skv h5{text-align:center;color:var(--ink2);margin:16px 0 0}
+.skv-p{text-align:center;font-size:20px}
+.skv .skv-b{justify-content:center;gap:26px;margin-top:20px}
+.skv .skv-b button{flex:none;height:auto;padding:2px 0;background:none!important;box-shadow:none!important;border-radius:0;border-bottom:1px solid currentColor;font:500 14px Inter,sans-serif;color:var(--ink2)}
+.skv .skv-b button.warn{color:var(--t3)}
+.skv .skv-b button.arm{color:#d23a2a;background:none;border-bottom-color:#d23a2a}
+.skv-go{width:auto;margin:6px auto 0;display:block}
+.skf{padding:6px 0 0;gap:16px;text-align:left}
+.skf h3{font-size:clamp(28px,8vw,36px)}
+.skf textarea,.os textarea,.os input[type=text],.os input[type=tel]{background:none!important;box-shadow:none!important;border:0;border-bottom:1px solid var(--hl);border-radius:0;padding:10px 0;font:400 19px/1.35 Kalam,cursive;color:var(--t1)}
+.hp-h{margin:34px 0 4px;padding-top:22px;border-top:1px solid var(--hl);font:500 clamp(28px,8vw,36px) Khand,Inter,sans-serif;letter-spacing:.03em;text-transform:none;color:var(--t1)}
+#trbody{padding:0;background:none!important;box-shadow:none!important;border-radius:0}
+.tr-sum b,.tr-big b{font-weight:500;font-size:30px}
+.tr-r{border-top:1px solid var(--hl)}
+.tr-r.td{background:none;color:var(--ink2);font-weight:600}
+.tr-s.yes{background:none;color:#2d7a38}.tr-s.no{background:none;color:var(--t3);font-weight:400}
+.tr-b{height:3px;background:var(--hl)}
+.tr-h{color:var(--t3)}
+/* Settings */
+.set2 h2{font-size:clamp(32px,9vw,42px);letter-spacing:.03em;margin-bottom:0}
+#setHi{font:italic 400 20px Kalam,cursive;color:var(--ink2);margin:0 0 26px}
+.sg{margin:0 0 26px}
+.sg h4{margin:0 0 2px;color:var(--ink2);text-align:left}
+.sg-card{padding:0;background:none!important;box-shadow:none!important;border-radius:0;border-top:1px solid var(--hl)}
+.set2 .sg-card .seg{justify-content:flex-start;margin:6px 0 0 -16px}
+.set2 .tiles,.set2 .tiles.t3,.set2 .tiles.t1{display:block}
+.set2 .tile,.set2 .tile.on,.set2 .tiles.t1 .tile{display:flex;flex-direction:row;align-items:baseline;justify-content:space-between;width:100%;min-height:0;padding:13px 2px;gap:10px;background:none!important;box-shadow:none!important;border-radius:0;border-bottom:1px solid var(--hl);text-align:left;color:var(--t1)}
+.set2 .tile svg{display:none}
+.set2 .tile b,.set2 .tile.on b,.set2 .tiles.t1 .tile b{font:500 22px Khand,Inter,sans-serif;letter-spacing:.02em;color:var(--t1)}
+.set2 .tile em,.set2 .tile.on em{margin:0;font:italic 400 18px Kalam,cursive;color:var(--t3);opacity:1}
+.set2 .tile.on em{color:var(--ink2)}
+.set2 .sg-n{margin-top:10px;text-align:left;font:italic 400 16px/1.35 Kalam,cursive;letter-spacing:0;color:var(--t3)}
+.vbar{gap:6px}
+.vbar button,.vbar button.on{background:var(--hl)!important;box-shadow:none!important;border-radius:2px}
+.vbar button.on{background:#e06b0a!important}
+/* Learn */
+.fd-top h2{letter-spacing:.03em}
+.lg{gap:14px}
+.lg button{background:none!important;box-shadow:none!important;border:1px solid var(--hl);border-radius:3px}
+.lg svg{stroke-width:1.3}
+.lg b{letter-spacing:.02em}
+.lg em{font:italic 400 15px/1.25 Kalam,cursive;color:var(--t3)}
+.lg button.hot{background:none!important;color:inherit;border-color:#e06b0a}
+.lg button.hot svg{stroke:#e06b0a}.lg button.hot em{color:var(--t3)}
+.lm{padding:14px 0;margin-bottom:18px;border-top:1px solid var(--hl);border-bottom:1px solid var(--hl);text-align:center}
+.lm-t{flex-direction:column;align-items:center;gap:0}
+.lm-t b{font-size:26px;letter-spacing:.02em}
+.lm-t span{font:italic 400 19px Kalam,cursive;letter-spacing:0;color:var(--ink2)}
+.lm-bar{height:2px;background:var(--hl);margin:10px auto;width:60%}
+.lm p{font-size:19px;color:var(--t1)}
+.lm button:not(.lm-off){background:none!important;box-shadow:none!important;height:auto;padding:2px 0;border-radius:0;border-bottom:1px solid #c25a00;color:var(--ink2);font:500 14px Inter,sans-serif}
+.lm .lm-off{background:none!important;box-shadow:none!important;color:var(--t3);height:auto;margin-top:12px}
+/* onboarding */
+.onb-opts button,.onb-opts button.learn{background:none!important;box-shadow:none!important;border:1px solid var(--hl);border-radius:3px;color:var(--t1)}
+.onb-opts button.on{border-color:#e06b0a;color:var(--t1)}
+.onb-opts button.on b,.onb-opts button.on em,.onb-opts button.learn span,.onb-opts button.learn em{color:inherit}
+.onb-opts button.learn b{color:#e06b0a}.onb-opts button.on em{color:var(--ink2)}
+.onb-skip{background:none!important;box-shadow:none!important}
+
+/* v0.74 illustrations */
+.ui-art{display:block;margin:0 auto;object-fit:contain;pointer-events:none;user-select:none}
+.sk-hero{width:min(58vw,210px);height:min(58vw,210px);margin:0 auto -4px}
+.set-hero{width:118px;height:118px;margin:-6px auto -4px}
+.hp-streak{width:92px;height:92px;margin:0 auto 2px}
+.lh-img{width:112px;height:112px;margin:-6px auto 2px}
+.lm-img{width:68px;height:68px;margin:0 auto 4px}
+.lg-img{width:70px;height:70px;margin:-8px 0 0 -8px}
+
+.lg{grid-template-columns:repeat(2,minmax(0,1fr))}
+.lg button{min-width:0;overflow:hidden}
+.lg b{font-size:21px}
+.lm-img{width:60px;height:60px}
+
+.lg button{aspect-ratio:auto;min-height:208px;justify-content:flex-start;gap:0}
+.lg-img{width:62px;height:62px;margin:-4px 0 8px -6px}
+.lg b{font-size:20px;line-height:1.1}
+.lg em{font-size:14px}
+
+#fire{display:none!important}
+.set2 .tile.danger b{color:#d23a2a}
+
 </style>
 </head>
 <body>
@@ -757,20 +1153,24 @@ html.dk #finimg.tp{filter:drop-shadow(0 8px 18px rgba(0,0,0,.45))}
 <div id="foot"><b id="flabel">Doha 1</b><span id="fcount">1 / 42<em id="hint"> · swipe up &#8593;</em></span></div>
 <div id="ui"><button id="explain" aria-label="Show explanation">Explanation</button><button id="reset" aria-label="Restart from the beginning">&#8634; Restart</button></div>
 <div id="splash"><div class="sp-art"><div class="glow"></div><div class="parts" id="parts"></div><div class="hearts" id="hearts"></div><img id="spimg" alt="Hanuman meditating" draggable="false"></div><b>Be Hanuman</b><span><i class="bar">||</i> Hanuman Chalisa <i class="bar">||</i></span></div>
-<div id="finish"><div class="fin-art"><div class="glow"></div><div class="parts" id="fparts"></div><div class="hearts" id="fhearts"></div><img id="finimg" alt="Hanuman celebrating" draggable="false"></div><h2>Jai Hanuman</h2><div class="finbtns"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button><button id="streakBtn" data-tr="1">&#128293; My Hanu Streak</button></div></div>
+<div id="finish"><div class="fin-art"><div class="glow"></div><div class="parts" id="fparts"></div><div class="hearts" id="fhearts"></div><img id="finimg" alt="Hanuman celebrating" draggable="false"></div><h2>Jai Hanuman</h2><p id="finPr" class="finpr"></p><div class="finbtns"><button id="support">&#9825; Support us</button><button id="home">&#8962; Home</button><button id="streakBtn" data-tr="1">&#128293; My Streak</button></div></div>
 <div id="suppage"><button id="supback" aria-label="Back">&#8249; Back</button><div class="supin"><div class="suph">&#9825;</div><h2>Support Be Hanuman</h2><p>Free, with no ads. If it helped your reading, here are a few ways to help it reach more people.</p><div id="suplist"></div><a class="supfoot" href="https://growthx.club/" target="_blank" rel="noopener" aria-label="Built at growthX"><img src="https://built.growthx.club/built-logo.svg" alt="Built at growthX" width="116" loading="lazy"></a></div></div>
-<div id="settings"><div class="supin"><h2>Settings</h2>
-<div class="setrow"><span>Language</span><div class="setbtns"><button data-l="hing">English</button><button data-l="hi">हिन्दी</button></div></div>
-<div class="setrow"><span>Theme</span><div class="setbtns"><button data-th="">Light</button><button data-th="dk">Dark</button></div></div>
-<div class="setrow"><span>Warm filter (eye comfort)</span><div class="setbtns"><button data-wf="1">On</button><button data-wf="0">Off</button></div></div>
-<div class="setrow"><span>Verse font</span><div class="setbtns"><button data-ft="0">Modern</button><button data-ft="1">Serif</button></div></div>
-<div class="setrow"><span>Bionic reading</span><div class="setbtns"><button data-br="1">Yes</button><button data-br="0">No</button></div></div>
-<div class="setrow"><span>Hide meaning</span><div class="setbtns"><button data-hm="1">Yes</button><button data-hm="0">No</button></div></div>
-<div class="setrow"><span>Hide explanation</span><div class="setbtns"><button data-he="1">Yes</button><button data-he="0">No</button></div></div>
-<div class="setrow"><span>Recitation</span><div class="setbtns"><button data-m="1">On</button><button data-m="0">Off</button></div></div>
-<div class="setrow" id="volrow"><span>Recitation volume</span><div class="setbtns vols"><button data-vol="10">10</button><button data-vol="25">25</button><button data-vol="50">50</button><button data-vol="75">75</button><button data-vol="100">100</button></div></div>
-<button id="setdone">Done</button></div></div>
-<div id="trends"><button id="trback" aria-label="Back">&#8249; Back</button><div class="trin"><h2>Your practice</h2><div class="trtabs"><button data-v="w" class="on">Weekly</button><button data-v="m">Monthly</button></div><div class="trnav"><button id="trprev" aria-label="Previous">&#8249;</button><b id="trlab"></b><button id="trnext" aria-label="Next">&#8250;</button></div><div id="trbody"></div></div></div>
+<div id="settings"><div class="supin set2"><div id="setArt"></div><h2>Settings</h2><p id="setHi"></p>
+<section class="sg"><h4>Recitation</h4><div class="sg-card"><div class="tiles t1"><button class="tile" data-tg="fresh"><b>Restart recitation</b><em></em></button></div><p class="sg-n">On: every visit opens at Doha 1. Off: it opens where you stopped.</p></div></section>
+<section class="sg"><h4>Reading</h4><div class="sg-card"><div class="seg"><button data-l="hing">English</button><button data-l="hi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</button></div><div class="tiles t3"><button class="tile" data-tg="br"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h5a3 3 0 0 1 0 6H7zM7 11h6a3 3 0 0 1 0 6H7z"/></svg><b>Bionic</b><em></em></button><button class="tile" data-tg="mn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></svg><b>Meaning</b><em></em></button><button class="tile" data-tg="ex"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.2M12 7.8v.4"/></svg><b>Explain</b><em></em></button></div><p class="sg-n">Meaning and explanation live in Learn. Turn them on to show them on Home too.</p></div></section>
+<section class="sg"><h4>Display</h4><div class="sg-card"><div class="tiles t3"><button class="tile" data-tg="dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><b>Dark</b><em></em></button><button class="tile" data-tg="wf"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M18.7 5.3 17 7M7 17l-1.7 1.7"/></svg><b>Warm</b><em></em></button><button class="tile" data-tg="ft"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18 10 5l5 13M6.8 14h6.4M17 11h3.5M18.8 11v7"/></svg><b>Serif</b><em></em></button></div></div></section>
+<section class="sg"><h4>Audio</h4><div class="sg-card"><div class="tiles t1"><button class="tile" data-tg="m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/><path d="M15.6 9a4.2 4.2 0 0 1 0 6M18.2 6.4a8 8 0 0 1 0 11.2"/></svg><b>Recitation</b><em></em></button></div><div id="volrow"><p class="sg-n">Recitation volume</p><div class="vbar"><button data-vol="10" aria-label="10"></button><button data-vol="25" aria-label="25"></button><button data-vol="50" aria-label="50"></button><button data-vol="75" aria-label="75"></button><button data-vol="100" aria-label="100"></button></div></div></div></section>
+<section class="sg"><h4>Demo</h4><div class="sg-card"><div class="tiles t1"><button class="tile danger" data-tg="reset"><b>Reset profile</b><em>Start over</em></button></div><p class="sg-n">Clears everything on this device and starts again from onboarding.</p></div></section>
+</div></div>
+<div id="trends"><button id="trback" aria-label="Back">&#8249; Back</button><div class="hpin"><h2 id="hpHi">Jai Hanuman</h2><div id="hpSk"></div></div><div class="trin"><h3 class="hp-h"><span id="hpStk"></span>Streak</h3><div class="trtabs"><button data-v="w" class="on">Weekly</button><button data-v="m">Monthly</button></div><div class="trnav"><button id="trprev" aria-label="Previous">&#8249;</button><b id="trlab"></b><button id="trnext" aria-label="Next">&#8250;</button></div><div id="trbody"></div></div></div>
+<nav id="tabbar" aria-label="Main" style="--i:0"><button data-tab="home" class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg><span>Home</span></button><button data-tab="chant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h2M8 8v8M12 4v16M16 8v8M20 12h-2"/></svg><span>Chant</span></button><button data-tab="learn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg><span>Learn</span></button><button data-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.4"/><circle cx="8" cy="17" r="2.4"/></svg><span>Settings</span></button></nav>
+<div id="feed"><div class="fd-top"><button id="fdBack" class="fd-back" style="display:none">&#8249; Learn</button><h2 id="fdTitle">Learn</h2></div><div class="fd-body" id="fdbody"></div></div>
+<div id="stories" aria-label="Stories"></div>
+<div id="onb"><div class="onb-card"><div class="onb-top"><span class="onb-dots"><i class="on"></i><i></i><i></i></span><div class="setbtns onb-l"><button data-l="hing">English</button><button data-l="hi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</button></div></div>
+<section class="os on" data-s="1"><h2>Jai Hanuman &#128591;</h2><p>Tell us who is chanting.</p><label>Your name<input id="onName" type="text" autocomplete="name" maxlength="60" placeholder="Name"></label><label>Phone number (optional)<input id="onPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="+91 98765 43210"></label><p class="onb-err" id="onErr" aria-live="polite"></p><button class="cbtn" id="onGo1">Continue</button><p class="onb-fine">Your phone number is not saved or sent anywhere.</p></section>
+<section class="os" data-s="2"><h2>How do you want to begin?</h2><p>Learn the Chalisa first, or set a daily sankalp. You can change this anytime in Settings.</p><div class="onb-opts"><button class="learn" data-lm="1"><b>&#128214;</b><span>I want to learn first</span><em>21-day mode</em></button><button data-dg="1"><b>1</b><span>time a day</span><em>A steady start</em></button><button data-dg="3"><b>3</b><span>times a day</span><em>Build the habit</em></button><button data-dg="7"><b>7</b><span>times a day</span><em>Deep practice</em></button><button data-dg="11"><b>11</b><span>times a day</span><em>A full round</em></button></div></section>
+<section class="os" data-s="3"><h2>Your intention</h2><p>Why are you chanting, and what will you do to back it? You will see this each day as a reminder.</p><label>For how long<div class="seg" id="onDur"><button data-od="11">11 days</button><button data-od="21" class="on">21 days</button><button data-od="40">40 days</button></div></label><label>My intention<textarea id="onI" rows="2" maxlength="140" placeholder="e.g. To overcome my fear about the upcoming interview"></textarea></label><label>My promise<textarea id="onP" rows="2" maxlength="140" placeholder="e.g. I will prepare for the interview 3 hours every day"></textarea></label><button class="cbtn" id="onBegin">Begin my sankalp</button><button class="onb-skip" id="onSkip">Skip for now</button></section></div></div>
+<div id="remind" aria-live="polite"></div>
 <div id="warmveil" aria-hidden="true"></div>
 <div id="streakToast" aria-live="polite"></div>
 <div id="nudge" aria-hidden="true"></div>
@@ -1145,6 +1545,8 @@ J2:"पवनपुत्र हनुमान की जय!"
 // Fill the times with tools: open hanuman.dyut.si/tapper.html, tap at the start of each verse, paste the result here.
 window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]};
 </script>
+<script>try{if(/[?&]reset=1/.test(location.search)){var k=[],i,n;for(i=0;i<localStorage.length;i++){n=localStorage.key(i);if(n&&n.indexOf("bh_")===0)k.push(n)}k.forEach(function(n){localStorage.removeItem(n)});sessionStorage.clear();history.replaceState(null,"",location.pathname)}}catch(e){}</script>
+<script>window.FACTS=[{"id":1,"s":"Origin story","t":"Born of the wind's blessing","st":"Anjana and Kesari prayed for a child. In the tradition, Vayu, the wind god, played a part in the birth, which is why Hanuman is called Pavanputra, son of the wind.","h":"Where you start doesn't set your ceiling.","f":"f001.webp"},{"id":2,"s":"Origin story","t":"His name means 'jaw'","st":"Hanu means jaw. The name comes from a childhood injury, when a blow left his jaw marked. One scar gave him the name the whole world now says.","h":"Your hardest day can end up as your name.","f":"f002.webp"},{"id":3,"s":"Origin story","t":"He tried to eat the sun","st":"Baby Hanuman saw the rising sun, thought it was a glowing fruit, and leapt into the sky to grab it. The gods watched a toddler race the sun.","h":"Big dreams look silly right up until they don't.","f":"f003.webp"},{"id":4,"s":"Origin story","t":"Rahu's complaint","st":"Rahu was about to swallow the sun for an eclipse when a little monkey zoomed past and pushed him aside. He ran to Indra, the king of the gods, to complain.","h":"Some people disrupt the system just by arriving.","f":"f004.webp"},{"id":5,"s":"Origin story","t":"When the wind stopped","st":"Indra struck Hanuman with his thunderbolt and he fell. Vayu, heartbroken, pulled all air out of the world. Every creature struggled until the gods begged him to return.","h":"A parent's hurt can pause the whole world.","f":"f005.webp"},{"id":6,"s":"Origin story","t":"A starter pack from the gods","st":"To make peace, the gods gave gifts. Brahma, Indra, Varuna and others blessed him with strength, a body that could take hits, and protection from many weapons.","h":"Great things are built by lots of people backing you.","f":"f006.webp"},{"id":7,"s":"Origin story","t":"Why fire couldn't hurt him","st":"Agni, the fire god, blessed Hanuman so that flames would not harm him. Many years later that boon would matter more than anyone expected, in a city called Lanka.","h":"Prep now for a problem you can't see yet.","f":"f007.webp"},{"id":8,"s":"Origin story","t":"The curse that made him forget","st":"Young Hanuman played pranks on sages who were meditating. They cursed him, gently: he would forget his own powers until someone reminded him. That reminder came years later.","h":"Imposter syndrome is older than the Ramayana.","f":"f008.webp"},{"id":9,"s":"Origin story","t":"The student who faced the sun","st":"Hanuman asked Surya, the sun god, to teach him. Surya never stops moving, so Hanuman followed him across the sky, walking backwards, eyes on his teacher.","h":"Commitment looks like showing up facing forward.","f":"f009.webp"},{"id":10,"s":"Origin story","t":"His fee: serve a friend","st":"When his studies ended, Surya asked for no money. His fee was that Hanuman would serve and protect Sugriva, Surya's son. That promise led Hanuman straight to Ram.","h":"The best 'payment' for knowledge is how you use it for others.","f":"f010.webp"},{"id":11,"s":"Origin story","t":"One person, many names","st":"Anjaneya, Maruti, Pavanputra, Kesarinandan, Bajrangbali, Mahavir, Sankat Mochan. Each name is a different side of him. Which one feels like yours?","h":"You are allowed to be more than one thing.","f":"f011.webp"},{"id":12,"s":"Origin story","t":"The gods' team-up","st":"When Vishnu was to come as Ram, many gods took vanara forms to help him. Hanuman is counted among them, with Vayu in his story and, in some traditions, a link to Shiva.","h":"The best teams are put together before the mission begins.","f":"f012.webp"},{"id":13,"s":"Origin story","t":"He is still here","st":"Hanuman is called a chiranjivi, one who lives on. Tradition says he stays on earth as long as Ram's name is spoken. Every chant is a kind of invitation.","h":"Some things stay alive because people keep showing up.","f":"f013.webp"},{"id":14,"s":"Origin story","t":"Where was he born?","st":"Several places say it happened here: Anjanadri near Hampi in Karnataka, a hill in Jharkhand, Tirumala in Andhra and more. Devotees have never agreed on one spot.","h":"Some stories are big enough for many homes.","f":"f014.webp"},{"id":15,"s":"Ram and Hanuman","t":"The disguise that didn't last","st":"Sugriva sent Hanuman, dressed as a simple brahmin, to find out who the two warriors in the forest were. One conversation with Ram and he knew exactly who he was talking to.","h":"Real recognise real.","f":"f015.webp"},{"id":16,"s":"Ram and Hanuman","t":"'Who speaks this well?'","st":"In the Valmiki Ramayana, after hearing Hanuman speak, Ram turns to Lakshman and says only someone who has studied deeply could talk like this. First impression, by speech.","h":"Clear words are a superpower.","f":"f016.webp"},{"id":17,"s":"Ram and Hanuman","t":"He carried them both","st":"The vanaras' mountain home was hard to climb, so Hanuman lifted Ram and Lakshman onto his shoulders and carried them up to meet Sugriva. Effort without ego.","h":"Show up for people. Do the carrying.","f":"f017.webp"},{"id":18,"s":"Ram and Hanuman","t":"The original wingman","st":"Hanuman brought Ram and Sugriva together. Each had a problem the other could solve: Ram needed help finding Sita, and Sugriva had lost his kingdom. A fire witnessed their friendship.","h":"Introductions can change history.","f":"f018.webp"},{"id":19,"s":"Ram and Hanuman","t":"Why Ram gave him the ring","st":"Before sending the search parties, Ram gave Hanuman his signet ring to show Sita. Of everyone there, he trusted Hanuman with the one thing that proved the message was real.","h":"Be the person others hand their important thing to.","f":"f019.webp"},{"id":20,"s":"Ram and Hanuman","t":"Service as a love language","st":"Hanuman's devotion is called dasya bhakti, love through service. He never asks for a title. He asks what needs doing and gets on with it.","h":"Showing love can be as simple as being useful.","f":"f020.webp"},{"id":21,"s":"Ram and Hanuman","t":"He never asked for a reward","st":"After the war, Ram offered Hanuman any boon. He asked to keep devotion to Ram, and to stay as long as Ram's story is told. That was the whole ask.","h":"Rare people want only the thing itself.","f":"f021.webp"},{"id":22,"s":"Ram and Hanuman","t":"The seat that stays empty","st":"Folk tradition says wherever the Ramayana is told, Hanuman comes to listen, invisibly, sitting with folded hands. Some storytellers still leave a seat for him.","h":"Real fans show up quietly.","f":"f022.webp"},{"id":23,"s":"Ram and Hanuman","t":"A name that floats stones","st":"To cross the sea to Lanka, the vanaras built a bridge. A folk story says stones with Ram's name written on them floated. Faith did the engineering.","h":"Belief can be the first load-bearing beam.","f":"f023.webp"},{"id":24,"s":"Ram and Hanuman","t":"The giant in a tiny frame","st":"Hanuman could grow as big as a mountain or shrink small enough to hide. The tradition calls these powers anima and mahima. The skill is knowing which size fits the room.","h":"Read the room. Resize.","f":"f024.webp"},{"id":25,"s":"The Lanka mission","t":"Deadline missed, panic on","st":"The search party reached the southern shore with no sign of Sita and a deadline already gone. They sat together, ready to give up. Then an old vulture, Sampati, pointed to Lanka.","h":"Panic is loud. Clarity arrives quietly.","f":"f025.webp"},{"id":26,"s":"The Lanka mission","t":"Nobody knew who could jump","st":"Each vanara listed how far he could leap. Angada said he could get there but wasn't sure he'd get back. Everyone stared at the ocean, doing the math.","h":"Naming your limit honestly is leadership.","f":"f026.webp"},{"id":27,"s":"The Lanka mission","t":"Jambavan's pep talk","st":"Old Jambavan walked over to the quiet one in the corner and said: you were born with this. Remember who you are. Hanuman remembered, and the curse of forgetting lifted.","h":"The right mentor reminds you what you forgot.","f":"f027.webp"},{"id":28,"s":"The Lanka mission","t":"He grew until the mountain shook","st":"On Mahendra mountain, Hanuman expanded to a giant size, stamped his feet and made the whole hill tremble. Then he flew. No hype video needed.","h":"Sometimes the preparation is the dramatic bit.","f":"f028.webp"},{"id":29,"s":"The Lanka mission","t":"The polite no to rest","st":"Mid-ocean, the mountain Mainaka rose from the sea offering Hanuman a rest. He touched it respectfully, thanked it, and kept flying. Rest is fine. Today, he had a promise.","h":"Say no kindly. Keep your goal.","f":"f029.webp"},{"id":30,"s":"The Lanka mission","t":"Surasa's test","st":"A sea-goddess named Surasa opened a huge mouth to test him. Hanuman got bigger, then suddenly tiny, slipped in and out, and thanked her. He passed without a fight.","h":"Winning sometimes means being flexible, not louder.","f":"f030.webp"},{"id":31,"s":"The Lanka mission","t":"Simhika the shadow-catcher","st":"A sea monster, Simhika, caught flyers by grabbing their shadows. Hanuman felt himself being dragged down, found the cause, and ended it from inside her.","h":"Some pulls come from what's hidden below.","f":"f031.webp"},{"id":32,"s":"The Lanka mission","t":"Cat-sized on Lanka's hill","st":"He landed on a hill outside Lanka, saw the gold city and knew a giant vanara would be caught instantly. So he shrank to the size of a cat and slipped in at dusk.","h":"The best entrance is sometimes a small one.","f":"f032.webp"},{"id":33,"s":"The Lanka mission","t":"Lankini and the prophecy","st":"The city's guardian, Lankini, spotted him and blocked the gate. Hanuman struck her once with his left hand. She bowed: Brahma had said that when a vanara beat her, Lanka's end had begun.","h":"Some doors open only after you win the first fight.","f":"f033.webp"},{"id":34,"s":"The Lanka mission","t":"Searching every palace","st":"He searched Ravana's palaces room by room. Seeing sleeping women, he questioned his own mind. 'It stayed pure,' he reflected. 'My mind remained steady.' He kept looking.","h":"Integrity is what you do when nobody's watching.","f":"f034.webp"},{"id":35,"s":"The Lanka mission","t":"The wrong woman, the right call","st":"In a grand palace he saw a beautiful queen and wondered for a moment if she was Sita. Then he reasoned: Sita would never sleep in luxury, away from Ram. He dropped the guess and kept searching instead of reporting a false win.","h":"Don't fake the result just to be done.","f":"f035.webp"},{"id":36,"s":"The Lanka mission","t":"Under the Ashoka tree","st":"In a grove of Ashoka trees he found Sita: thin, quiet, guarded by demonesses. She had been waiting a long time for any sign that Ram was still looking.","h":"Hope often looks fragile and stays alive anyway.","f":"f036.webp"},{"id":37,"s":"The Lanka mission","t":"He waited, then spoke softly","st":"Hanuman watched Ravana threaten Sita and wanted to act. He stayed hidden and thought it through. Then he began quietly telling Ram's story from the tree, so she wouldn't be frightened.","h":"Plan the first sentence. It decides the whole talk.","f":"f037.webp"},{"id":38,"s":"The Lanka mission","t":"Proof in a ring","st":"Sita wondered if this was a trick. Hanuman handed her Ram's ring. She recognised it, cried, and believed him. Then she asked how one little vanara had crossed an ocean.","h":"Trust is built with details only the real person would know.","f":"f038.webp"},{"id":39,"s":"The Lanka mission","t":"Sita said no to a ride home","st":"Hanuman offered to carry Sita back to Ram right then. She declined, saying Ram should come and rescue her, and a rescue in the dark could put them both at risk. He accepted it.","h":"Respect someone's choice even when you can fix it faster.","f":"f039.webp"},{"id":40,"s":"The Lanka mission","t":"A jewel for Ram","st":"Before leaving, Sita gave Hanuman her chudamani, a hair jewel, to show Ram. It meant: she was alive, brave, and still waiting. He wrapped it carefully.","h":"Proof of life is a very small object sometimes.","f":"f040.webp"},{"id":41,"s":"The Lanka mission","t":"Strategic garden chaos","st":"Hanuman then ate fruit from Ravana's garden and uprooted trees. He wanted to be noticed, to see the enemy's strength, and learn the city before leaving. It was a plan, not a tantrum.","h":"Sometimes you cause a ripple to see who shows up.","f":"f041.webp"},{"id":42,"s":"The Lanka mission","t":"Akshay's last fight","st":"Ravana sent his young son Akshayakumar to stop the intruder. Hanuman fought him fairly and ended it. Ravana's court started to realise this was no ordinary monkey.","h":"Underestimating someone is how stories turn.","f":"f042.webp"},{"id":43,"s":"The Lanka mission","t":"Caught on purpose","st":"Indrajit used the Brahmastra, which Hanuman could have resisted. He chose to respect it and let himself be tied. He wanted to meet Ravana in person.","h":"A planned surrender can be a smart move.","f":"f043.webp"},{"id":44,"s":"The Lanka mission","t":"No chair? Build one","st":"Ravana's court gave him no seat. Hanuman coiled his tail into a tall spiral and sat on it, higher than Ravana's throne. No fuss. No shouting. Just a tail.","h":"If nobody pulls up a chair, make your own.","f":"f044.webp"},{"id":45,"s":"The Lanka mission","t":"Speak truth to a king","st":"Standing before Ravana, Hanuman said: I am Ram's messenger. Return Sita and you will be forgiven. It was respectful and it was clear.","h":"Say the hard thing politely.","f":"f045.webp"},{"id":46,"s":"The Lanka mission","t":"A message can't be killed","st":"Ravana wanted him executed. His brother Vibhishana spoke up: a messenger must not be killed. The court agreed to a lesser punishment: set his tail on fire.","h":"One steady voice can change the room.","f":"f046.webp"},{"id":47,"s":"The Lanka mission","t":"Oil on the tail","st":"They wrapped cloth around his tail, soaked it in oil and lit it. They laughed. Hanuman waited quietly. The boon from Agni, years before, was still working.","h":"Preparation shows up in the funniest moments.","f":"f047.webp"},{"id":48,"s":"The Lanka mission","t":"Lanka lights up","st":"Flames on his tail, Hanuman jumped from roof to roof and set Lanka's palaces on fire, except the grove where Sita sat. A small fire, aimed well, changed a city.","h":"Precision beats force.","f":"f048.webp"},{"id":49,"s":"The Lanka mission","t":"The panic after the fire","st":"Looking at the burning city, Hanuman suddenly feared he'd harmed Sita. He rushed back and found her safe, protected by her own faith. He had learned to check the damage.","h":"Own the impact, not just the intent.","f":"f049.webp"},{"id":50,"s":"The Lanka mission","t":"Cooling the tail","st":"After the fire, Hanuman flew to the shore and dipped his burning tail in the sea. A small, funny moment between big ones. Even heroes need to cool down.","h":"Cool down before the next big thing.","f":"f050.webp"},{"id":51,"s":"The Lanka mission","t":"The victory party at Madhuvan","st":"On the way back, the vanaras reached Sugriva's honey grove, Madhuvan, and feasted without asking. They'd earned it. Sugriva guessed from the noise that the mission had succeeded.","h":"Celebrate wins, even before the full report.","f":"f051.webp"},{"id":52,"s":"The Lanka mission","t":"Lead with the good news","st":"When Hanuman reached Ram, his first words were: 'I have seen Sita.' Not a long story. Not a warm-up. The headline first, then the details.","h":"State the outcome first. Then explain.","f":"f052.webp"},{"id":53,"s":"War and Sanjeevani","t":"A bridge built together","st":"Millions of vanaras, led by Nala and Neela, built a stone bridge across the sea. Hanuman carried, lifted and encouraged. No single hero built it. They all did.","h":"Big things are built by lots of small hands.","f":"f053.webp"},{"id":54,"s":"War and Sanjeevani","t":"Give them a second chance","st":"When Ravana's brother Vibhishana asked to join Ram, many vanaras doubted him. Hanuman spoke up, saying he'd spoken honestly and acted with courage. Ram accepted him.","h":"People can switch sides when they find what's right.","f":"f054.webp"},{"id":55,"s":"War and Sanjeevani","t":"Ravana's compliment","st":"In battle, Hanuman struck Ravana so hard that the demon king staggered. Ravana said: 'Well done, vanara. That was a great blow.' Even enemies recognise real strength.","h":"Respect your rival when they earn it.","f":"f055.webp"},{"id":56,"s":"War and Sanjeevani","t":"Lakshman falls","st":"Indrajit's weapon struck Lakshman down. The camp went silent. The healer Sushena said only a herb from far Himalayan peaks could save him, and it had to be found before dawn.","h":"Some deadlines are not negotiable.","f":"f056.webp"},{"id":57,"s":"War and Sanjeevani","t":"The longest night run","st":"The healer asked Hanuman to fly north to Dronagiri mountain, bring four named herbs, and be back by sunrise. A journey of thousands of miles. He started instantly.","h":"Trust means someone hears 'impossible' and hears 'urgent'.","f":"f057.webp"},{"id":58,"s":"War and Sanjeevani","t":"Kalanemi's trap","st":"Ravana sent a demon, Kalanemi, disguised as a sage, to delay Hanuman. Hanuman was thirsty and almost fell for it, until a crocodile in a nearby pool revealed the truth.","h":"Be careful of 'help' that slows you down.","f":"f058.webp"},{"id":59,"s":"War and Sanjeevani","t":"Can't spot the herb? Bring the mountain","st":"At Dronagiri, Hanuman couldn't tell which herbs were the right ones. So he lifted the whole mountain and flew it back. If you can't solve the small problem, solve the big one.","h":"Sometimes you carry the whole mountain.","f":"f059.webp"},{"id":60,"s":"War and Sanjeevani","t":"Bharat's accidental arrow","st":"Passing over Nandigram, Bharat saw a huge shadow and shot an arrow at it. Hanuman fell, murmuring 'Ram, Ram'. Bharat rushed to help him, horrified, and Hanuman forgave instantly.","h":"Mistakes get fixed faster when both sides are kind.","f":"f060.webp"},{"id":61,"s":"War and Sanjeevani","t":"Dawn delivered","st":"Hanuman landed back before sunrise. Sushena prepared the herbs. Lakshman opened his eyes. Ram held Hanuman close and said no words were enough.","h":"Showing up on time can save a life.","f":"f061.webp"},{"id":62,"s":"War and Sanjeevani","t":"Ahiravana's kidnap","st":"Ravana's relative Ahiravana, a sorcerer, kidnapped Ram and Lakshman and took them to Patala, the underworld. Hanuman went after them alone.","h":"When your people are in trouble, you go.","f":"f062.webp"},{"id":63,"s":"War and Sanjeevani","t":"A fortress made of tail","st":"Before going to rescue them, Hanuman formed a protective fortress with his tail around the vanara camp so nothing could enter. Then he left, confident they were safe.","h":"A good leader builds safety before leaving.","f":"f063.webp"},{"id":64,"s":"War and Sanjeevani","t":"Five faces, five flames","st":"In Patala, five lamps in five directions had to be blown out at the same moment. Hanuman took the five-faced Panchamukhi form and extinguished them all at once.","h":"Some problems need every angle at the same time.","f":"f064.webp"},{"id":65,"s":"War and Sanjeevani","t":"Meeting his own son","st":"In Patala, Hanuman met a guard named Makardhwaja, a being born from a drop of Hanuman's sweat. They fought without knowing. When they learned the truth, father and son embraced.","h":"Your own story can surprise you.","f":"f065.webp"},{"id":66,"s":"War and Sanjeevani","t":"Go and tell Bharat","st":"As Ram's exile ended, he sent Hanuman ahead to tell Bharat that he was coming home. Bharat had vowed to give up his life if Ram didn't return on time. Hanuman arrived just in time.","h":"Some messages are urgent in the kindest way.","f":"f066.webp"},{"id":67,"s":"War and Sanjeevani","t":"Why Hanuman is orange","st":"Hanuman saw Sita put sindoor in her hair and asked why. 'For Ram's long life,' she said. He smeared sindoor all over his body to give Ram even more. That's why he is orange.","h":"Love can look a little over the top. It's still love.","f":"f067.webp"},{"id":68,"s":"War and Sanjeevani","t":"Pearls and an open heart","st":"Sita gave Hanuman a pearl necklace. He bit each pearl and checked it. 'Where is Ram's name?' someone asked. He opened his chest and there, in his heart, were Ram and Sita.","h":"Show, don't tell.","f":"f068.webp"},{"id":69,"s":"Beyond the Ramayana","t":"The tail Bhima couldn't lift","st":"In the Mahabharata, Bhima, famous for strength, found an old monkey blocking his path. He couldn't move its tail. The monkey was Hanuman, his half-brother in spirit, and Bhima's pride dissolved.","h":"Never judge by how someone looks.","f":"f069.webp"},{"id":70,"s":"Beyond the Ramayana","t":"The flag on Arjuna's chariot","st":"At Kurukshetra, Arjuna's chariot carried a banner with Hanuman on it. According to tradition, Hanuman's presence protected the chariot throughout the war.","h":"Pick the logo you fight under.","f":"f070.webp"},{"id":71,"s":"Beyond the Ramayana","t":"Arjuna's bridge of arrows","st":"Arjuna once boasted he could build a bridge of arrows across the sea. Hanuman, disguised, said it would break under his weight. It did, until Krishna's help held it. Arjuna learned humility.","h":"Humble brag? Better to just ask for help.","f":"f071.webp"},{"id":72,"s":"Beyond the Ramayana","t":"Humbling Garuda","st":"Krishna wanted to humble three proud people: Garuda, Satyabhama and his own Sudarshan. He called Hanuman in. By the end, the three had stopped competing.","h":"The loudest person in the room isn't the strongest.","f":"f072.webp"},{"id":73,"s":"Beyond the Ramayana","t":"Shani's challenge","st":"Shani, the planet-god known for trouble, said he'd come to Hanuman. Hanuman invited him up and gave him a ride on his head, with a mountain on top. Shani promised never to trouble his devotees.","h":"Hard times can be handled with good humour.","f":"f073.webp"},{"id":74,"s":"Beyond the Ramayana","t":"Why Tuesday and Saturday","st":"Tuesdays are linked with Mars (Mangal), and Saturdays with Shani, so those are the days many devotees keep for Hanuman. Some fast, some visit a temple, many just chant the Chalisa.","h":"A weekly habit beats a once-a-year push.","f":"f074.webp"},{"id":75,"s":"Beyond the Ramayana","t":"Hanuman and Tulsidas","st":"Tradition says Hanuman helped Tulsidas see Ram at Chitrakoot. After many failed attempts, a parrot-voiced hint changed everything. Tulsidas wrote the Ramcharitmanas and Chalisa in gratitude.","h":"The right nudge comes when you keep going.","f":"f075.webp"},{"id":76,"s":"Beyond the Ramayana","t":"The Chalisa behind bars","st":"A legend says Tulsidas was imprisoned by an emperor and sat chanting for forty days. Monkeys swarmed the palace and he was released. The poem he wrote is the Hanuman Chalisa.","h":"Pressure sometimes writes the best poetry.","f":"f076.webp"},{"id":77,"s":"Beyond the Ramayana","t":"Sankat Mochan, Varanasi","st":"In Varanasi, the Sankat Mochan temple is traditionally said to have been established by Tulsidas. The name means 'remover of troubles'. People walk there barefoot on Tuesdays and Saturdays.","h":"Some places turn into anchors for a whole city.","f":"f077.webp"},{"id":78,"s":"Beyond the Ramayana","t":"He deleted his own masterpiece","st":"In the Hanuman Nataka legend, Hanuman wrote his own Ramayana on rocks. When Valmiki saw it, he was sad because it overshadowed his. Hanuman threw the tablets into the sea.","h":"Real greatness doesn't need credit.","f":"f078.webp"},{"id":79,"s":"Beyond the Ramayana","t":"Ram's name on every hair","st":"A folk story says every hair on Hanuman's body says 'Ram'. When someone asked how deep his devotion went, he showed them, and the whole body hummed with the name.","h":"Do what you love so much it becomes you.","f":"f079.webp"},{"id":80,"s":"Beyond the Ramayana","t":"The ring in the underworld","st":"Ram's ring slipped and fell into Patala. Hanuman followed and found thousands of identical rings. The king of Patala said: every Ram who has ever lived has dropped one. Hanuman understood how old this story is.","h":"Some stories repeat. That's how you know they matter.","f":"f080.webp"},{"id":81,"s":"Beyond the Ramayana","t":"From India to Thailand to Java","st":"Hanuman travels. In Thailand he is Hanuman in the Ramakien, in Java and Bali he is Hanoman in wayang shadow plays and Kecak dance. A story told across oceans.","h":"Stories pack light and go far.","f":"f081.webp"},{"id":82,"s":"Beyond the Ramayana","t":"The wrestler's god","st":"In northern India, akharas (wrestling pits) keep a Hanuman picture or shrine. Wrestlers touch the earth, bow to him and start practice. Strength with discipline.","h":"Start with a small ritual. It makes the rest easier.","f":"f082.webp"},{"id":83,"s":"Beyond the Ramayana","t":"Sundara Kanda","st":"The fifth book of the Valmiki Ramayana, Sundara Kanda, is mostly Hanuman's journey to Lanka. Many families read it in tough times, as a story of courage when everything looks stuck.","h":"Courage can be a bedtime story.","f":"f083.webp"},{"id":84,"s":"Beyond the Ramayana","t":"The eleventh Rudra","st":"In some traditions Hanuman is seen as an incarnation of Shiva, the eleventh of the Rudras. That's one reason many Shiva devotees also love him. Strength and stillness, together.","h":"Calm and powerful can be the same person.","f":"f084.webp"},{"id":85,"s":"Beyond the Ramayana","t":"The Hanuman Ashtak","st":"The Hanuman Ashtak, attributed to Tulsidas, has eight verses. Each begins with a famous moment, then asks 'who doesn't know your name, Sankat Mochan?' A reminder in a single breath.","h":"Short prayers are still prayers.","f":"f085.webp"},{"id":86,"s":"Beyond the Ramayana","t":"Hanuman Jayanti","st":"Hanuman Jayanti marks his birth. Many celebrate on the full moon of Chaitra, though some regions celebrate on other days. Temples fill up with orange flowers, sindoor and chanting.","h":"A birthday doesn't need a cake to feel like a party.","f":"f086.webp"},{"id":87,"s":"Beyond the Ramayana","t":"Hanuman in Jain stories","st":"In Jain tellings of the Ramayana, Hanuman is not a monkey but a prince of the vidyadharas, a skilled human race. The same hero, told differently, fits a different worldview.","h":"One person, many tellings.","f":"f087.webp"},{"id":88,"s":"Beyond the Ramayana","t":"He out-sang Narada","st":"Narada, the divine musician, grew proud of his veena. Hanuman sang. Rocks melted, the veena strings stuck in the soft stone, and Narada understood: skill isn't the same as depth.","h":"Don't confuse talent with soul.","f":"f088.webp"},{"id":89,"s":"Beyond the Ramayana","t":"At Ram's feet","st":"In every Ram Darbar picture, Hanuman sits at Ram's feet with folded hands, never at his side. The strongest figure in the scene takes the lowest seat, by choice.","h":"Position doesn't measure power.","f":"f089.webp"},{"id":90,"s":"Beyond the Ramayana","t":"Where does he live now?","st":"The Mahabharata says Hanuman lives on Gandhamadana mountain, a place of deep peace. Bhima's story shows him still around thousands of years after the Ramayana.","h":"Some people never stop being around.","f":"f090.webp"},{"id":91,"s":"Chalisa decoded","t":"Forty verses, one prayer","st":"'Chalisa' comes from chalis, forty. The Hanuman Chalisa has forty chaupais, with two dohas at the beginning and one at the end. One short poem you can recite in a few minutes.","h":"Short can still be deep.","f":"f091.webp"},{"id":92,"s":"Chalisa decoded","t":"Written in Awadhi, for everyone","st":"Tulsidas wrote it in Awadhi, a local language people actually spoke, not in Sanskrit. He wanted ordinary people to be able to say it themselves. Accessible by design.","h":"The best ideas speak the audience's language.","f":"f092.webp"},{"id":93,"s":"Chalisa decoded","t":"The distance to the sun, in one line","st":"'Jug sahastra jojan par bhanu.' Read as 12,000 x 1,000 x 8 miles, it comes to about 96 million miles, roughly 154 million km. The real distance is about 150 million km. Close.","h":"A line written long ago is surprisingly close to the answer.","f":"f093.webp"},{"id":94,"s":"Chalisa decoded","t":"Bajrang: the thunderbolt body","st":"'Bajrang' comes from vajra-anga, a body like a thunderbolt. It points back to his childhood boon and the strength he shows in the verse 'Mahavir vikram Bajrangi'.","h":"A strong body is meant to serve something.","f":"f094.webp"},{"id":95,"s":"Chalisa decoded","t":"It starts with a guru, not a god","st":"The first doha is about Tulsidas's guru. He says he cleans the mirror of his mind with the dust of his guru's feet. Before asking for strength, you clean the lens first.","h":"Start by cleaning the mirror.","f":"f095.webp"},{"id":96,"s":"Chalisa decoded","t":"'Give me strength, intellect, knowledge'","st":"'Bal buddhi vidya dehu mohi, harahu kalesh vikar.' The ask isn't for riches. It's for strength, intelligence and learning, and a request to remove troubles and flaws.","h":"Ask for capability, not just comfort.","f":"f096.webp"},{"id":97,"s":"Chalisa decoded","t":"Hard things become easy","st":"'Durgam kaaj jagat ke jete, sugam anugraha tumhre tete.' All the difficult tasks in the world become easy through your grace. A line for people with a big to-do list.","h":"Hard is often just 'unfamiliar'.","f":"f097.webp"},{"id":98,"s":"Chalisa decoded","t":"Gatekeeper of Ram's door","st":"'Ram duare tum rakhvare.' You are the guard at Ram's door; no one enters without your permission. Hanuman as gatekeeper, a reminder to be careful what you let in.","h":"Protect your peace. Choose what comes in.","f":"f098.webp"},{"id":99,"s":"Chalisa decoded","t":"'Why fear when you are the protector?'","st":"'Tum rakshak kahu ko darna.' When you have a protector, why be afraid? Not a line about having no problems. A line about having somewhere to put your fear.","h":"You are allowed to lean on something.","f":"f099.webp"},{"id":100,"s":"Chalisa decoded","t":"Align thought, word, deed","st":"'Sankat te Hanuman chhudave, man kram vachan dhyan jo lave.' Hanuman frees one from trouble when mind, action and word are all aligned. Three things, pointing the same way.","h":"Say it, do it, think it. Same direction.","f":"f100.webp"},{"id":101,"s":"Chalisa decoded","t":"Only you can hold your own power","st":"'Aapan tej samhaaro aapai, teenon lok haank te kaanpai.' You alone can hold your own radiance; the three worlds tremble at your call. Power needs control.","h":"Self-control is the real flex.","f":"f101.webp"},{"id":102,"s":"Chalisa decoded","t":"The fear verse","st":"'Bhoot pishach nikat nahin aave, Mahavir jab naam sunave.' Evil spirits don't come near when the great hero's name is spoken. Many people say this line when they feel scared at night.","h":"A name or a phrase can be a flashlight.","f":"f102.webp"},{"id":103,"s":"Chalisa decoded","t":"Seven times or a hundred?","st":"Verse 38 says 'jo sat baar paath kar koi', whoever recites this 'sat baar'. Most read it as a hundred times. Some read it as seven. The Chalisa leaves that to you.","h":"A routine is yours to define.","f":"f103.webp"},{"id":104,"s":"Chalisa decoded","t":"Shiva as witness","st":"'Jo yah padhe Hanuman Chalisa, hoy siddhi saakhi Gaureesa.' Whoever reads it, success follows, and Gaureesa, Shiva, is the witness. The poem ends by naming a witness, not a guarantee.","h":"A promise feels different with a witness.","f":"f104.webp"},{"id":105,"s":"Chalisa decoded","t":"Tulsidas signs off humbly","st":"'Tulsidas sada Hari chera, keejai Nath hriday mah dera.' Tulsidas calls himself Hari's servant and asks Hanuman to live in his heart. The author's whole signature.","h":"End with humility.","f":"f105.webp"},{"id":106,"s":"Chalisa decoded","t":"The closing doha","st":"'Pavan tanay sankat harana, mangal moorati roop.' Son of the wind, remover of troubles, form of auspiciousness. Then a request: stay in my heart, with Ram, Lakshman and Sita.","h":"A good ending is a request to stay.","f":"f106.webp"},{"id":107,"s":"Chalisa decoded","t":"Siyavar Ramchandra ki jai","st":"The Jaikara is the cheer at the end: 'Siyavar Ramchandra ki jai, Pavansut Hanuman ki jai'. A shout of joy that turns a prayer into a celebration.","h":"Finish loud. Joy counts.","f":"f107.webp"},{"id":108,"s":"Chalisa decoded","t":"Why 108?","st":"108 is traditionally treated as sacred: a mala has 108 beads, and many mantras are repeated 108 times. This Feed has 108 stories so you can walk through one bead at a time.","h":"One bead at a time is still a full mala.","f":"f108.webp"}];</script>
 <script>(function(){
   var CH=window.CHALISA,JK=window.CHALISA_JK,HI=window.HINDI||{},D=[];
   function hk(c){return c.n?"C"+c.n:c.kl==="Doha 1"?"D0":c.kl==="Doha 2"?"D2":"D41"}
@@ -1184,8 +1586,8 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   function cardHTML(c,i){
     if(c.t==="sankalp"){
       return '<section class="card"><div class="wrap skw">'+artHTML(c,i)+
-        '<div class="sk"><h2>Sankalp</h2><p class="mt">How many times will you read the Chalisa today?</p>'+
-        '<div class="sl" id="sl" role="slider" aria-label="Times to read today" aria-valuemin="1" aria-valuemax="21" aria-valuenow="1"><div class="sl-in"><div class="sl-track"><div class="sl-fill"></div></div><i class="sl-bd" data-v="1" style="--f:0.0"></i><i class="sl-bd" data-v="3" style="--f:0.2"></i><i class="sl-bd" data-v="5" style="--f:0.4"></i><i class="sl-bd" data-v="7" style="--f:0.6"></i><i class="sl-bd" data-v="11" style="--f:0.8"></i><i class="sl-bd" data-v="21" style="--f:1.0"></i><span class="sl-lb" style="--f:0.0">1</span><span class="sl-lb" style="--f:0.2">3</span><span class="sl-lb" style="--f:0.4">5</span><span class="sl-lb" style="--f:0.6">7</span><span class="sl-lb" style="--f:0.8">11</span><span class="sl-lb" style="--f:1.0">21</span><div class="sl-thumb"><b id="slv">1</b></div></div></div>'+
+        '<div class="sk"><h2>Sankalp</h2><p class="mt">Your sankalp for today</p>'+
+        '<div class="sk-goal"><b id="skg">1</b><span id="skw">times today</span></div><div id="skInfo"></div>'+
         '<p class="ex">Take a deep breath and be ready with a steady mind.</p>'+
         '<button id="install" class="lnk" style="display:none">Add to Home Screen</button></div>'+
         '<div class="swipe" aria-hidden="true"><img class="swpt" alt="" src="'+BASE+'images/swipe-point.png" draggable="false"><span class="sw-t">Swipe up to begin</span><span class="sw-d">Scroll or press &darr; to begin</span></div>'+
@@ -1218,7 +1620,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   var cards=[].slice.call(stage.children);
   var cur=0,dy=0,dragging=false,leaving=-1,leaveT=0;
   // A fresh launch opens on Sankalp. If the browser reloads the page mid-session (memory pressure on phones), resume where the reader was.
-  try{var s0=sessionStorage.getItem("bh_card_s");if(s0!==null){var s1=parseInt(s0,10);if(s1>=0&&s1<N)cur=s1}else{goal=1;round=1;saveRounds()}}catch(e){}
+  try{var s0=sessionStorage.getItem("bh_card_s");if(s0!==null){var s1=parseInt(s0,10);if(s1>=0&&s1<N)cur=s1}else{goal=dgGet();round=1;saveRounds()}}catch(e){}
   var prog=document.getElementById("prog"),hint=document.getElementById("hint"),fl=document.getElementById("flabel"),fc=document.getElementById("fcount");
 
   function layout(){
@@ -1242,7 +1644,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(typeof mbtn!=="undefined"&&mbtn)mbtn.style.visibility=(musicOn&&cur>0)?"visible":"hidden";
     fc.firstChild.nodeValue="";var cd=document.getElementById("cd");if(cd){var left=c.n?(40-c.n):null;if(cd.dataset.v!==String(left)){cd.dataset.v=String(left);cd.textContent=left===null?"":left;cd.classList.remove("tick");void cd.offsetWidth;if(left!==null)cd.classList.add("tick")}}
   }
-  function save(){try{sessionStorage.setItem("bh_card_s",String(cur))}catch(e){}}
+  function save(){try{sessionStorage.setItem("bh_card_s",String(cur))}catch(e){}try{localStorage.setItem("bh_pos",String(cur))}catch(e){}}
   function goTo(n){
     n=Math.max(0,Math.min(N-1,n));
     if(n!==cur){
@@ -1253,7 +1655,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     }
     dy=0;layout();
   }
-  function go(d){goTo(cur+d)}
+  function go(d){if(!homeTab())return;goTo(cur+d)}
 
   var sy=0,st=0;
   stage.addEventListener("pointerdown",function(e){
@@ -1292,6 +1694,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   document.documentElement.appendChild(navb);
   navb.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;go(b.id==="navup"?-1:1)});
   document.addEventListener("keydown",function(e){
+    if(e.target&&/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName))return;
     if(["ArrowDown","ArrowRight","PageDown"," "].indexOf(e.key)>-1){e.preventDefault();go(1)}
     if(["ArrowUp","ArrowLeft","PageUp"].indexOf(e.key)>-1){e.preventDefault();go(-1)}
   });
@@ -1342,7 +1745,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   VO.addEventListener("ended",function(){
     if(vi+1<vq.length){vi++;vgap=setTimeout(playClip,350)}
   });
-  function musicSync(){if(!musicOn||muted){return}playCard(cur)}
+  function musicSync(){if(!musicOn||muted||!homeTab()||mpOn()){return}playCard(cur)}
   var vT=null;function deferVoice(){clearTimeout(vT);vT=setTimeout(musicSync,220)}
   function label(){var su=document.getElementById("sbu");if(su)su.classList.toggle("on",!!muted);mbtn.innerHTML=muted?'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9.5l5 5M21 9.5l-5 5"/></svg>':'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M15.6 9a4.2 4.2 0 0 1 0 6M18.2 6.4a8 8 0 0 1 0 11.2"/></svg>';mbtn.classList.toggle("off",!!muted);mbtn.setAttribute("aria-label",muted?"Unmute voice":"Mute voice");mbtn.style.visibility=(musicOn&&clipsFor(cur).length)?"visible":"hidden";var rp=document.getElementById("replay");if(rp)rp.style.visibility=(clipsFor(cur).length&&musicOn)?"visible":"hidden";updateExplain()}
   function updateExplain(){var b=document.getElementById("explain"),c=D[cur];if(!b)return;var ok=c&&!c.t&&c.ex;b.style.visibility=ok?"visible":"hidden";b.dataset.i=cur}
@@ -1352,7 +1755,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   // If the browser blocked playback after a screen change, the next touch starts it.
   ["pointerdown","touchend","click","keydown"].forEach(function(ev){
     window.addEventListener(ev,function(e){
-      if(blocked&&musicOn&&!muted&&!(e.target&&e.target.closest&&e.target.closest("#music,[data-m]"))){blocked=false;playCard(cur,true)}
+      if(blocked&&musicOn&&!muted&&homeTab()&&!(e.target&&e.target.closest&&e.target.closest("#music,[data-m]"))){blocked=false;playCard(cur,true)}
     },{passive:true});
   });
   var rpb=document.getElementById("replay");if(rpb)rpb.onclick=replay;
@@ -1363,27 +1766,28 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   };
   function setMusic(on){
     musicOn=on;try{localStorage.setItem("bh_music",on?"1":"0")}catch(e){}
-    if(on){muted=false;if(cur>0)playCard(cur,true)}else{stopVoice()}
+    if(on){muted=false;if(cur>0&&homeTab())playCard(cur,true)}else{stopVoice()}
     updateMusicUI();label();
   }
 
   // Settings: hide meaning / hide explanation / recitation volume (saved on the device)
   var hideM=0,hideE=0,vol=100,theme="",fontSel=0,bionic=0,warm=0;
-  try{theme=localStorage.getItem("bh_theme")||"";warm=+localStorage.getItem("bh_wf")||0;if(theme==="wm"){theme="dk";warm=1;localStorage.setItem("bh_theme","dk");localStorage.setItem("bh_wf","1")}if(theme!=="dk")theme="";fontSel=+localStorage.getItem("bh_font")||0;bionic=+localStorage.getItem("bh_br")||0;hideM=+localStorage.getItem("bh_hm")||0;hideE=+localStorage.getItem("bh_he")||0;var vv=parseInt(localStorage.getItem("bh_vol")||"100",10);if([10,25,50,75,100].indexOf(vv)>=0)vol=vv}catch(e){}
+  try{theme=localStorage.getItem("bh_theme")||"";warm=+localStorage.getItem("bh_wf")||0;if(theme==="wm"){theme="dk";warm=1;localStorage.setItem("bh_theme","dk");localStorage.setItem("bh_wf","1")}if(theme!=="dk")theme="";fontSel=+localStorage.getItem("bh_font")||0;bionic=+localStorage.getItem("bh_br")||0;var hmv=localStorage.getItem("bh_hm"),hev=localStorage.getItem("bh_he");hideM=hmv===null?1:+hmv;hideE=hev===null?1:+hev;var vv=parseInt(localStorage.getItem("bh_vol")||"100",10);if([10,25,50,75,100].indexOf(vv)>=0)vol=vv}catch(e){}
   function applyPrefs(){
     var h=document.documentElement;h.classList.toggle("hm",!!hideM);h.classList.toggle("br",!!bionic);[].forEach.call(document.querySelectorAll("[data-br]"),function(b){b.classList.toggle("on",+b.dataset.br===bionic)});h.classList.toggle("dk",theme==="dk");h.classList.toggle("wf",!!warm);[].forEach.call(document.querySelectorAll("[data-wf]"),function(b){b.classList.toggle("on",+b.dataset.wf===warm)});h.classList.toggle("fs",!!fontSel);var tm=document.querySelector('meta[name="theme-color"]');if(tm)tm.setAttribute("content",theme==="dk"?"#3a3a3a":"#e3e3e1");[].forEach.call(document.querySelectorAll("[data-th]"),function(b){b.classList.toggle("on",b.dataset.th===theme)});[].forEach.call(document.querySelectorAll("[data-ft]"),function(b){b.classList.toggle("on",+b.dataset.ft===fontSel)});h.classList.toggle("he",!!hideE);
-    try{VO.volume=vol/100;NX.volume=vol/100}catch(e){}
+    try{VO.volume=vol/100;NX.volume=vol/100;if(typeof MP!=="undefined"&&MP)MP.volume=vol/100}catch(e){}
     [].forEach.call(document.querySelectorAll("[data-hm]"),function(b){b.classList.toggle("on",+b.dataset.hm===hideM)});
     [].forEach.call(document.querySelectorAll("[data-he]"),function(b){b.classList.toggle("on",+b.dataset.he===hideE)});
     [].forEach.call(document.querySelectorAll("[data-vol]"),function(b){b.classList.toggle("on",+b.dataset.vol===vol)});
     var vr=document.getElementById("volrow");if(vr)vr.style.display=musicOn?"":"none";
     if(hideE&&typeof closeBubble==="function")closeBubble();
-    artTheme();
+    artTheme();if(typeof tilePaint==="function")tilePaint();
   }
 
   // Dark artwork: transparent WebP files in images/dark/. Add a name here when its file exists; others fall back to the dimmed light image.
   var DARK_SET=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","opening2","sankalp","jaikara","jaikara2"];
   function artTheme(){
+    [].forEach.call(document.querySelectorAll("img[data-u]"),function(im){var s=uiSrc(im.dataset.u);if(im.getAttribute("src")!==s)im.src=s});
     var dk=document.documentElement.classList.contains("dk");
     [].forEach.call(document.querySelectorAll(".art img[data-n],#finimg[data-n]"),function(im){
       var n=im.dataset.n;if(DARK_SET.indexOf(n)<0)return;
@@ -1512,7 +1916,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     }
     body.innerHTML=h;
   }
-  function openTrends(){trO=0;trRender();trEl.classList.add("open")}
+  function openTrends(){showTab("home")}
   document.getElementById("trback").onclick=function(){trEl.classList.remove("open")};
   document.getElementById("trprev").onclick=function(){trO--;trRender()};
   document.getElementById("trnext").onclick=function(){if(trO<0){trO++;trRender()}};
@@ -1534,7 +1938,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(r<g){if(w){w.classList.add("fin");layout();haptic(20)}}else openFinish();
   }
   function updateRounds(){
-    resetCount();slPaint();
+    resetCount();slPaint();skgPaint();
     var g=goal||1,r=Math.min(round,g),t=document.getElementById("rtxt"),btn=document.getElementById("again"),cb=document.getElementById("complete");
     if(!t)return;
     if(cb)cb.textContent=r<g?"Complete round "+r+" of "+g:"Complete Sankalp";
@@ -1554,7 +1958,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     if(b.dataset.l){setMode(b.dataset.l);fit();return}
     if(b.dataset.m){setMusic(b.dataset.m==="1");return}
     if(b.id==="again"){
-      if(b.dataset.a==="new"){goal=1;round=1;saveRounds();updateRounds();backToMain();goTo(0)}
+      if(b.dataset.a==="new"){goal=dgGet();round=1;saveRounds();updateRounds();backToMain();goTo(0)}
       else{round=Math.min(round,goal||1)+1;saveRounds();updateRounds();backToMain();goTo(1)}
     }
     else if(b.id==="install")installApp();
@@ -1576,7 +1980,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   var mf=document.createElement("link");mf.rel="manifest";mf.href=BASE+"manifest.webmanifest";document.head.appendChild(mf);
 
   var ai=document.createElement("link");ai.rel="apple-touch-icon";ai.href=BASE+"icon-180.png";document.head.appendChild(ai);
-  document.getElementById("reset").onclick=function(){goal=1;round=1;saveRounds();updateRounds();backToMain();goTo(0);hint.classList.remove("gone")};
+  document.getElementById("reset").onclick=function(){goal=dgGet();round=1;saveRounds();updateRounds();backToMain();goTo(0);hint.classList.remove("gone")};
   var nudgeEl=document.getElementById("nudge");
   if(nudgeEl){nudgeEl.innerHTML='<b class="pl"></b>';}
   var nzT=null;function updateNudge(){if(!nudgeEl)return;nudgeEl.style.display=(cur===0||cur===N-1)?"none":"";nudgeEl.classList.remove("on");clearTimeout(nzT);nzT=setTimeout(function(){nudgeEl.classList.add("on");nzT=setTimeout(function(){nudgeEl.classList.remove("on")},2000)},750)}
@@ -1617,8 +2021,8 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   // Settings: language + music, chosen once
   var setEl=document.getElementById("settings"),setupDone=false;
   try{setupDone=localStorage.getItem("bh_setup")==="1"}catch(e){}
-  function openSettings(){updateMusicUI();setMode(mode);setEl.classList.add("open")}
-  function closeSettings(){setEl.classList.remove("open");setupDone=true;try{localStorage.setItem("bh_setup","1")}catch(e){}}
+  function openSettings(){showTab("settings")}
+  function closeSettings(){showTab("home")}
   document.getElementById("gear").addEventListener("click",function(){stkRender();openSettings()});
   setEl.addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
@@ -1660,9 +2064,9 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     else window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank","noopener");
   });
   document.getElementById("home").addEventListener("click",function(){
-    sp2.classList.remove("open");finEl.classList.remove("open");goal=1;round=1;saveRounds();
+    sp2.classList.remove("open");finEl.classList.remove("open");goal=dgGet();round=1;saveRounds();
     try{sessionStorage.setItem("bh_card_s","0")}catch(e){}
-    updateRounds();goTo(0);if(window.__showSplash)window.__showSplash();
+    updateRounds();goTo(0);showTab("home");
   });
   // Desktop left sidebar: jump to any verse, language, music, support (shown only on wide screens with a mouse, see CSS)
   var side=document.createElement("nav");side.id="side";
@@ -1682,7 +2086,7 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
   }
   side.addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
-    if(b.dataset.i!==undefined){goTo(+b.dataset.i);return}
+    if(b.dataset.i!==undefined){showTab("chant");goTo(+b.dataset.i);return}
     if(b.dataset.sl){setMode(b.dataset.sl);fit();return}
     if(b.id==="sbm"){setMusic(!musicOn);return}
     if(b.id==="sbs"){openSupport()}
@@ -1713,6 +2117,395 @@ window.MUSIC={video:"L4SWfzTeyN4",times:[null,null,null,null,null,null,null,null
     o.querySelector(".pa-later").onclick=function(){sup.snooze=Date.now()+10*864e5;supSave();o.classList.remove("open");setTimeout(function(){o.remove()},300)};
   }
   setMode(mode);updateMusicUI();updateSide();label();
+  /* ===== v0.70 alpha: bottom tabs, onboarding, Feed (Music, Learn, Facts, My Hanuman) ===== */
+  var LIVE=/*LIVE*/true;/* build.py sets true for the live variant: no Learn tab */
+  var SIGNUP_URL="";/* paste the Google Apps Script web-app URL here to collect sign-ups into the sheet */
+  var DOHA1=1;/* card index of Doha 1 (card 0 is the sankalp card) */
+  var feedEl=document.getElementById("feed"),curTab="chant";
+  function homeTab(){return curTab==="chant"}
+  function mpOn(){return typeof MP!=="undefined"&&MP&&!MP.paused&&!MP.ended}
+  function uiSrc(n){var c=document.documentElement.classList,d=c.contains("dk")||c.contains("wm");return BASE+"images/ui/"+(d?"dark/":"")+n+".webp"}
+  function uiImg(n,c){return '<img class="ui-art '+(c||"")+'" data-u="'+n+'" alt="" src="'+uiSrc(n)+'" onerror="this.remove()">'}
+  function stg(k,d){try{var v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}}
+  function stset(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
+
+  // ---- tabs ----
+  var TABN=LIVE?["home","chant","settings"]:["home","chant","learn","settings"];
+  if(LIVE){var lt0=document.querySelector("#tabbar [data-tab=learn]");if(lt0)lt0.remove();document.getElementById("tabbar").style.setProperty("--n",3)}
+  function showTab(t,sub){
+    curTab=t;document.documentElement.dataset.tab=t;
+    finEl.classList.remove("open");sp2.classList.remove("open");closeBubble();
+    feedEl.classList.toggle("open",t==="learn");trEl.classList.toggle("open",t==="home");setEl.classList.toggle("open",t==="settings");
+    var tb=document.getElementById("tabbar");tb.style.setProperty("--i",Math.max(0,TABN.indexOf(t)));
+    [].forEach.call(tb.querySelectorAll("[data-tab]"),function(b){b.classList.toggle("on",b.dataset.tab===t)});
+    if(t==="learn")fdOpen(sub||"");
+    if(t==="home"){trO=0;hpPaint()}
+    if(t==="settings"){var sa=document.getElementById("setArt");if(sa&&!sa.firstChild)sa.innerHTML=uiImg("settings","set-hero");updateMusicUI();setMode(mode);tilePaint();var u=getUser(),h=document.getElementById("setHi");if(h)h.textContent=u&&u.name?"Jai Hanuman, "+u.name:"Jai Hanuman"}
+    if(t==="chant"){skInfoPaint();deferVoice();layout()}else stopVoice();
+  }
+  document.getElementById("tabbar").addEventListener("click",function(e){var b=e.target.closest("[data-tab]");if(b)showTab(b.dataset.tab)});
+  stage.addEventListener("click",function(e){var b=e.target.closest("[data-go]");if(b&&b.dataset.go!=="sk")showTab(b.dataset.go)});
+
+  // ---- 21-day learning mode ----
+  function today0(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()}
+  function lmStart(){return parseInt(stg("bh_lm","0"),10)||0}
+  function lmDay(){var s=lmStart();return s?Math.round((today0()-s)/864e5)+1:0}
+  function lmActive(){var d=lmDay();return d>=1&&d<=21}
+  function lmPlan(d){return [(d-1)*2+1,d>=21?43:d*2]}
+  function lmToggle(){stset("bh_lm",lmActive()?"0":today0());tilePaint()}
+  function sankalpVal(){return lmActive()?"learn-first":dgGet()}
+
+  // ---- daily sankalp (1 / 3 / 7), set in onboarding and Settings ----
+  function dgGet(){var v=parseInt(stg("bh_dg","1"),10);return v>0&&v<=21?v:1}
+  function skgPaint(){var e=document.getElementById("skg");if(e)e.textContent=goal||1;var w=document.getElementById("skw");if(w)w.textContent=(goal||1)===1?"time today":"times today"}
+  function dgPaint(){[].forEach.call(document.querySelectorAll("[data-dg]"),function(b){b.classList.toggle("on",+b.dataset.dg===dgGet())});skgPaint()}
+  function setDg(v){stset("bh_dg",v);goal=v;round=1;saveRounds();updateRounds();dgPaint();postUser()}
+  setEl.addEventListener("click",function(e){var b=e.target.closest("[data-dg]");if(b)setDg(+b.dataset.dg)});
+  goal=dgGet();saveRounds();
+
+  // ---- sign-up details ----
+  function getUser(){try{return JSON.parse(localStorage.getItem("bh_user")||"")||null}catch(e){return null}}
+  function onbDone(){return stg("bh_onb","0")==="1"}
+  function postUser(){
+    var u=getUser();if(!u||!SIGNUP_URL)return;
+    var src=/\/alpha\//.test(location.pathname)?"alpha":/\/beta\//.test(location.pathname)?"beta":"live";
+    try{
+      fetch(SIGNUP_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({name:u.name,phone:u.phone,sankalp:sankalpVal(),source:src,consent:!!u.consent})})
+        .then(function(){stset("bh_pend","0")}).catch(function(){stset("bh_pend","1")});
+    }catch(e){stset("bh_pend","1")}
+  }
+  try{var u0=getUser();if(u0&&(u0.phone||u0.consent)){delete u0.phone;delete u0.consent;stset("bh_user",JSON.stringify(u0))}}catch(e){}
+  if(LIVE){[].forEach.call(document.querySelectorAll("#settings .sg-n"),function(n){if(/live in Learn/.test(n.textContent))n.textContent="Turn on Meaning or Explanation to show them under each verse."});var lb0=document.querySelector("#onb [data-lm]");if(lb0)lb0.remove();var s2=document.querySelector("#onb .os[data-s=\"2\"]");if(s2){s2.querySelector("h2").textContent="How often will you chant?";s2.querySelector("p").textContent="Pick how many times a day. You can change this anytime."}}
+
+  // ---- onboarding ----
+  var onbEl=document.getElementById("onb");
+  function onbShow(s){
+    [].forEach.call(onbEl.querySelectorAll(".os"),function(e){e.classList.toggle("on",+e.dataset.s===s)});
+    [].forEach.call(onbEl.querySelectorAll(".onb-dots i"),function(e,i){e.classList.toggle("on",i<s)});
+    var f=onbEl.querySelector(".os.on input");if(f&&s===1)setTimeout(function(){try{f.focus({preventScroll:true})}catch(x){}},50);
+  }
+  function openOnb(){onbEl.classList.add("open");onbShow(1);setMode(mode);dgPaint();[].forEach.call(onbEl.querySelectorAll("[data-dg]"),function(x){x.classList.remove("on")})}
+  function finishOnb(){stset("bh_onb","1");onbEl.classList.remove("open")}
+  function onbErr(m){document.getElementById("onErr").textContent=m||""}
+  var onDur=21;
+  function onbNext(){
+    var name=document.getElementById("onName").value.trim(),raw=document.getElementById("onPhone").value.replace(/[^\d+]/g,""),dgt=raw.replace(/\D/g,""); 
+    if(name.length<2){onbErr("Please enter your name.");return}
+    if(dgt.length&&(dgt.length<10||dgt.length>15)){onbErr("Please enter a valid phone number, or leave it blank.");return}
+    try{localStorage.setItem("bh_user",JSON.stringify({name:name.slice(0,60),ts:Date.now()}))}catch(e){}
+    onbErr("");onbShow(2);
+  }
+  onbEl.addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.l){setMode(b.dataset.l);return}
+    if(b.id==="onGo1")onbNext();
+    else if(b.dataset.lm){stset("bh_lm",today0());finishOnb();postUser();showTab("learn")}
+    else if(b.dataset.dg){var v=+b.dataset.dg;stset("bh_lm","0");setDg(v);onbShow(3)}
+    else if(b.dataset.od){onDur=+b.dataset.od;[].forEach.call(onbEl.querySelectorAll("[data-od]"),function(x){x.classList.toggle("on",+x.dataset.od===onDur)})}
+    else if(b.id==="onBegin"){sk2Set({intent:document.getElementById("onI").value.trim(),promise:document.getElementById("onP").value.trim(),days:onDur,start:dkey(new Date()),ts:Date.now()});finishOnb();skInfoPaint();showTab("chant");goTo(0);if(!maybeRemind(true))goTo(DOHA1)}
+    else if(b.id==="onSkip"){finishOnb();skInfoPaint();showTab("chant");goTo(DOHA1)}
+  });
+  onbEl.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.tagName==="INPUT"&&e.target.type!=="checkbox"){e.preventDefault();onbNext()}});
+  window.__firstRun=function(){if(!onbDone())openOnb();else maybeRemind()};
+  if(!onbDone()&&cur>0)openOnb();
+
+  // ---- Settings tiles (Control Center style) ----
+  setEl.addEventListener("click",function(e){
+    var t=e.target.closest("[data-tg]");if(!t)return;var k=t.dataset.tg;
+    if(k==="dark"){theme=theme==="dk"?"":"dk";setPref("bh_theme",theme);applyPrefs()}
+    else if(k==="wf"){warm=warm?0:1;setPref("bh_wf",warm);applyPrefs()}
+    else if(k==="ft"){fontSel=fontSel?0:1;setPref("bh_font",fontSel);applyPrefs();fit()}
+    else if(k==="br"){bionic=bionic?0:1;setPref("bh_br",bionic);applyPrefs()}
+    else if(k==="fresh"){stset("bh_fresh",stg("bh_fresh","1")==="1"?"0":"1");tilePaint()}
+    else if(k==="reset"){if(!t.classList.contains("arm")){t.classList.add("arm");t.querySelector("em").textContent="Tap again to confirm";setTimeout(function(){t.classList.remove("arm");tilePaint()},3500)}else{try{var ks=[],q;for(q=0;q<localStorage.length;q++){var kn=localStorage.key(q);if(kn&&kn.indexOf("bh_")===0)ks.push(kn)}ks.forEach(function(kn){localStorage.removeItem(kn)});sessionStorage.clear()}catch(x){}location.reload()}}
+    else if(k==="mn"){hideM=hideM?0:1;setPref("bh_hm",hideM);applyPrefs();fit()}
+    else if(k==="ex"){hideE=hideE?0:1;setPref("bh_he",hideE);applyPrefs()}
+    else if(k==="m"){setMusic(!musicOn)}
+    else if(k==="lm"){lmToggle()}
+    
+  });
+  function tilePaint(){
+    var s2=sk2Get(),st={mysk:!!(s2&&skActive(s2)),dark:theme==="dk",wf:!!warm,ft:!!fontSel,br:!!bionic,mn:!hideM,ex:!hideE,m:!!musicOn,lm:lmActive(),fresh:stg("bh_fresh","1")==="1"};
+    var tx={dark:["Off","On"],wf:["Off","On"],ft:["Modern","Serif"],br:["Off","On"],mn:["Hidden","Shown"],ex:["Hidden","Shown"],m:["Off","On"],lm:["Off","Day "+lmDay()+" of 21"],fresh:["Off","On"],reset:["Start over","Start over"],mysk:["Not set",s2&&skActive(s2)?"Day "+skDay(s2)+" of "+s2.days:"Set one"]};
+    [].forEach.call(document.querySelectorAll("[data-tg]"),function(b){var k=b.dataset.tg,on=!!st[k];b.classList.toggle("on",on);var em=b.querySelector("em");if(em&&tx[k]&&!b.classList.contains("arm"))em.textContent=tx[k][on?1:0]});
+    [].forEach.call(document.querySelectorAll(".vbar [data-vol]"),function(b){b.classList.toggle("on",+b.dataset.vol<=vol)});
+    var vr=document.getElementById("volrow");if(vr)vr.style.display=musicOn?"":"none";
+  }
+
+  // ---- Learn tab: a selection page for the learning options ----
+  var fdSub="",fdBody=document.getElementById("fdbody"),FD_T={"":"Learn",max:"Chalisa Maxing",audio:"Audio Learning",stories:"Stories",sk:"My Sankalp"};
+  function fdOpen(s){
+    fdSub=s||"";
+    document.getElementById("fdTitle").textContent=FD_T[fdSub];
+    document.getElementById("fdBack").style.display=fdSub?"":"none";
+    fdBody.innerHTML="";var h=document.createElement("div");h.className="fd-sec "+(fdSub||"land");fdBody.appendChild(h);
+    if(!fdSub)renderLand(h);else if(fdSub==="audio")renderMusic(h);else if(fdSub==="max")renderLearn(h);else if(fdSub==="stories")renderTray(h);else renderSk(h);
+    artTheme();
+  }
+  document.getElementById("fdBack").addEventListener("click",function(){fdOpen("")});
+  function lmBanner(){
+    var d=lmDay();
+    if(lmActive()){var p=lmPlan(d);return '<div class="lm fd-card">'+uiImg("learn-mode","lm-img")+'<div class="lm-t"><b>Learning mode</b><span>Day '+d+' of 21</span></div><div class="lm-bar"><s style="width:'+Math.round(d/21*100)+'%"></s></div><p>Today: '+lnLabel(p[0])+(p[1]>p[0]?" to "+lnLabel(p[1]):"")+'</p><button data-act="lesson">Start today\'s lesson &#8250;</button><button class="lnk lm-off" data-act="lmoff">Stop learning mode</button></div>'}
+    if(lmStart()&&d>21)return '<div class="lm fd-card"><div class="lm-t"><b>21 days of learning done &#128591;</b></div><p>Set your sankalp on Home and begin reciting.</p><button data-act="set">Open Home &#8250;</button></div>';
+    return '<div class="lm fd-card">'+uiImg("learn-mode","lm-img")+'<div class="lm-t"><b>21-day learning mode</b></div><p>Learn the whole Chalisa in 21 days, two verses a day.</p><button data-act="lmon">Start learning mode &#8250;</button></div>';
+  }
+  var ICO={
+    max:'<svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg>',
+    audio:'<svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4.5" height="6.5" rx="1.6"/><rect x="16.5" y="14" width="4.5" height="6.5" rx="1.6"/></svg>',
+    stories:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.8v6.4l5.2-3.2z"/></svg>',
+    me:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8.5 12.2 2.4 2.4 4.6-5"/></svg>'
+  };
+  function renderLand(h){
+    var hot=lmActive();
+    h.innerHTML='<div class="fd-in">'+lmBanner()+'<div class="lg">'+
+      '<button data-sub="max"'+(hot?' class="hot"':"")+'>'+uiImg("learn-maxing","lg-img")+'<div><b>Chalisa Maxing</b><em>Verse, meaning and explanation</em></div></button>'+
+      '<button data-sub="audio">'+uiImg("learn-audio","lg-img")+'<div><b>Audio Learning</b><em>Listen to all 44 recitations</em></div></button>'+
+      '<button data-sub="stories">'+uiImg("learn-stories","lg-img")+'<div><b>Stories</b><em>108 stories of Hanuman</em></div></button>'+
+      '<button data-act="home">'+uiImg("learn-sankalp","lg-img")+'<div><b>My Sankalp</b><em>Intention, promise and streak</em></div></button></div></div>';
+    h.onclick=function(e){
+      var b=e.target.closest("button");if(!b)return;
+      if(b.dataset.sub)fdOpen(b.dataset.sub);
+      else if(b.dataset.act==="lesson"){lrn=lmPlan(lmDay())[0]-1;stset("bh_learn",lrn);fdOpen("max")}
+      else if(b.dataset.act==="set")showTab("home");
+      else if(b.dataset.act==="home")showTab("home");
+      else if(b.dataset.act==="lmon"||b.dataset.act==="lmoff"){lmToggle();fdOpen("")}
+    };
+  }
+
+  // ---- Music: simple player over the 44 recitation clips ----
+  var MPT=[],MP=new Audio(),mpI=0,mpC=0,mpPlay=false,mpLoaded=false;
+  MP.preload="auto";
+  (function(){for(var q=1;q<=44;q++){var c=D[q];MPT.push({q:q,c:clipsFor(q),d:c,t:q===1?"Doha 1":q===2?"Doha 2":q===43?"Closing Doha":q===44?"Jaikara":"Chaupai "+c.n})}})();
+  function mpLine(t){
+    if(t.q===44)return mode==="hi"?strip(JK.lines[0].dev):JK.lines[0].hing;
+    return mode==="hi"?strip(t.d.dev[0]):t.d.hing[0];
+  }
+  function mpSrc(){return clipSrc(MPT[mpI].c[mpC])}
+  function mpTry(){var pr;try{MP.volume=vol/100}catch(e){}try{pr=MP.play()}catch(e){}if(pr&&pr.catch)pr.catch(function(){mpPlay=false;mpPaint()})}
+  function mpStart(i){
+    if(i<0||i>=MPT.length)return;
+    stopVoice();mpI=i;mpC=0;MP.src=mpSrc();mpLoaded=true;mpPlay=true;mpTry();mpPaint();mpMeta();
+  }
+  function mpToggle(){
+    if(!mpLoaded){mpStart(mpI);return}
+    if(mpPlay){MP.pause();mpPlay=false}else{stopVoice();mpPlay=true;mpTry()}
+    mpPaint();
+  }
+  function mpNext(){if(mpI+1<MPT.length)mpStart(mpI+1)}
+  function mpPrev(){if(mpLoaded&&mpC===0&&MP.currentTime>3){MP.currentTime=0;return}mpStart(Math.max(0,mpI-1))}
+  MP.addEventListener("ended",function(){
+    if(mpC+1<MPT[mpI].c.length){mpC++;MP.src=mpSrc();mpTry()}
+    else if(mpI+1<MPT.length)mpStart(mpI+1);
+    else{mpPlay=false;mpPaint()}
+  });
+  MP.addEventListener("timeupdate",function(){
+    var s=document.querySelector("#mpBar s");if(!s||!MP.duration)return;
+    var n=MPT[mpI].c.length;s.style.width=Math.min(100,((mpC+MP.currentTime/MP.duration)/n)*100)+"%";
+  });
+  function mpMeta(){
+    try{
+      if(!navigator.mediaSession)return;
+      navigator.mediaSession.metadata=new MediaMetadata({title:MPT[mpI].t,artist:"Hanuman Chalisa",album:"Be Hanuman"});
+      navigator.mediaSession.setActionHandler("play",mpToggle);navigator.mediaSession.setActionHandler("pause",mpToggle);
+      navigator.mediaSession.setActionHandler("previoustrack",mpPrev);navigator.mediaSession.setActionHandler("nexttrack",mpNext);
+    }catch(e){}
+  }
+  var ICO_PLAY='<svg viewBox="0 0 24 24" width="30" height="30"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>',ICO_PAUSE='<svg viewBox="0 0 24 24" width="30" height="30"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>';
+  function mpPaint(){
+    var t=MPT[mpI],pb=document.getElementById("mpPlay");if(!pb)return;
+    pb.innerHTML=mpPlay?ICO_PAUSE:ICO_PLAY;pb.setAttribute("aria-label",mpPlay?"Pause":"Play");
+    document.getElementById("mpT").textContent=t.t;
+    document.getElementById("mpL").textContent=mpLine(t);
+    document.getElementById("mpN").textContent="Track "+(mpI+1)+" of "+MPT.length+(mpPlay?"  ·  plays on automatically":"");
+    var a=document.getElementById("mpArt");
+    if(a.dataset.q!==String(t.q)){a.dataset.q=t.q;a.innerHTML=artHTML(t.d,t.q);artTheme();var s=document.querySelector("#mpBar s");if(s)s.style.width="0"}
+    [].forEach.call(document.querySelectorAll(".mp-list button"),function(b){var on=+b.dataset.i===mpI;b.classList.toggle("cur",on);b.classList.toggle("pl",on&&mpPlay)});
+  }
+  function renderMusic(h){
+    var L=MPT.map(function(t,i){return '<button data-i="'+i+'"><em>'+(i+1)+'</em><span>'+esc(t.t)+'</span></button>'}).join("");
+    h.innerHTML='<div class="fd-in mp"><div class="mp-now fd-card"><div class="mp-art" id="mpArt"></div><b id="mpT"></b><p id="mpL"></p><div class="mp-bar" id="mpBar"><s></s></div>'+
+      '<div class="mp-ctl"><button id="mpPrev" aria-label="Previous"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M6 5h2.4v14H6zM20 5.5v13L9.6 12z" fill="currentColor"/></svg></button><button id="mpPlay" class="big"></button><button id="mpNext" aria-label="Next"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M15.6 5H18v14h-2.4zM4 5.5v13L14.4 12z" fill="currentColor"/></svg></button></div><span class="mp-n" id="mpN"></span></div>'+
+      '<h4 class="fd-h4">All tracks</h4><div class="mp-list">'+L+'</div></div>';
+    h.addEventListener("click",function(e){
+      var b=e.target.closest("button");if(!b)return;
+      if(b.id==="mpPlay")mpToggle();else if(b.id==="mpPrev")mpPrev();else if(b.id==="mpNext")mpNext();
+      else if(b.dataset.i!==undefined)mpStart(+b.dataset.i);
+    });
+    mpPaint();
+  }
+
+  // ---- Learn: verse, meaning, explanation, one at a time ----
+  var lrn=Math.max(0,Math.min(42,parseInt(stg("bh_learn","0"),10)||0));
+  function lnLabel(q){var c=D[q];return q===1?"Doha 1":q===2?"Doha 2":q===43?"Closing Doha":"Chaupai "+c.n}
+  function lnVerse(c){
+    var B='<i class="bar">||</i>',S='<i class="bar">|</i>';
+    return '<div class="verse"><div class="v-hing"><span>'+esc(c.hing[0])+' '+S+'</span><span>'+esc(c.hing[1])+' '+B+'</span></div><div class="v-hi"><span>'+esc(strip(c.dev[0]))+' '+S+'</span><span>'+esc(strip(c.dev[1]))+' '+B+'</span></div></div>';
+  }
+  function renderLearn(h){
+    var q=lrn+1,c=D[q],opts="";
+    for(var i=1;i<=43;i++)opts+='<option value="'+(i-1)+'"'+(i===q?" selected":"")+'>'+lnLabel(i)+'</option>';
+    h.innerHTML='<div class="fd-in ln"><div class="ln-top"><span>Verse by verse</span><select id="lnSel" aria-label="Jump to verse">'+opts+'</select></div>'+
+      '<div class="ln-art">'+artHTML(c,q)+'</div><div class="ln-lab">'+lnLabel(q)+'</div>'+lnVerse(c)+
+      '<button class="ln-listen" data-act="listen">&#9654; Listen</button>'+
+      '<div class="ln-sec"><h4>Meaning</h4><p class="mt mt-en">'+bio(c.mt)+'</p><p class="mt mt-hi">'+esc(hm(c))+'</p></div>'+
+      '<div class="ln-sec"><h4>Explanation</h4><p class="lnx mt-en">'+bio(c.ex||"")+'</p><p class="lnx mt-hi">'+esc(hx(c)||"")+'</p></div>'+
+      '<div class="ln-nav"><button data-act="prev"'+(lrn===0?" disabled":"")+'>&#8249; Previous</button><span>'+q+' / 43</span><button data-act="next" class="pri">'+(q===43?"Start reciting &#8250;":"Next &#8250;")+'</button></div></div>';
+    h.scrollTop=0;
+    h.onclick=function(e){
+      var b=e.target.closest("button");if(!b)return;
+      if(b.dataset.act==="prev"&&lrn>0){lrn--;stset("bh_learn",lrn);renderLearn(h);artTheme()}
+      else if(b.dataset.act==="next"){if(lrn<42){lrn++;stset("bh_learn",lrn);renderLearn(h);artTheme()}else{showTab("chant");goTo(0)}}
+      else if(b.dataset.act==="listen"){mpStart(q-1)}
+    };
+    document.getElementById("lnSel").onchange=function(){lrn=+this.value;stset("bh_learn",lrn);renderLearn(h);artTheme()};
+  }
+
+  // ---- Stories: Instagram-style. Tap right = next, tap left = back, hold = pause, swipe sideways = next shelf, swipe down = close ----
+  var SHV=null,stSeen={};try{stSeen=JSON.parse(localStorage.getItem("bh_stseen")||"{}")||{}}catch(e){stSeen={}}
+  function shelves(){
+    if(SHV)return SHV;var m={},o=[];
+    (window.FACTS||[]).forEach(function(f){if(!m[f.s]){m[f.s]={name:f.s,items:[]};o.push(m[f.s])}m[f.s].items.push(f)});
+    return SHV=o;
+  }
+  function fxShare(f){
+    var txt=f.t+"\n\n"+f.st+"\n\n"+f.h+"\n\nBe Hanuman: https://hanuman.dyut.si/";
+    if(navigator.share){navigator.share({title:f.t,text:txt}).catch(function(){})}
+    else window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank","noopener");
+  }
+  function renderTray(h){
+    var S=shelves();
+    h.innerHTML='<div class="fd-in"><p class="tr-q">Tap a circle to watch. Tap the right side for the next story, the left to go back, hold to pause.</p><div class="tray">'+
+      S.map(function(s,i){var seen=(stSeen[s.name]||0)>=s.items.length;
+        return '<button data-i="'+i+'"><span class="ring'+(seen?" seen":"")+'"><span class="ci"><i>&#2384;</i><img alt="" loading="lazy" src="'+BASE+'images/facts/s'+(i+1)+'.webp" onerror="this.onerror=function(){this.remove()};this.src=\''+BASE+'images/facts/'+s.items[0].f+'\'"></span></span><b>'+esc(s.name)+'</b><em>'+s.items.length+' stories</em></button>';
+      }).join("")+'</div></div>';
+    h.onclick=function(e){var b=e.target.closest("button");if(!b)return;var i=+b.dataset.i,s=S[i],k=Math.min(stSeen[s.name]||0,s.items.length-1);if((stSeen[s.name]||0)>=s.items.length)k=0;stOpen(i,k)};
+  }
+  var stEl=document.getElementById("stories"),stSh=0,stI=0,stHold=false,stHT=null,stDown=null,stCur=null;
+  function stOpen(sh,i){stSh=sh;stI=i||0;stEl.classList.add("open");stRender()}
+  function stClose(){clearTimeout(stHT);stEl.classList.remove("open","hold");stEl.innerHTML="";if(curTab==="learn"&&fdSub==="stories")fdOpen("stories")}
+  function stDur(f){return Math.min(14000,5500+(f.st.length+f.h.length)*22)}
+  function stRender(){
+    var S=shelves(),sh=S[stSh],L=sh.items,f=L[stI];stCur=f;
+    stSeen[sh.name]=Math.max(stSeen[sh.name]||0,stI+1);stset("bh_stseen",JSON.stringify(stSeen));
+    var bars=L.map(function(_,k){return '<i class="'+(k<stI?"d":k===stI?"c":"")+'"><s'+(k===stI?' style="animation-duration:'+stDur(f)+'ms"':"")+'></s></i>'}).join("");
+    stEl.innerHTML='<div class="st-img"><i>&#2384;</i><img alt="" src="'+BASE+'images/facts/'+f.f+'" onerror="this.remove()"></div>'+
+      '<div class="st-body"><span class="fx-sh">'+esc(sh.name)+'</span><h3>'+esc(f.t)+'</h3><p class="fx-st">'+esc(f.st)+'</p><p class="fx-h">'+esc(f.h)+'</p></div>'+
+      '<div class="st-hit"></div><div class="st-top"><div class="st-bars">'+bars+'</div><div class="st-hd"><span>'+esc(sh.name)+'</span><button class="st-x" aria-label="Close">&times;</button></div></div>'+
+      '<div class="st-ft"><span>'+(stI+1)+' / '+L.length+'</span><button class="st-sh">Share &#8599;</button></div>';
+    var nx=L[stI+1]||(S[stSh+1]&&S[stSh+1].items[0]);if(nx){var im=new Image();im.src=BASE+"images/facts/"+nx.f}
+  }
+  function stNext(){var S=shelves(),L=S[stSh].items;if(stI<L.length-1){stI++;stRender()}else if(stSh<S.length-1){stSh++;stI=0;stRender()}else stClose()}
+  function stPrev(){if(stI>0){stI--;stRender()}else if(stSh>0){stSh--;stI=0;stRender()}else{stI=0;stRender()}}
+  function stShelf(d){var n=stSh+d;if(n<0)return;if(n>=shelves().length){stClose();return}stSh=n;stI=0;stRender()}
+  stEl.addEventListener("pointerdown",function(e){
+    if(!e.target.closest(".st-hit"))return;
+    stDown={x:e.clientX,y:e.clientY};stHold=false;clearTimeout(stHT);
+    stHT=setTimeout(function(){stHold=true;stEl.classList.add("hold")},220);
+    try{stEl.setPointerCapture(e.pointerId)}catch(x){}
+  });
+  stEl.addEventListener("pointerup",function(e){
+    if(!stDown)return;clearTimeout(stHT);var d=stDown;stDown=null;stEl.classList.remove("hold");
+    var dx=e.clientX-d.x,dy=e.clientY-d.y,adx=Math.abs(dx),ady=Math.abs(dy);
+    if(dy>90&&ady>adx){stClose();return}
+    if(adx>60&&adx>ady){stShelf(dx<0?1:-1);return}
+    if(stHold)return;
+    var r=stEl.getBoundingClientRect();
+    if(e.clientX-r.left<r.width*0.33)stPrev();else stNext();
+  });
+  stEl.addEventListener("pointercancel",function(){stDown=null;clearTimeout(stHT);stEl.classList.remove("hold")});
+  stEl.addEventListener("animationend",function(e){if(e.target.tagName==="S"&&e.animationName==="stfill")stNext()});
+  stEl.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;if(b.classList.contains("st-x"))stClose();else if(b.classList.contains("st-sh")&&stCur)fxShare(stCur)});
+  document.addEventListener("keydown",function(e){
+    if(!stEl.classList.contains("open"))return;
+    if(e.key==="ArrowRight"||e.key==="ArrowDown"||e.key===" "){e.preventDefault();stNext()}
+    else if(e.key==="ArrowLeft"||e.key==="ArrowUp"){e.preventDefault();stPrev()}
+    else if(e.key==="Escape")stClose();
+  });
+
+  // ---- Sankalp: times a day + intention + promise + duration (11 / 21 / 40 days) ----
+  function sk2Get(){try{return JSON.parse(localStorage.getItem("bh_sk2")||"")||null}catch(e){return null}}
+  function sk2Set(o){stset("bh_sk2",o?JSON.stringify(o):"")}
+  function skStartD(s){var p=s.start.split("-");return new Date(+p[0],+p[1]-1,+p[2])}
+  function skDay(s){return Math.round((today0()-skStartD(s).getTime())/864e5)+1}
+  function skActive(s){return !!s&&skDay(s)<=s.days}
+  function skKept(s){var st=skStartD(s),n=0;for(var i=0;i<s.days;i++){var d=new Date(st.getFullYear(),st.getMonth(),st.getDate()+i);if(d.getTime()>today0())break;if(sk[dkey(d)])n++}return n}
+  function skStreak(s){var st=skStartD(s),d=new Date(),n=0;d=new Date(d.getFullYear(),d.getMonth(),d.getDate());if(!sk[dkey(d)])d.setDate(d.getDate()-1);while(d>=st&&sk[dkey(d)]){n++;d.setDate(d.getDate()-1)}return n}
+  function skLine(s){return "Day "+Math.min(skDay(s),s.days)+" of "+s.days}
+  function skTotal(s){var st=skStartD(s),n=0;for(var i=0;i<s.days;i++){var d=new Date(st.getFullYear(),st.getMonth(),st.getDate()+i);if(d.getTime()>today0())break;n+=stk[dkey(d)]||0}return n}
+  function skInfoPaint(){
+    var s=sk2Get(),box=document.getElementById("skInfo"),w=stage.querySelector(".skw"),fp=document.getElementById("finPr"),h="",act=skActive(s);
+    if(s&&act){h='<div class="ski"><div class="ski-d">'+skLine(s)+'</div>'+(s.intent?'<p><b>Intention</b>'+esc(s.intent)+'</p>':"")+(s.promise?'<p><b>Promise</b>'+esc(s.promise)+'</p>':"")+'<button class="lnk" data-go="sk">My sankalp &#8250;</button></div>'}
+    else if(s){h='<div class="ski"><div class="ski-d">Sankalp complete \u{1F64F}</div><button class="lnk" data-go="sk">Start a new one &#8250;</button></div>'}
+    else h='<div class="ski"><button class="lnk" data-go="sk">Add your intention and promise &#8250;</button></div>';
+    if(box)box.innerHTML=h;
+    if(w)w.classList.toggle("has",!!(s&&act&&(s.intent||s.promise)));
+    if(fp)fp.textContent=s&&act&&s.promise?"Keep your promise: "+s.promise:"";
+  }
+  stage.addEventListener("click",function(e){var b=e.target.closest("[data-go]");if(b&&b.dataset.go==="sk")showTab("home")});
+  var skEdit=false,skDur=21,skRT=null;
+  function renderSk(h){
+    var s=sk2Get();
+    if(s&&!skEdit){
+      var act=skActive(s),d=Math.min(skDay(s),s.days),kept=skKept(s),today=stk[dkey(new Date())]||0;
+      h.innerHTML='<div class="fd-in"><div class="skv fd-card">'+uiImg(act?"home-sankalp":"home-complete","sk-hero")+'<div class="skv-t"><b>'+(act?"Day "+d+" of "+s.days:"Sankalp complete \u{1F64F}")+'</b><span>'+skTotal(s)+" chant"+(skTotal(s)===1?"":"s")+'</span></div><div class="lm-bar"><s style="width:'+Math.round(d/s.days*100)+'%"></s></div>'+
+        '<p class="skv-m">'+(goal||1)+' time'+((goal||1)>1?"s":"")+' a day · kept '+kept+' of '+d+' day'+(d>1?'s':'')+'</p>'+(act?'<div class="skv-td"><b>Today</b><span>'+today+' of '+(goal||1)+'</span></div><button class="cbtn skv-go" data-a="chant">Chant now</button>':"")+
+        (s.intent?'<h5>Intention</h5><p class="skv-p">'+esc(s.intent)+'</p>':"")+(s.promise?'<h5>Promise</h5><p class="skv-p">'+esc(s.promise)+'</p>':"")+
+        '<div class="skv-b"><button data-a="edit">Edit</button><button data-a="reset" class="warn">'+(act?"Reset sankalp":"Start a new sankalp")+'</button></div></div></div>';
+      h.onclick=function(e){
+        var b=e.target.closest("button");if(!b)return;
+        if(b.dataset.a==="chant"){showTab("chant")}
+        else if(b.dataset.a==="edit"){skEdit=true;renderSk(h)}
+        else if(b.dataset.a==="reset"){
+          if(!act){sk2Set(null);skInfoPaint();renderSk(h);return}
+          if(!b.classList.contains("arm")){b.classList.add("arm");b.textContent="Tap again to confirm";clearTimeout(skRT);skRT=setTimeout(function(){b.classList.remove("arm");b.textContent="Reset sankalp"},3500)}
+          else{sk2Set(null);skInfoPaint();renderSk(h)}
+        }
+      };
+      return;
+    }
+    if(!s&&!skEdit&&h.id==="hpSk"){h.innerHTML='<div class="fd-in"><div class="skv fd-card">'+uiImg("home-empty","sk-hero")+'<div class="skv-t"><b>No sankalp yet</b></div><p class="skv-p">Choose how often you chant, for how many days, and what you promise yourself.</p><div class="skv-b"><button data-a="edit">Set my sankalp</button></div></div></div>';h.onclick=function(e){if(e.target.closest("[data-a=edit]")){skEdit=true;renderSk(h)}};return}
+    skDur=s?s.days:21;
+    h.innerHTML='<div class="fd-in"><div class="skf fd-card"><h3>'+(s?"Edit sankalp":"New sankalp")+'</h3>'+
+      '<label>Times a day<div class="seg"><button data-dg="1">1</button><button data-dg="3">3</button><button data-dg="7">7</button><button data-dg="11">11</button></div></label>'+
+      '<label>For how long<div class="seg" id="skDurSeg"><button data-sd="11">11 days</button><button data-sd="21">21 days</button><button data-sd="40">40 days</button></div></label>'+
+      '<label>My intention<textarea id="skI" rows="2" maxlength="140" placeholder="e.g. To overcome my fear about the upcoming interview"></textarea></label>'+
+      '<label>My promise<textarea id="skP" rows="2" maxlength="140" placeholder="e.g. I will prepare for the interview 3 hours every day"></textarea></label>'+
+      '<button class="cbtn" id="skSave">'+(s?"Save changes":"Begin sankalp")+'</button>'+(s?'<button class="onb-skip" id="skCancel">Cancel</button>':"")+'</div></div>';
+    if(s){document.getElementById("skI").value=s.intent||"";document.getElementById("skP").value=s.promise||""}
+    function durPaint(){[].forEach.call(h.querySelectorAll("[data-sd]"),function(b){b.classList.toggle("on",+b.dataset.sd===skDur)})}
+    durPaint();dgPaint();
+    h.onclick=function(e){
+      var b=e.target.closest("button");if(!b)return;
+      if(b.dataset.sd){skDur=+b.dataset.sd;durPaint()}
+      else if(b.dataset.dg){setDg(+b.dataset.dg)}
+      else if(b.id==="skCancel"){skEdit=false;renderSk(h)}
+      else if(b.id==="skSave"){
+        sk2Set({intent:document.getElementById("skI").value.trim(),promise:document.getElementById("skP").value.trim(),days:skDur,start:s?s.start:dkey(new Date()),ts:Date.now()});
+        skEdit=false;skInfoPaint();renderSk(h);
+      }
+    };
+  }
+
+  // ---- once a day: remind the reader of their intention and promise ----
+  var rmEl=document.getElementById("remind");
+  function maybeRemind(force){
+    var s=sk2Get();if(!s||!skActive(s)||!(s.intent||s.promise)||!onbDone()||onbEl.classList.contains("open"))return;
+    var t=dkey(new Date());if(!force&&stg("bh_remd","")===t)return;stset("bh_remd",t);
+    rmEl.innerHTML='<div class="rm-c"><span class="rm-k">'+skLine(s)+'</span><h2>Your sankalp</h2>'+(s.intent?'<h5>Intention</h5><p>'+esc(s.intent)+'</p>':"")+(s.promise?'<h5>Promise</h5><p>'+esc(s.promise)+'</p>':"")+'<p class="rm-n">Keep this in mind as you chant today.</p><button class="cbtn" id="rmGo">Chant now</button></div>';
+    rmEl.classList.add("open");return true;
+  }
+  rmEl.addEventListener("click",function(e){if(e.target.closest("#rmGo")||e.target===rmEl){rmEl.classList.remove("open");showTab("chant");goTo(DOHA1)}});
+  function hpPaint(){
+    var u=getUser(),e=document.getElementById("hpHi");if(e)e.textContent=u&&u.name?"Jai Hanuman, "+u.name:"Jai Hanuman";
+    var h=document.getElementById("hpSk");if(h)renderSk(h);
+    var hs=document.getElementById("hpStk");if(hs&&!hs.firstChild)hs.innerHTML=uiImg("home-streak","hp-streak");
+    trRender();
+  }
+  skInfoPaint();
+  curTab="chant";document.documentElement.dataset.tab="chant";(function(){var tb0=document.getElementById("tabbar");tb0.style.setProperty("--i",1);[].forEach.call(tb0.querySelectorAll("[data-tab]"),function(b){b.classList.toggle("on",b.dataset.tab==="chant")})})();
+  if(cur===0&&onbDone()){var p0=stg("bh_fresh","1")==="1"?DOHA1:parseInt(stg("bh_pos","0"),10);if(p0>0&&p0<N)goTo(p0)}
+  if(onbDone()&&cur>0)setTimeout(maybeRemind,500);
+  skgPaint();applyPrefs();
 
 })();
 </script>
